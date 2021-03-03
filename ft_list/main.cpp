@@ -5,6 +5,11 @@
 int main() {
 
 	ft::list<int> a(5, 10);
+	std::cout << "size " << a.size() << std::endl;
+	ft::list<int>::iterator it = a.begin();
+	*it = 1576;
+	ft::list<int>::iterator itE = a.end();
+	*itE = 345;
 	a.TMP_Display();
 }
 
