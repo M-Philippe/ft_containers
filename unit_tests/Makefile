@@ -6,7 +6,7 @@
 #    By: philippe <philippe@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 02:26:02 by pminne            #+#    #+#              #
-#    Updated: 2021/07/02 18:36:40 by philippe         ###   ########lyon.fr    #
+#    Updated: 2021/07/17 02:35:21 by philippe         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,22 +19,34 @@ SRCS	=	main.cpp\
 
 OBJS	=	$(SRCS:.cpp=.o)
 
-EXEC	=	unit_tests
+EXEC	=	tests
+
+INSTRUCTIONS = "Compilation done, run ./unit_tests$'\n\
+				-l to list all availaible tests$'\n\
+				-t to list all availaible tags$'\n\
+				-n to select a specific suite name$'\n\
+				-d <yes> to show test duration$'\n\
+				-benchmark-no-analysis"
 
 all:	$(EXEC)
 
 $(EXEC):	$(OBJS)
-	$(CPP) -o $@ $^ $(CFLAGS)
+	@$(CPP) -o $@ $^ $(CFLAGS)
+	@echo $(INSTRUCTIONS)
+	@echo "make instructions for a reminder of those instructions"
 
 %.o:	%.cpp
-	$(CPP) -o $@ -c $< $(CFLAGS) 
+	@$(CPP) -o $@ -c $< $(CFLAGS) 
 
 fclean	:	clean
-	rm -rf $(EXEC)
+	@rm -rf $(EXEC)
 
 clean	:
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
 
 re:		fclean all
 
-.PHONY: all fclean clean re
+instructions:
+	@echo $(INSTRUCTIONS)
+
+.PHONY: all fclean clean re instructions
