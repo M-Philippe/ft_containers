@@ -5,7 +5,8 @@
 
 int main() {
 	ft::vector<int> vct(10, 8);
-	std::vector<int> vct2(10, 8);
+	vct.resize(5);
+	/*std::vector<int> vct2(10, 8);
 
 	ft::vector<int>::iterator it = vct.begin();
 	std::vector<int>::iterator it2 = vct2.begin();
@@ -22,7 +23,7 @@ int main() {
 	std::cout << *it << " | " << *it2 << std::endl;
 	it++;
 	it2++;
-	std::cout << *it << " | " << *it2 << std::endl;
+	std::cout << *it << " | " << *it2 << std::endl;*/
 	
 	return (0);
 }

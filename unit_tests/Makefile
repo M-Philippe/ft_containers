@@ -6,13 +6,13 @@
 #    By: philippe <philippe@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 02:26:02 by pminne            #+#    #+#              #
-#    Updated: 2021/07/17 02:35:21 by philippe         ###   ########lyon.fr    #
+#    Updated: 2021/07/17 17:24:10 by philippe         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 CPP	=	clang++
 
-CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS	=	-Wall -Wextra -fsanitize=address -g3
 
 SRCS	=	main.cpp\
 			vector.cpp\

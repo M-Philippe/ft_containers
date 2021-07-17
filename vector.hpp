@@ -78,11 +78,13 @@ namespace ft
                     const allocator_type &alloc = allocator_type())
                                                   : _alloc(alloc) {
       _array = _alloc.allocate(n);
-      _size = n;
       _capacity = 1;
       while (_capacity <= n)
         _capacity = _capacity * (2 * _capacity);
-      assign(n, val);
+      _array = _alloc.allocate(_capacity);
+      for (_size = 0; _size < n; ++_size)
+        _array[_size] = val;
+      std::cout << _size << std::endl;
     }
 
     ~vector() {
@@ -104,6 +106,19 @@ namespace ft
 
     size_type size() const {
       return (_size);
+    }
+
+    /*  When vector is reduced, iterator must still be valid */
+    void  resize(size_type n, value_type val = value_type()) {
+      if (n < _size) {
+        _size--;
+        _alloc.deallocate(_array + 2, 1);
+        //_alloc.deallocate(_array, 1);
+        //while (--_size > n) {
+        //  std::cout << _size << " | " << _array[_size] << std::endl;
+        //  _alloc.deallocate(&_array[_size], val.size());
+        //}
+      }
     }
 
     size_type capacity() const {
