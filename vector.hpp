@@ -18,7 +18,6 @@ namespace ft
 
     /*  Iterator  */
     typedef unsigned int u_int;
-
     class vector_iterator {
       private:
         value_type*    _link;
