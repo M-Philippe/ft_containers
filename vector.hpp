@@ -1,9 +1,12 @@
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
+
 #include <cstdio>
 #include <iostream>
+#include "vector_iterator.hpp"
 
 namespace ft
 {
-
   template <class T, class Alloc = std::allocator<T> >
   class vector
   {
@@ -15,48 +18,10 @@ namespace ft
     typedef Alloc allocator_type;
     typedef typename allocator_type::reference reference;
     typedef typename allocator_type::const_reference const_reference;
-
-    /*  Iterator  */
-    typedef unsigned int u_int;
-    class vector_iterator {
-      private:
-        value_type*    _link;
-        u_int _position;
-
-      public:
-        vector_iterator(value_type* link, u_int pos = 0) {
-          _link = link;
-          _position = pos;
-        }
-
-        value_type& operator*() {
-          return (*_link);
-        }
-
-        vector_iterator& operator++() {
-          _link++;
-          _position++;
-          return (*this);
-        }
-
-        vector_iterator operator++(int) {
-          vector_iterator it(*this);
-          ++(*this);
-          return (it);
-        }
-
-        vector_iterator& operator--() {
-          _link--;
-          _position--;
-          return (*this);
-        }
-
-      }; // class iterator
-
-    typedef vector_iterator iterator;
-
-  private:
     
+    // tmp
+    typedef vector_iterator<T> iterator;
+
     T *_array;
     size_type _size;
     size_type _capacity;
@@ -77,7 +42,6 @@ namespace ft
     explicit vector(size_type n, const value_type &val = value_type(),
                     const allocator_type &alloc = allocator_type())
                                                   : _alloc(alloc) {
-      _array = _alloc.allocate(n);
       _capacity = 1;
       while (_capacity <= n)
         _capacity = _capacity * (2 * _capacity);
@@ -88,7 +52,7 @@ namespace ft
     }
 
     ~vector() {
-      _alloc.deallocate(_array, _size);
+      _alloc.deallocate(_array, _capacity);
     }
 
     /*
@@ -178,3 +142,5 @@ namespace ft
   };
 
 } // namespace ft
+
+#endif

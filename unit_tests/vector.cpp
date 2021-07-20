@@ -35,7 +35,7 @@ TEST_CASE("Tests iterators", "[ft_vector]") {
   REQUIRE(i == 10);
 }
 
-TEST_CASE("tests shrinks", "[ft_vector]") {
+/*TEST_CASE("tests shrinks", "[ft_vector]") {
   ft::vector<int> ft_vector(10, 8);
   std::vector<int> st_vector(10, 8);
 
@@ -43,7 +43,7 @@ TEST_CASE("tests shrinks", "[ft_vector]") {
   st_vector.resize(5);
   //REQUIRE(ft_vector.size() == st_vector.size());
   //REQUIRE(ft_vector.capacity() == st_vector.capacity());
-}
+}*/
 
 #ifdef BENCHMARK
 TEST_CASE("BENCHMARK", "[ft_vector]") {
