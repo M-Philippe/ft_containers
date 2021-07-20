@@ -42,13 +42,10 @@ namespace ft
     explicit vector(size_type n, const value_type &val = value_type(),
                     const allocator_type &alloc = allocator_type())
                                                   : _alloc(alloc) {
-      _capacity = 1;
-      while (_capacity <= n)
-        _capacity = _capacity * (2 * _capacity);
+      _capacity = n;
       _array = _alloc.allocate(_capacity);
       for (_size = 0; _size < n; ++_size)
-        _array[_size] = val;
-      std::cout << _size << std::endl;
+        _alloc.construct(_array + _size, val);
     }
 
     ~vector() {
@@ -64,6 +61,11 @@ namespace ft
      return (begin);
    }
 
+   iterator end() {
+     iterator end(NULL, _size);
+     return (end);
+   }
+
     /*
     **      CAPACITY
     */
@@ -74,15 +76,9 @@ namespace ft
 
     /*  When vector is reduced, iterator must still be valid */
     void  resize(size_type n, value_type val = value_type()) {
-      if (n < _size) {
-        _size--;
-        _alloc.deallocate(_array + 2, 1);
-        //_alloc.deallocate(_array, 1);
-        //while (--_size > n) {
-        //  std::cout << _size << " | " << _array[_size] << std::endl;
-        //  _alloc.deallocate(&_array[_size], val.size());
-        //}
-      }
+      if (n < _size)
+        while (_size > n)
+          _alloc.destroy(_array + _size--);
     }
 
     size_type capacity() const {
@@ -114,7 +110,7 @@ namespace ft
 
     void assign(size_type n, const value_type &val) {
       for (size_type i = 0; i < n; ++i)
-        _array[i] = val;
+        _alloc.construct(_array + i, val);
     }
 
     void push_back (const value_type& val) {

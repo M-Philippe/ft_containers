@@ -21,6 +21,10 @@ namespace ft {
           _position = pos;
         }
 
+        bool operator==(const vector_iterator& second) {
+          return (_link == second._link);
+        }
+
         value_type& operator*() {
           return (*_link);
         }
