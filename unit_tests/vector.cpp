@@ -61,14 +61,23 @@ TEST_CASE("Tests iterators", "[ft_vector]") {
   }
 }
 
-TEST_CASE("tests shrinks", "[ft_vector]") {
+TEST_CASE("Tests vector::resize()", "[ft_vector]") {
   ft::vector<int> ft_vector(10, 8);
   std::vector<int> st_vector(10, 8);
 
-  ft_vector.resize(5);
-  st_vector.resize(5);
-  REQUIRE(ft_vector.size() == st_vector.size());
-  REQUIRE(ft_vector.capacity() == st_vector.capacity());
+  SECTION("Test resize (n < _size)") {
+    ft::vector<int>::iterator first_it = ft_vector.begin();
+    ft_vector.resize(5);
+    st_vector.resize(5);
+
+    REQUIRE(ft_vector.size() == st_vector.size());
+    REQUIRE(ft_vector.capacity() == st_vector.capacity());
+  
+    /*  Iterator still must be valid after resize */
+    ft::vector<int>::iterator second_it = ft_vector.begin();
+    while (second_it != ft_vector.end())
+      REQUIRE(first_it++.operator==(second_it++) == true);
+  }
 }
 
 #ifdef BENCHMARK

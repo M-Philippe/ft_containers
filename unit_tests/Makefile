@@ -6,7 +6,7 @@
 #    By: philippe <philippe@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 02:26:02 by pminne            #+#    #+#              #
-#    Updated: 2021/07/21 01:18:04 by philippe         ###   ########lyon.fr    #
+#    Updated: 2021/07/21 15:57:51 by philippe         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ OBJS	=	$(SRCS:.cpp=.o)
 
 EXEC	=	tests
 
-INSTRUCTIONS = "Compilation done, run ./unit_tests$'\n\
+INSTRUCTIONS = "Compilation done, run ./$(EXEC)$'\n\
 				-l to list all availaible tests$'\n\
 				-t to list all availaible tags$'\n\
 				-n to select a specific suite name$'\n\
 				-d <yes> to show test duration$'\n\
-				-benchmark-no-analysis"
+				-benchmark-no-analysis$'\n"
 
 all:	$(EXEC)
 

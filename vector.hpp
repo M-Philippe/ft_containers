@@ -79,6 +79,7 @@ namespace ft
       if (n < _size)
         while (_size > n)
           _alloc.destroy(_array + _size--);
+      (void)val;
     }
 
     size_type capacity() const {
