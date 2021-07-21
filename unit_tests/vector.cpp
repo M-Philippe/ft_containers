@@ -154,6 +154,12 @@ TEST_CASE("Tests front / back", "[ft_vector]") {
   REQUIRE(ft_vector.back() == -15);
 }
 
+TEST_CASE("Tests clear", "[ft_vector]") {
+  ft::vector<int> ft_vector(10, 8);
+  ft_vector.clear();
+  REQUIRE(ft_vector.size() == 0);
+}
+
 #ifdef BENCHMARK
 TEST_CASE("BENCHMARK", "[ft_vector]") {
   ft::vector<int> ft_vector(10, 8);

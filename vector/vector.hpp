@@ -64,7 +64,6 @@ namespace ft
         _alloc.deallocate(_array, _size);
         _capacity = rhs._size;
         _array = _alloc.allocate(_capacity);
-        _size = 0;
         while (_size < rhs._size) {
           _alloc.construct(_array + _size, rhs._array[_size]);
           _size++;
@@ -177,18 +176,19 @@ namespace ft
       }
     }
 
+    void clear() {
+      if (_size == 0)
+        return;
+      for (size_type i  = 0; i < _size; ++i)
+        _alloc.destroy(_array + i);
+      _size = 0;
+    }
+
     /*
     **      ALLOCATOR
     */
 
     allocator_type get_allocator() const { return (_alloc); }
-
-  private:
-
-    void clear() {
-      for (size_type i = 0; i < _size; ++i)
-        _alloc.destroy(_array + i);
-    }
     
   }; // class vector
 
