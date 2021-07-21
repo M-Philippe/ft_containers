@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../vector.hpp"
+#include "../vector/vector.hpp"
 #include <iostream>
 #include <vector>
 
