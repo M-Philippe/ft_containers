@@ -11,6 +11,19 @@ TEST_CASE("simple creation", "[ft_vector]") {
   REQUIRE(vct.max_size() == std_vct.max_size());
 }
 
+TEST_CASE("Tests operator =", "[ft_vector]") {
+  ft::vector<int> ft_vector(10, 8);
+  ft::vector<int> st_vector(3, 4);
+
+  ft_vector = st_vector;
+  ft::vector<int>::iterator ft_it = ft_vector.begin();
+  ft::vector<int>::iterator st_it = ft_vector.begin();
+  while (ft_it != ft_vector.end()) {
+    std::cout << *ft_it << " | " << *st_it << std::endl;
+    REQUIRE(*ft_it++ == *st_it++);
+  }
+}
+
 TEST_CASE("test that ft_vector grows like st_vector", "[ft_vector]") {
   // Default constructor
   {

@@ -48,7 +48,19 @@ namespace ft
     }
 
     ~vector() {
+      for (size_type i = 0; i < _size; ++i)
+        _alloc.destroy(_array + i);
       _alloc.deallocate(_array, _capacity);
+    }
+
+    vector& operator= (const vector& x) {
+      clear();
+      if (_capacity >= x._size) {
+        for (size_type i = 0; i < x._size; ++i)
+          _alloc.construct(_array + i, x._array[i]);
+        _size = x._size;
+      }
+      return (*this);
     }
 
     /*
@@ -108,6 +120,13 @@ namespace ft
         return (false);
     }
 
+    /*void reserve (size_type n) {
+      // Throw exception if n > max_size
+      if (n > _capacity) {
+
+      }
+    }*/
+
     /*
     **      ELEMENT ACCESS
     */
@@ -156,6 +175,14 @@ namespace ft
     allocator_type get_allocator() const {
       return (_alloc);
     }
+
+  private:
+
+    void clear() {
+      for (size_type i = 0; i < _size; ++i)
+        _alloc.destroy(_array + i);
+    }
+    
   }; // class vector
 
 } // namespace ft
