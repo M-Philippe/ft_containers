@@ -6,6 +6,9 @@
 TEST_CASE("simple creation", "[ft_vector]") {
   ft::vector<int> vct(10, 5);
   REQUIRE(vct.size() == 10);
+
+  std::vector<int> std_vct(10, 5);
+  REQUIRE(vct.max_size() == std_vct.max_size());
 }
 
 TEST_CASE("test that ft_vector grows like st_vector", "[ft_vector]") {
@@ -77,6 +80,40 @@ TEST_CASE("Tests vector::resize()", "[ft_vector]") {
     ft::vector<int>::iterator second_it = ft_vector.begin();
     while (second_it != ft_vector.end())
       REQUIRE(first_it++.operator==(second_it++) == true);
+  }
+
+  SECTION("Test resize (n > _size && n < _capacity)") {
+    // To increase _capacity from 10 to 20
+    ft_vector.push_back(1);
+    st_vector.push_back(1);
+    ft_vector.resize(15);
+    st_vector.resize(15);
+    
+    REQUIRE(ft_vector.size() == st_vector.size());
+    REQUIRE(ft_vector.capacity() == st_vector.capacity());
+    ft::vector<int>::iterator ft_it = ft_vector.begin();
+    std::vector<int>::iterator st_it = st_vector.begin();
+    REQUIRE(*(ft_it + 12) == *(st_it + 12));
+  }
+
+  SECTION("Test resize (n > _size && n > _capacity)") {
+    // To increase _capacity from 10 to 20
+    ft_vector.push_back(1);
+    st_vector.push_back(1);
+    ft_vector.resize(22);
+    st_vector.resize(22);
+    
+    REQUIRE(ft_vector.size() == st_vector.size());
+    REQUIRE(ft_vector.capacity() == st_vector.capacity());
+    ft::vector<int>::iterator ft_it = ft_vector.begin();
+    std::vector<int>::iterator st_it = st_vector.begin();
+    REQUIRE(*(ft_it + 12) == *(st_it + 12));
+
+    for (int i = 0; i < 20; ++i) {
+      ft_vector.push_back(i);
+      st_vector.push_back(i);
+      REQUIRE(ft_vector.capacity() == st_vector.capacity());
+    }
   }
 }
 

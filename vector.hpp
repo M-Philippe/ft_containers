@@ -74,12 +74,28 @@ namespace ft
       return (_size);
     }
 
+    size_type max_size() const {
+      return (_alloc.max_size());
+    }
+    
     /*  When vector is reduced, iterator must still be valid */
     void  resize(size_type n, value_type val = value_type()) {
       if (n < _size)
         while (_size > n)
           _alloc.destroy(_array + _size--);
-      (void)val;
+      if (n > _size && n < _capacity)
+        while (_size < n)
+          _alloc.construct(_array + _size++, val);
+      if (n > _size && n > _capacity) {
+        T* _old_array = _array;
+        _capacity = n;
+        _array = _alloc.allocate(_capacity);
+        for (size_type i = 0; i < _size; ++i)
+          _alloc.construct(_array + i, *(_old_array + i));
+        _alloc.deallocate(_old_array, _size);
+        while (_size < n)
+          _alloc.construct(_array + _size++, val);
+      }
     }
 
     size_type capacity() const {
@@ -136,7 +152,7 @@ namespace ft
     allocator_type get_allocator() const {
       return (_alloc);
     }
-  };
+  }; // class vector
 
 } // namespace ft
 
