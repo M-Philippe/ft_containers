@@ -91,13 +91,9 @@ namespace ft
     **      CAPACITY
     */
 
-    size_type size() const {
-      return (_size);
-    }
+    size_type size() const { return (_size); }
 
-    size_type max_size() const {
-      return (_alloc.max_size());
-    }
+    size_type max_size() const { return (_alloc.max_size()); }
     
     void  resize(size_type n, value_type val = value_type()) {
       if (n < _size)
@@ -118,9 +114,7 @@ namespace ft
       }
     }
 
-    size_type capacity() const {
-      return (_capacity);
-    }
+    size_type capacity() const { return (_capacity); }
 
     bool empty() const {
       if (_size == 0)
@@ -140,9 +134,7 @@ namespace ft
     **      ELEMENT ACCESS
     */
 
-    reference operator[] (size_type n) {
-      return (_array[n]);
-    }
+    reference operator[] (size_type n) { return (_array[n]); }
     
     /* Must add check-bounds */
     reference at(size_type n) {
@@ -153,21 +145,13 @@ namespace ft
       return (_array[n]);
     }
 
-    reference front() {
-      return (_array[0]);
-    }
+    reference front() { return (_array[0]); }
 
-    const_reference front() const {
-      return (_array[0]);
-    }
+    const_reference front() const { return (_array[0]); }
 
-    reference back() {
-      return (_array[_size - 1]);
-    }
+    reference back() { return (_array[_size - 1]); }
 
-    const_reference back() const {
-      return (_array[_size - 1]);
-    }
+    const_reference back() const { return (_array[_size - 1]); }
 
     /*
     **      MODIFIERS
@@ -197,9 +181,7 @@ namespace ft
     **      ALLOCATOR
     */
 
-    allocator_type get_allocator() const {
-      return (_alloc);
-    }
+    allocator_type get_allocator() const { return (_alloc); }
 
   private:
 
