@@ -19,7 +19,6 @@ namespace ft
     typedef typename allocator_type::reference reference;
     typedef typename allocator_type::const_reference const_reference;
     
-    // tmp
     typedef vector_iterator<T> iterator;
 
     T *_array;
@@ -113,6 +112,11 @@ namespace ft
     **      ELEMENT ACCESS
     */
 
+    reference operator[] (size_type n) {
+      return (_array[n]);
+    }
+    
+    /* Must add check-bounds */
     reference at(size_type n) {
       return (_array[n]);
     }
@@ -139,8 +143,8 @@ namespace ft
         _capacity == 0 ? _capacity = 1 : _capacity *= 2;
         _array = _alloc.allocate(_capacity);
         for (size_type i = 0; i < _size; ++i)
-          _array[i] = old_array[i];
-        _array[_size++] = val;
+          _alloc.construct(_array + i, old_array[i]);
+        _alloc.construct(_array + _size++, val);
         _alloc.deallocate(old_array, _size);
       }
     }

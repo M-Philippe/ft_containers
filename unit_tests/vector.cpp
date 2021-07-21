@@ -33,6 +33,7 @@ TEST_CASE("test that ft_vector grows like st_vector", "[ft_vector]") {
     for (std::size_t i = 0; i < 1000000; ++i) {
       ft_vector.push_back(i);
       st_vector.push_back(i);
+      REQUIRE(ft_vector[ft_vector.size() - 1] == st_vector[st_vector.size() - 1]);
       REQUIRE(ft_vector.capacity() == st_vector.capacity());
       REQUIRE(ft_vector.size() == st_vector.size());
     }
