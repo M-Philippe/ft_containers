@@ -176,6 +176,8 @@ namespace ft
       }
     }
 
+    void pop_back() { _alloc.destroy(&_array[--_size]); }
+
     void clear() {
       if (_size == 0)
         return;

@@ -154,6 +154,21 @@ TEST_CASE("Tests front / back", "[ft_vector]") {
   REQUIRE(ft_vector.back() == -15);
 }
 
+TEST_CASE("Tests pop_back", "[ft_vector]") {
+  ft::vector<int> ft_vector;
+  int sum  = 0;
+  ft_vector.push_back (100);
+  ft_vector.push_back (200);
+  ft_vector.push_back (300);
+
+  while (!ft_vector.empty())
+  {
+    sum += ft_vector.back();
+    ft_vector.pop_back();
+  }
+  REQUIRE(sum == 600);
+}
+
 TEST_CASE("Tests clear", "[ft_vector]") {
   ft::vector<int> ft_vector(10, 8);
   ft_vector.clear();
