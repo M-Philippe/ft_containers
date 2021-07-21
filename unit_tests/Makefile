@@ -6,7 +6,7 @@
 #    By: philippe <philippe@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/23 02:26:02 by pminne            #+#    #+#              #
-#    Updated: 2021/07/20 21:32:02 by philippe         ###   ########lyon.fr    #
+#    Updated: 2021/07/21 01:18:04 by philippe         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CPP	=	clang++
 
 CFLAGS	=	-Wall -Wextra -fsanitize=address -g3
 
-SRCS	=	main.cpp\
+SRCS	=	unit_tests.cpp\
 			vector.cpp\
 
 OBJS	=	$(SRCS:.cpp=.o)

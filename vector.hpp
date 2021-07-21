@@ -57,12 +57,12 @@ namespace ft
     */
 
    iterator begin() {
-     iterator begin(&_array[0]);
+     iterator begin(_array, 0);
      return (begin);
    }
 
    iterator end() {
-     iterator end(NULL, _size);
+     iterator end(_array, _size);
      return (end);
    }
 

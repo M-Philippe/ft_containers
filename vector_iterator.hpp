@@ -1,6 +1,9 @@
 #ifndef VECTOR_ITERATOR_HPP
 # define VECTOR_ITERATOR_HPP
 
+// tmp
+#include <unistd.h>
+
 namespace ft {
 
     /*  Iterator  */
@@ -13,16 +16,18 @@ namespace ft {
       
       private:
         value_type*    _link;
-        u_int _position;
 
       public:
-        vector_iterator(value_type* link, u_int pos = 0) {
-          _link = link;
-          _position = pos;
+        vector_iterator(value_type* link, u_int pos) {
+          _link = link + pos;
         }
 
         bool operator==(const vector_iterator& second) {
           return (_link == second._link);
+        }
+
+        bool operator!=(const vector_iterator& second) {
+          return ( !(*this == second));
         }
 
         value_type& operator*() {
@@ -31,7 +36,6 @@ namespace ft {
 
         vector_iterator& operator++() {
           _link++;
-          _position++;
           return (*this);
         }
 
@@ -43,7 +47,6 @@ namespace ft {
 
         vector_iterator& operator--() {
           _link--;
-          _position--;
           return (*this);
         }
 
