@@ -53,12 +53,22 @@ namespace ft
       _alloc.deallocate(_array, _capacity);
     }
 
-    vector& operator= (const vector& x) {
+    vector& operator= (const vector& rhs) {
       clear();
-      if (_capacity >= x._size) {
-        for (size_type i = 0; i < x._size; ++i)
-          _alloc.construct(_array + i, x._array[i]);
-        _size = x._size;
+      if (_capacity >= rhs._size) {
+        for (size_type i = 0; i < rhs._size; ++i)
+          _alloc.construct(_array + i, rhs._array[i]);
+        _size = rhs._size;
+      }
+      else if (_capacity < rhs._size) {
+        _alloc.deallocate(_array, _size);
+        _capacity = rhs._size;
+        _array = _alloc.allocate(_capacity);
+        _size = 0;
+        while (_size < rhs._size) {
+          _alloc.construct(_array + _size, rhs._array[_size]);
+          _size++;
+        }
       }
       return (*this);
     }
