@@ -99,7 +99,6 @@ namespace ft
       return (_alloc.max_size());
     }
     
-    /*  When vector is reduced, iterator must still be valid */
     void  resize(size_type n, value_type val = value_type()) {
       if (n < _size)
         while (_size > n)
@@ -152,6 +151,22 @@ namespace ft
 
     const_reference at(size_type n) const {
       return (_array[n]);
+    }
+
+    reference front() {
+      return (_array[0]);
+    }
+
+    const_reference front() const {
+      return (_array[0]);
+    }
+
+    reference back() {
+      return (_array[_size - 1]);
+    }
+
+    const_reference back() const {
+      return (_array[_size - 1]);
     }
 
     /*

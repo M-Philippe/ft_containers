@@ -142,6 +142,18 @@ TEST_CASE("Tests vector::resize()", "[ft_vector]") {
   }
 }
 
+TEST_CASE("Tests front / back", "[ft_vector]") {
+  ft::vector<int> ft_vector;
+  ft_vector.push_back(15);
+  ft_vector.push_back(40);
+  ft_vector.push_back(1);
+
+  ft_vector.front() += ft_vector.back();
+  REQUIRE(ft_vector.front() == 16);
+  ft_vector.back() -= ft_vector.front();
+  REQUIRE(ft_vector.back() == -15);
+}
+
 #ifdef BENCHMARK
 TEST_CASE("BENCHMARK", "[ft_vector]") {
   ft::vector<int> ft_vector(10, 8);
