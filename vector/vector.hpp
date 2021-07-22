@@ -21,6 +21,8 @@ namespace ft
     
     typedef vector_iterator<T> iterator;
 
+  private:
+    
     T *_array;
     size_type _size;
     size_type _capacity;
@@ -120,6 +122,21 @@ namespace ft
         return (true);
       else
         return (false);
+    }
+
+    // TO-DO: return exception length_error if n > vector::max_size
+    void reserve (size_type n) {
+      if (n > _capacity) {
+        _capacity = n;
+        T*  new_array = _alloc.allocate(_capacity);
+        size_type tmp_size = _size;
+        for (size_type i = 0; i < _size; ++i)
+          _alloc.construct(new_array + i, *(_array + i));
+        clear();
+        _size = tmp_size;
+        _alloc.deallocate(_array, _size);
+        _array = new_array;
+      }
     }
 
     /*void reserve (size_type n) {

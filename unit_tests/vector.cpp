@@ -175,6 +175,32 @@ TEST_CASE("Tests clear", "[ft_vector]") {
   REQUIRE(ft_vector.size() == 0);
 }
 
+TEST_CASE("Tests reserve", "[ft_vector]") {
+  ft::vector<int> ft_vector(10, 8);
+  std::vector<int> st_vector(10, 8);
+
+  SECTION("n < _capacity") {
+    ft_vector.reserve(5);
+    st_vector.reserve(5);
+    REQUIRE(ft_vector.size() == st_vector.size());
+    REQUIRE(ft_vector.capacity() == st_vector.capacity());
+  }
+  
+  SECTION("n == _capacity") {
+    ft_vector.reserve(10);
+    st_vector.reserve(10);
+    REQUIRE(ft_vector.size() == st_vector.size());
+    REQUIRE(ft_vector.capacity() == st_vector.capacity());
+  }
+  
+  SECTION("n > _capacity") {
+    ft_vector.reserve(15);
+    st_vector.reserve(15);
+    REQUIRE(ft_vector.size() == st_vector.size());
+    REQUIRE(ft_vector.capacity() == st_vector.capacity());
+  }
+}
+
 #ifdef BENCHMARK
 TEST_CASE("BENCHMARK", "[ft_vector]") {
   ft::vector<int> ft_vector(10, 8);
