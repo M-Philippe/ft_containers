@@ -7,29 +7,34 @@
 
 namespace ft
 {
+  class length_error : public std::exception {
+    public:
+      const char* what() const throw() { return("vector::reserve"); };
+  };
+
   template <class T, class Alloc = std::allocator<T> >
   class vector
   {
 
   public:
-    
+
     typedef T value_type;
     typedef size_t size_type;
     typedef Alloc allocator_type;
     typedef typename allocator_type::reference reference;
     typedef typename allocator_type::const_reference const_reference;
-    
+
     typedef vector_iterator<T> iterator;
 
   private:
-    
+
     T *_array;
     size_type _size;
     size_type _capacity;
     allocator_type _alloc;
 
   public:
-    
+
     /*
     **      CONSTRUCTORS
     */
@@ -95,7 +100,7 @@ namespace ft
     size_type size() const { return (_size); }
 
     size_type max_size() const { return (_alloc.max_size()); }
-    
+
     void  resize(size_type n, value_type val = value_type()) {
       if (n < _size)
         while (_size > n)
@@ -124,9 +129,10 @@ namespace ft
         return (false);
     }
 
-    // TO-DO: return exception length_error if n > vector::max_size
     void reserve (size_type n) {
-      if (n > _capacity) {
+      if (n > max_size())
+        throw (length_error());
+      else if (n > _capacity) {
         _capacity = n;
         T*  new_array = _alloc.allocate(_capacity);
         size_type tmp_size = _size;
@@ -151,7 +157,7 @@ namespace ft
     */
 
     reference operator[] (size_type n) { return (_array[n]); }
-    
+
     /* Must add check-bounds */
     reference at(size_type n) {
       return (_array[n]);
@@ -208,7 +214,7 @@ namespace ft
     */
 
     allocator_type get_allocator() const { return (_alloc); }
-    
+
   }; // class vector
 
 } // namespace ft

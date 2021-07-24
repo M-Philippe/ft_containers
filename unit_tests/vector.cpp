@@ -100,7 +100,7 @@ TEST_CASE("Tests vector::resize()", "[ft_vector]") {
 
     REQUIRE(ft_vector.size() == st_vector.size());
     REQUIRE(ft_vector.capacity() == st_vector.capacity());
-  
+
     /*  Iterator still must be valid after resize */
     ft::vector<int>::iterator second_it = ft_vector.begin();
     while (second_it != ft_vector.end())
@@ -113,7 +113,7 @@ TEST_CASE("Tests vector::resize()", "[ft_vector]") {
     st_vector.push_back(1);
     ft_vector.resize(15);
     st_vector.resize(15);
-    
+
     REQUIRE(ft_vector.size() == st_vector.size());
     REQUIRE(ft_vector.capacity() == st_vector.capacity());
     ft::vector<int>::iterator ft_it = ft_vector.begin();
@@ -127,7 +127,7 @@ TEST_CASE("Tests vector::resize()", "[ft_vector]") {
     st_vector.push_back(1);
     ft_vector.resize(22);
     st_vector.resize(22);
-    
+
     REQUIRE(ft_vector.size() == st_vector.size());
     REQUIRE(ft_vector.capacity() == st_vector.capacity());
     ft::vector<int>::iterator ft_it = ft_vector.begin();
@@ -185,19 +185,27 @@ TEST_CASE("Tests reserve", "[ft_vector]") {
     REQUIRE(ft_vector.size() == st_vector.size());
     REQUIRE(ft_vector.capacity() == st_vector.capacity());
   }
-  
+
   SECTION("n == _capacity") {
     ft_vector.reserve(10);
     st_vector.reserve(10);
     REQUIRE(ft_vector.size() == st_vector.size());
     REQUIRE(ft_vector.capacity() == st_vector.capacity());
   }
-  
+
   SECTION("n > _capacity") {
     ft_vector.reserve(15);
     st_vector.reserve(15);
     REQUIRE(ft_vector.size() == st_vector.size());
     REQUIRE(ft_vector.capacity() == st_vector.capacity());
+  }
+
+  SECTION("Test exception throw") {
+    ft::vector<int>::size_type ft_max = ft_vector.max_size();
+    std::vector<int>::size_type st_max = st_vector.max_size();
+
+    REQUIRE_THROWS(ft_vector.reserve(ft_max + 15));
+    REQUIRE_THROWS(st_vector.reserve(st_max + 15));
   }
 }
 
