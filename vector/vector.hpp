@@ -1,21 +1,15 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-#include <cstdio>
 #include <iostream>
+#include "vector_exceptions.hpp"
 #include "vector_iterator.hpp"
 
 namespace ft
 {
-  class length_error : public std::exception {
-    public:
-      const char* what() const throw() { return("vector::reserve"); };
-  };
-
   template <class T, class Alloc = std::allocator<T> >
   class vector
   {
-
   public:
 
     typedef T value_type;
@@ -145,25 +139,21 @@ namespace ft
       }
     }
 
-    /*void reserve (size_type n) {
-      // Throw exception if n > max_size
-      if (n > _capacity) {
-
-      }
-    }*/
-
     /*
     **      ELEMENT ACCESS
     */
 
     reference operator[] (size_type n) { return (_array[n]); }
 
-    /* Must add check-bounds */
     reference at(size_type n) {
+      if (n >= _size)
+        throw (out_of_range(_size, n));
       return (_array[n]);
     }
 
     const_reference at(size_type n) const {
+      if (n >= _size)
+        throw (out_of_range(_size, n));
       return (_array[n]);
     }
 

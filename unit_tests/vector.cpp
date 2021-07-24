@@ -142,6 +142,18 @@ TEST_CASE("Tests vector::resize()", "[ft_vector]") {
   }
 }
 
+TEST_CASE("Tests at()", "[ft_vector]") {
+  ft::vector<int> ft_vector(10, 8);
+  std::vector<int> st_vector(10, 8);
+
+  ft_vector.push_back(100);
+  st_vector.push_back(100);
+  REQUIRE(ft_vector.at(10) == 100);
+  REQUIRE(st_vector.at(10) == 100);
+  REQUIRE_THROWS(ft_vector.at(11));
+  REQUIRE_THROWS(st_vector.at(11));
+}
+
 TEST_CASE("Tests front / back", "[ft_vector]") {
   ft::vector<int> ft_vector;
   ft_vector.push_back(15);
