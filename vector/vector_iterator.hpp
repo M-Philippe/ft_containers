@@ -1,61 +1,56 @@
 #ifndef VECTOR_ITERATOR_HPP
 # define VECTOR_ITERATOR_HPP
 
-// tmp
-#include <unistd.h>
-
 namespace ft {
 
-    /*  Iterator  */
-    typedef unsigned int u_int;
-    
-    template <typename T>
-    class vector_iterator {
-      public:
-        typedef T value_type;
-      
-      private:
-        value_type*    _link;
+  template <typename T>
+  class vector_iterator {
 
-      public:
-        vector_iterator(value_type* link, u_int pos) {
-          _link = link + pos;
-        }
+    public:
+      typedef T value_type;
 
-        bool operator==(const vector_iterator& second) {
-          return (_link == second._link);
-        }
+    private:
+      value_type*    _link;
 
-        bool operator!=(const vector_iterator& second) {
-          return ( !(*this == second));
-        }
+    public:
+      vector_iterator(value_type* link, size_t pos) {
+        _link = link + pos;
+      }
 
-        value_type& operator*() {
-          return (*_link);
-        }
+      bool operator==(const vector_iterator& second) {
+        return (_link == second._link);
+      }
 
-        vector_iterator& operator++() {
-          _link++;
-          return (*this);
-        }
+      bool operator!=(const vector_iterator& second) {
+        return ( !(*this == second));
+      }
 
-        vector_iterator operator++(int) {
-          vector_iterator it(*this);
-          ++(*this);
-          return (it);
-        }
+      value_type& operator*() {
+        return (*_link);
+      }
 
-        vector_iterator& operator--() {
-          _link--;
-          return (*this);
-        }
+      vector_iterator& operator++() {
+        _link++;
+        return (*this);
+      }
 
-        vector_iterator operator+(int rhs) {
-          _link += rhs;
-          return (*this);
-        }
+      vector_iterator operator++(int) {
+        vector_iterator it(*this);
+        ++(*this);
+        return (it);
+      }
 
-      }; // class iterator
+      vector_iterator& operator--() {
+        _link--;
+        return (*this);
+      }
+
+      vector_iterator operator+(int rhs) {
+        _link += rhs;
+        return (*this);
+      }
+
+    }; // class iterator
 
 }; // namespace ft
 
