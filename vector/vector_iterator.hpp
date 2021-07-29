@@ -4,53 +4,76 @@
 namespace ft {
 
   template <typename T>
-  class vector_iterator {
+  class const_iterator {
 
     public:
-      typedef T value_type;
+      typedef const T value_type;
 
-    private:
-      value_type*    _link;
+    protected:
+      const T*    _link;
 
     public:
-      vector_iterator(value_type* link, size_t pos) {
+      const_iterator() {
+        _link = NULL;
+      };
+
+      const_iterator(value_type* link, size_t pos) {
         _link = link + pos;
       }
 
-      bool operator==(const vector_iterator& second) {
+      ~const_iterator() {};
+
+      bool operator==(const const_iterator& second) {
         return (_link == second._link);
       }
 
-      bool operator!=(const vector_iterator& second) {
+      bool operator!=(const const_iterator& second) {
         return ( !(*this == second));
       }
 
-      value_type& operator*() {
+      virtual value_type& operator*() {
         return (*_link);
       }
 
-      vector_iterator& operator++() {
+      const_iterator& operator++() {
         _link++;
         return (*this);
       }
 
-      vector_iterator operator++(int) {
-        vector_iterator it(*this);
+      const_iterator operator++(int) {
+        const_iterator it(*this);
         ++(*this);
         return (it);
       }
 
-      vector_iterator& operator--() {
+      const_iterator& operator--() {
         _link--;
         return (*this);
       }
 
-      vector_iterator operator+(int rhs) {
+      const_iterator operator+(int rhs) {
         _link += rhs;
         return (*this);
       }
 
-    }; // class iterator
+    }; // class const_iterator
+
+  template <typename T>
+  class vector_iterator : public const_iterator<T> {
+    public:
+      typedef T value_type;
+
+      vector_iterator(value_type* link, size_t pos) {
+        this->_link = link + pos;
+      }
+
+      ~vector_iterator() {};
+
+      value_type& operator*() {
+        return (*(const_cast<T*>(this->_link)));
+      }
+
+  }; // class iterator
 
 }; // namespace ft
 

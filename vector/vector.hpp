@@ -19,6 +19,7 @@ namespace ft
     typedef typename allocator_type::const_reference const_reference;
 
     typedef vector_iterator<T> iterator;
+    typedef const_iterator<T> const_iterator;
 
   private:
 
