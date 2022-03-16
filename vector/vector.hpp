@@ -190,7 +190,10 @@ namespace ft
       }
     }
 
-    void pop_back() { _alloc.destroy(&_array[--_size]); }
+    void pop_back() {
+      if (_size > 0)
+        _alloc.destroy(&_array[--_size]);
+    }
 
     void clear() {
       if (_size == 0)

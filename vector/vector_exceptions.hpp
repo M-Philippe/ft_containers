@@ -8,7 +8,7 @@ namespace ft {
 
   class length_error : public std::exception {
     public:
-      const char* what() const throw() { return("vector::reserve"); }
+      const char* what() const throw() { return("ft::bad_alloc"); }
   };
 
   class out_of_range : public std::exception
