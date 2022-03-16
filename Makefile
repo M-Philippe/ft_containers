@@ -12,41 +12,41 @@
 
 CPP	=	clang++
 
-CFLAGS	=	-Wall -Wextra -fsanitize=address -g3
+FT_FLAGS	=	-Wall -Wextra -g3
+STD_FLAGS = -Wall -Wextra -g3 -DSTD_TEST
 
-SRCS	=	unit_tests.cpp\
-			vector.cpp\
+SRCS	=	src/main.cpp\
+				src/vector/vector_test.cpp\
 
-OBJS	=	$(SRCS:.cpp=.o)
+FT_OBJS	=	$(SRCS:%.cpp=ft_objs/%.o)
+STD_OBJS = $(SRCS:%.cpp=std_objs/%.o)
 
-EXEC	=	tests
+EXEC_FT	=	ft_test
+EXEC_STD = std_test
 
-INSTRUCTIONS = "Compilation done, run ./$(EXEC)$'\n\
-				-l to list all availaible tests$'\n\
-				-t to list all availaible tags$'\n\
-				-n to select a specific suite name$'\n\
-				-d <yes> to show test duration$'\n\
-				-benchmark-no-analysis$'\n"
+all:	$(EXEC_FT) $(EXEC_STD)
 
-all:	$(EXEC)
+$(EXEC_FT):	$(FT_OBJS)
+	@$(CPP) -o $@ $^ $(FT_FLAGS)
 
-$(EXEC):	$(OBJS)
-	@$(CPP) -o $@ $^ $(CFLAGS)
-	@echo $(INSTRUCTIONS)
-	@echo "make instructions for a reminder of those instructions"
+$(EXEC_STD):	$(STD_OBJS)
+	@$(CPP) -o $@ $^ $(STD_FLAGS)
 
-%.o:	%.cpp
-	@$(CPP) -o $@ -c $< $(CFLAGS) 
+ft_objs/%.o:	%.cpp
+	mkdir -p $(@D)
+	@$(CPP) -o $@ -c $< $(FT_FLAGS)
+
+std_objs/%.o: %.cpp
+	mkdir -p $(@D)
+	@$(CPP) -o $@ -c $< $(STD_FLAGS)
 
 fclean	:	clean
-	@rm -rf $(EXEC)
+	@rm -rf $(EXEC_FT) $(EXEC_STD)
 
 clean	:
-	@rm -rf $(OBJS)
+	@rm -rf ft_objs
+	@rm -rf std_objs
 
 re:		fclean all
-
-instructions:
-	@echo $(INSTRUCTIONS)
 
 .PHONY: all fclean clean re instructions

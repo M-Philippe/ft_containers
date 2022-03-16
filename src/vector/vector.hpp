@@ -4,6 +4,7 @@
 #include <iostream>
 #include "vector_exceptions.hpp"
 #include "vector_iterator.hpp"
+#include "../utils/utils.hpp"
 
 namespace ft
 {
@@ -193,6 +194,13 @@ namespace ft
     void pop_back() {
       if (_size > 0)
         _alloc.destroy(&_array[--_size]);
+    }
+
+    void swap (vector& x) {
+      ft::swap(_size, x._size);
+      ft::swap(_capacity, x._capacity);
+      ft::swap(_array, x._array);
+      ft::swap(_alloc, x._alloc);
     }
 
     void clear() {

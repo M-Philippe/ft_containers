@@ -1,12 +1,13 @@
 #include <ctime>
-#include "./vector/vector.hpp"
+#include "./vector.hpp"
 #include <vector>
 #include <string.h>
 
-enum Color {
-	RED = 31,
-	//"\033["
-};
+#define NAMESPACE ft
+#ifdef STD_TEST
+	#undef NAMESPACE
+	#define NAMESPACE std
+#endif
 
 void	printOk() {
 	std::cout << "\033[0;32m" << "V" << "\033[0;37m";
@@ -72,14 +73,99 @@ void	vectorExpansion() {
 	std::cout << "\n\t===" << std::endl;
 }
 
+void	vectorOperatorEqual() {
+	std::cout << "Vector operator=" << std::endl;
+	{
+		std::cout << "_capacity >= rhs.size" << std::endl;
+    ft::vector<int> ft_vector(3, 8);
+    ft::vector<int> st_vector(3, 4);
+
+    ft_vector = st_vector;
+    ft::vector<int>::iterator ft_it = ft_vector.begin();
+    ft::vector<int>::iterator st_it = st_vector.begin();
+    while (ft_it != ft_vector.end()) {
+			*ft_it == *st_it ? printOk() : printError("\n*ft_it != *st_it");
+			ft_it++;
+			st_it++;
+		}
+  }
+  {
+    std::cout << "\n_capacity < rhs.size" << std::endl;
+		ft::vector<int> ft_vector(3, 8);
+    ft::vector<int> st_vector(10, 4);
+
+    ft_vector = st_vector;
+    ft::vector<int>::iterator ft_it = ft_vector.begin();
+    ft::vector<int>::iterator st_it = st_vector.begin();
+    while (st_it != st_vector.end()) {
+			*ft_it == *st_it ? printOk() : printError("\n*ft_it != *st_it");
+			ft_it++;
+			st_it++;
+		}
+  }
+	std::cout << "\n\t===" << std::endl;
+}
+
+void	vectorIterator() {
+	std::cout << "VectorIterator" << std::endl;
+	ft::vector<int> ft_vector(10, 8);
+  std::vector<int> st_vector(10, 8);
+  ft::vector<int>::iterator ft_it = ft_vector.begin();
+  std::vector<int>::iterator st_it = st_vector.begin();
+
+  {
+    std::cout << "Test that iteration is good" << std::endl;
+		int i = 0;
+    while (st_it != st_vector.end()) {
+      (*ft_it == *st_it) ? printOk() : printError("\n*ft_it != *st_it");
+      ++i;
+      ++st_it;
+    }
+  }
+  {
+    std::cout << "\nTest that iteration stops at it.end()" << std::endl;
+		int i = 0;
+    while (ft_it++ != ft_vector.end()) {
+      ++i;
+    }
+		i == 10 ? printOk() : printError("\ni != 10");
+  }
+	{
+		std::cout << "\nOn an empty vector" << std::endl;
+		ft::vector<int> ft_empty_vector;
+		std::vector<int> st_empty_vector;
+		ft::vector<int>::iterator ft_it = ft_empty_vector.begin();
+		std::vector<int>::iterator st_it = st_empty_vector.begin();
+		int i = 0;
+		while (ft_it != ft_empty_vector.end()) {
+      (*ft_it == *st_it) ? printOk() : printError("\n*ft_it != *st_it");
+		}
+		i == 0 ? printOk() : printError("\ni != 0");
+	}
+	std::cout << "\n\t===" << std::endl;
+}
+
 void	vectorResize() {
 	std::cout << "VectorExpansion" << std::endl;
 	ft::vector<int> ft_vector(10, 8);
   std::vector<int> st_vector(10, 8);
 
-  {
+	{
+		std::cout << "Size/max_size/capacity of empty vector" << std::endl;
+		ft::vector<int> ft_empty;
+		std::vector<int> st_empty;
+		ft_empty.size() == st_empty.size() ? printOk() : printError("\nft_vector.size() != st_vector.size()");
+    ft_empty.capacity() == st_empty.capacity() ? printOk() : printError("\nft_vector.capacity() != st_vector.capacity()");
+		ft_empty.max_size() == st_empty.max_size() ? printOk() : printError("\nft_empty.max_size() != st_mepty.max_size()");
+		ft_empty.empty() == st_empty.empty() ? printOk() : printError("\nft_empty.empty() != st_empty.empty()");
+	}
+	{
+		ft_vector.empty() == st_vector.empty() ? printOk() : printError("\nft_vector.empty() != st_vector.empty()");
+		ft_vector.max_size() == st_vector.max_size() ? printOk() : printError("\nft_vector.max_size() != st_vector.max_size()");
+	}
+	{
 		// resize (n < _size)
-		std::cout << "Resize (n < _size)" << std::endl;
+		std::cout << "\nResize (n < _size)" << std::endl;
     ft::vector<int>::iterator first_it = ft_vector.begin();
     ft_vector.resize(5);
     st_vector.resize(5);
@@ -137,16 +223,6 @@ void	vectorResize() {
 	std::cout << "\n\t===" << std::endl;
 }
 
-void	vectorClear() {
-	std::cout << "VectorClear" << std::endl;
-	ft::vector<int> ft_vector(10, 8);
-	std::vector<int> st_vector(10, 8);
-  ft_vector.clear();
-	st_vector.clear();
-  ft_vector.size() == st_vector.size() ? printOk() : printError("\nft_vector.size() != st_vector.size()");
-	std::cout << "\n\t===" << std::endl;
-}
-
 void	vectorReserve() {
 	std::cout << "VectorReserve" << std::endl;
 	ft::vector<int> ft_vector(10, 8);
@@ -201,6 +277,49 @@ void	vectorReserve() {
 	std::cout << "\n\t===" << std::endl;
 }
 
+void	vectorOperatorBrackets() {
+
+}
+
+void	vectorAt() {
+	std::cout << "VectorAt" << std::endl;
+	ft::vector<int> ft_vector(10, 8);
+  std::vector<int> st_vector(10, 8);
+
+  ft_vector.push_back(100);
+  st_vector.push_back(100);
+	ft_vector.at(10) == st_vector.at(10) ? printOk() : printError("\nft_vector.at(10) != st_vector.at(10)");
+	std::string ft_error;
+	std::string st_error;
+	try {
+		ft_vector.at(11);
+		printError("\nft_vector.at(11) should throw an error");
+	} catch (std::exception& e) {
+		printOk();
+		ft_error = e.what();
+	}
+	try {
+		st_vector.at(11);
+		printError("\nst_vector.at(11) should throw an error");
+	} catch (std::exception& e) {
+		printOk();
+		st_error = e.what();
+	}
+	st_error == ft_error ? printOk() : printError("\nMessage thrown by exception aren't the same");
+	{
+		std::cout << "\nOn empty vector" << std::endl;
+		ft::vector<int> ft_empty;
+		std::vector<int> st_empty;
+		// Throw an exception
+		//ft_empty.at(0) == st_empty.at(0) ? printOk() : printError("\nft_empty.at(0) != st_empty.at(0)");
+		st_vector.clear();
+		ft_vector.clear();
+		((st_vector.size() == 0) && (ft_vector.size() == 0)) ? printOk() : printError("\nft_vector.size() != st_empty.size()");
+	}
+	std::cout << "\n\t===" << std::endl;
+}
+
+
 void vectorFrontBack() {
 	std::cout << "VectorFrontBack" << std::endl;
 	ft::vector<int> ft_vector;
@@ -235,8 +354,8 @@ void vectorFrontBack() {
 	std::cout << "\n\t===" << std::endl;
 }
 
-void	vectorPopBack() {
-	std::cout << "VectorPopBack" << std::endl;
+void	vectorPushPopBack() {
+	std::cout << "VectorPushPopBack" << std::endl;
 	ft::vector<int> ft_vector;
 	std::vector<int> st_vector;
   int st_sum = 0;
@@ -264,86 +383,68 @@ void	vectorPopBack() {
 	std::cout << "\n\t===" << std::endl;
 }
 
-void	vectorAt() {
-	std::cout << "VectorAt" << std::endl;
-	ft::vector<int> ft_vector(10, 8);
-  std::vector<int> st_vector(10, 8);
+void	vectorSwap() {
+	std::cout << "VectorSwap" << std::endl;
 
-  ft_vector.push_back(100);
-  st_vector.push_back(100);
-	ft_vector.at(10) == st_vector.at(10) ? printOk() : printError("\nft_vector.at(10) != st_vector.at(10)");
-	std::string ft_error;
-	std::string st_error;
-	try {
-		ft_vector.at(11);
-		printError("\nft_vector.at(11) should throw an error");
-	} catch (std::exception& e) {
-		printOk();
-		ft_error = e.what();
-	}
-	try {
-		st_vector.at(11);
-		printError("\nst_vector.at(11) should throw an error");
-	} catch (std::exception& e) {
-		printOk();
-		st_error = e.what();
-	}
-	st_error == ft_error ? printOk() : printError("\nMessage thrown by exception aren't the same");
+	ft::vector<int> ft_vector(3, 100);
+	ft::vector<int> ft_vector2(5, 200);
+
+	for (u_long i = 0; i < ft_vector.size(); i++)
+		std::cout << ft_vector[i] << " ";
+	std::cout << std::endl;
+	for (u_long i = 0; i < ft_vector2.size(); i++)
+		std::cout << ft_vector2[i] << " ";
+	std::cout << std::endl;
+	std::cout << "After" << std::endl;
+	ft_vector.swap(ft_vector2);
+	for (u_long i = 0; i < ft_vector.size(); i++)
+		std::cout << ft_vector[i] << " ";
+	std::cout << std::endl;
+	for (u_long i = 0; i < ft_vector2.size(); i++)
+		std::cout << ft_vector2[i] << " ";
 	std::cout << "\n\t===" << std::endl;
 }
 
-void	vectorIterator() {
-	std::cout << "VectorIterator" << std::endl;
+void	vectorClear() {
+	std::cout << "VectorClear" << std::endl;
 	ft::vector<int> ft_vector(10, 8);
-  std::vector<int> st_vector(10, 8);
-  ft::vector<int>::iterator ft_it = ft_vector.begin();
-  std::vector<int>::iterator st_it = st_vector.begin();
+	std::vector<int> st_vector(10, 8);
+  ft_vector.clear();
+	st_vector.clear();
+  ft_vector.size() == st_vector.size() ? printOk() : printError("\nft_vector.size() != st_vector.size()");
+	std::cout << "\nOn empty Vector" << std::endl;
+	ft::vector<int> ft_empty;
+	std::vector<int> st_empty;
+	ft_empty.clear();
+	st_empty.clear();
+  ft_empty.size() == st_empty.size() ? printOk() : printError("\nft_empty.size() != st_empty.size()");
+	std::cout << "\n\t===" << std::endl;
+}
 
-  {
-    std::cout << "Test that iteration is good" << std::endl;
-		int i = 0;
-    while (st_it != st_vector.end()) {
-      (*ft_it == *st_it) ? printOk() : printError("\n*ft_it != *st_it");
-      ++i;
-      ++st_it;
-    }
-  }
-  {
-    std::cout << "\nTest that iteration stops at it.end()" << std::endl;
-		int i = 0;
-    while (ft_it++ != ft_vector.end()) {
-      ++i;
-    }
-		i == 10 ? printOk() : printError("\ni != 10");
-  }
-	{
-		std::cout << "\nOn an empty vector" << std::endl;
-		ft::vector<int> ft_empty_vector;
-		std::vector<int> st_empty_vector;
-		ft::vector<int>::iterator ft_it = ft_empty_vector.begin();
-		std::vector<int>::iterator st_it = st_empty_vector.begin();
-		int i = 0;
-		while (ft_it != ft_empty_vector.end()) {
-      (*ft_it == *st_it) ? printOk() : printError("\n*ft_it != *st_it");
-		}
-		i == 0 ? printOk() : printError("\ni != 0");
-	}
+void	vectorGetAllocator() {
+	std::cout << "VectorGetAllocator" << std::endl;
+	ft::vector<int> ft_vector(10, 8);
+	std::vector<int> st_vector(10, 8);
+	ft_vector.get_allocator() == st_vector.get_allocator() ? printOk() : printError("\nget_allocation !=");
 	std::cout << "\n\t===" << std::endl;
 }
 
 void	vector_test() {
 	simpleCreation();
 	vectorExpansion();
+	vectorOperatorEqual();
+	vectorIterator();
 	vectorResize();
 	vectorReserve();
-	vectorClear();
-	vectorPopBack();
-	vectorFrontBack();
+	vectorOperatorBrackets();
 	vectorAt();
-	vectorIterator();
-}
-
-
-int main() {
-	vector_test();
+	vectorFrontBack();
+	//vectorAssign();
+	vectorPushPopBack();
+	//vectorInsert();
+	//vectorErase();
+	vectorSwap();
+	vectorClear();
+	vectorGetAllocator();
+	NAMESPACE::vector<int> a;
 }

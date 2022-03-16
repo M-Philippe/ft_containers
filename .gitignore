@@ -32,4 +32,8 @@
 *.app
 .vscode
 
+*.txt
+ft_test
+std_test
+
 tests
