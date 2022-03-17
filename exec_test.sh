@@ -14,7 +14,7 @@ then
 	echo "$GREEN=== VectorTest OK :) ===$BLACK"
 else
 	echo "$RED=== VectorTest BAD :'( ===$BLACK"
-	echo "$(diff ft_results std_results)"
+	echo "$(diff ft_results.txt std_results.txt)"
 fi
 
 echo "$GREEN=== All tests done ===$BLACK"

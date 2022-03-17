@@ -19,12 +19,33 @@ void	printError(std::string message) {
 }
 
 void	simpleCreation() {
-	std::cout << "SimpleCreation" << std::endl;
+	/*std::cout << "SimpleCreation" << std::endl;
 	ft::vector<int> ft_vct(10, 5);
 	std::vector<int> st_vct(10, 5);
 	ft_vct.size() == st_vct.size() ? printOk() : printError("ft_vct.size != st_vct.size");
 	ft_vct.max_size() == st_vct.max_size() ? printOk() : printError("ft_vct.max_size != st_vct.max_size");
-	std::cout << "\n\t===" << std::endl;
+	std::cout << "\n\t===" << std::endl;*/
+	/*std::cout << "RangeConstructor" << std::endl;
+	NAMESPACE::vector<int> vector(18, 5);
+	for (u_long i = 0; i < vector.size(); i++)
+		std::cout << vector[i] << " ";
+	std::cout << std::endl;
+	NAMESPACE::vector<int> vectorIterator(vector.begin(), vector.end());
+	for (u_long i = 0; i < vectorIterator.size(); i++)
+		std::cout << vectorIterator[i] << " ";*/
+	NAMESPACE::vector<int> a(5, 10);
+	NAMESPACE::vector<int> b(a);
+	for (u_long i = 0; i < a.size(); i++) {
+		if (a[i] != b[i])
+			printError("False");
+	}
+	a.clear();
+	for (u_long i = 0; i < a.size(); i++) {
+		std::cout << b[i] << std::endl;
+	}
+	NAMESPACE::vector<int> empty;
+	NAMESPACE::vector<int> empty_copy(empty);
+	std::cout << "\n===" << std::endl;
 }
 
 void	vectorExpansion() {
@@ -432,7 +453,7 @@ void	vectorGetAllocator() {
 
 void	vector_test() {
 	simpleCreation();
-	vectorExpansion();
+	/*vectorExpansion();
 	vectorOperatorEqual();
 	vectorIterator();
 	vectorResize();
@@ -446,6 +467,5 @@ void	vector_test() {
 	//vectorErase();
 	vectorSwap();
 	vectorClear();
-	vectorGetAllocator();
-	NAMESPACE::vector<int> a;
+	vectorGetAllocator();*/
 }

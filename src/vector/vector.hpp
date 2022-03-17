@@ -50,10 +50,37 @@ namespace ft
         _alloc.construct(_array + _size, val);
     }
 
+    template <class InputIterator>
+    vector (InputIterator first,
+            InputIterator last,
+            const allocator_type& alloc = allocator_type(),
+            typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : _alloc(alloc) {
+      InputIterator tmp = first;
+      u_long count = 0;
+      while (tmp++ != last) {
+        count++;
+      }
+      _capacity = count;
+      _array = _alloc.allocate(_capacity);
+      for (_size = 0; _size < count; ++_size)
+        _alloc.construct(_array + _size, *first);
+    }
+
+    vector (const vector& x) {
+      _size = x._size;
+      _capacity = x._capacity;
+      _alloc = x._alloc;
+      if (_capacity != 0)
+        _array = _alloc.allocate(_capacity);
+      for (u_long i = 0; i < x._size; i++)
+        _alloc.construct(_array + i, x._array[i]);
+    }
+
     ~vector() {
       for (size_type i = 0; i < _size; ++i)
         _alloc.destroy(_array + i);
-      _alloc.deallocate(_array, _capacity);
+      if (_capacity != 0)
+        _alloc.deallocate(_array, _capacity);
     }
 
     vector& operator= (const vector& rhs) {

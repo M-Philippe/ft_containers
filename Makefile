@@ -44,9 +44,11 @@ std_objs/%.o: %.cpp src/**/*.hpp
 	@$(CPP) -o $@ -c $< $(STD_FLAGS)
 
 fclean	:	clean
+	@echo "\033[0;32mdelete all executables"
 	@rm -rf $(EXEC_FT) $(EXEC_STD)
 
 clean	:
+	@echo "\033[0;32mdelete all objs"
 	@rm -rf ft_objs
 	@rm -rf std_objs
 
