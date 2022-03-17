@@ -24,20 +24,23 @@ STD_OBJS = $(SRCS:%.cpp=std_objs/%.o)
 EXEC_FT	=	ft_test
 EXEC_STD = std_test
 
-all:	$(EXEC_FT) $(EXEC_STD)
+all:	Makefile $(EXEC_FT) $(EXEC_STD)
+	@echo "\033[0;32mAll compilation done, run ./exec_test.sh"
 
 $(EXEC_FT):	$(FT_OBJS)
+	@echo "\033[0;32mCompiling ft_test"
 	@$(CPP) -o $@ $^ $(FT_FLAGS)
 
 $(EXEC_STD):	$(STD_OBJS)
+	@echo "\033[0;32mCompiling std_test"
 	@$(CPP) -o $@ $^ $(STD_FLAGS)
 
-ft_objs/%.o:	%.cpp
-	mkdir -p $(@D)
+ft_objs/%.o:	%.cpp src/**/*.hpp
+	@mkdir -p $(@D)
 	@$(CPP) -o $@ -c $< $(FT_FLAGS)
 
-std_objs/%.o: %.cpp
-	mkdir -p $(@D)
+std_objs/%.o: %.cpp src/**/*.hpp
+	@mkdir -p $(@D)
 	@$(CPP) -o $@ -c $< $(STD_FLAGS)
 
 fclean	:	clean

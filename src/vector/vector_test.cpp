@@ -8,6 +8,7 @@
 	#undef NAMESPACE
 	#define NAMESPACE std
 #endif
+// NAMESPACE::vector<int> foo;
 
 void	printOk() {
 	std::cout << "\033[0;32m" << "V" << "\033[0;37m";
