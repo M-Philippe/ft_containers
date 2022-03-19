@@ -8,8 +8,16 @@ namespace ft {
 
   class length_error : public std::exception {
     public:
-      const char* what() const throw() { return("ft::bad_alloc"); }
-  };
+      length_error(std::string function_name) {
+        _error_message = "vector::" + function_name;
+      }
+      const char* what() const throw() { return(_error_message.c_str()); }
+      ~length_error() throw() {}
+
+    private:
+      std::string _error_message;
+
+  }; // length_error
 
   class out_of_range : public std::exception
   {
@@ -37,7 +45,7 @@ namespace ft {
       size_t _size;
       size_t _n;
       std::string ret;
-  };
+  }; // out_of_range
 
 } // namespace ft
 

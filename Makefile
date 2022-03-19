@@ -13,7 +13,7 @@
 CPP	=	clang++
 
 FT_FLAGS	=	-Wall -Wextra -g3
-STD_FLAGS = -Wall -Wextra -g3 -DSTD_TEST
+STD_FLAGS = -Wall -Wextra -g3  -DSTD_TEST
 
 SRCS	=	src/main.cpp\
 				src/vector/vector_test.cpp\

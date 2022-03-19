@@ -56,7 +56,7 @@ namespace ft
             const allocator_type& alloc = allocator_type(),
             typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : _alloc(alloc) {
       InputIterator tmp = first;
-      u_long count = 0;
+      unsigned long count = 0;
       while (tmp++ != last) {
         count++;
       }
@@ -72,7 +72,7 @@ namespace ft
       _alloc = x._alloc;
       if (_capacity != 0)
         _array = _alloc.allocate(_capacity);
-      for (u_long i = 0; i < x._size; i++)
+      for (unsigned long i = 0; i < x._size; i++)
         _alloc.construct(_array + i, x._array[i]);
     }
 
@@ -109,6 +109,16 @@ namespace ft
    iterator begin() {
      iterator begin(_array, 0);
      return (begin);
+   }
+
+   const_iterator begin() const {
+     const_iterator begin(_array, 0);
+     return (begin);
+   }
+
+  const_iterator end() const {
+     const_iterator end(_array, _size);
+     return (end);
    }
 
    iterator end() {
@@ -154,7 +164,7 @@ namespace ft
 
     void reserve (size_type n) {
       if (n > max_size())
-        throw (length_error());
+        throw (length_error("reserve"));
       else if (n > _capacity) {
         _capacity = n;
         T*  new_array = _alloc.allocate(_capacity);
@@ -221,6 +231,45 @@ namespace ft
     void pop_back() {
       if (_size > 0)
         _alloc.destroy(&_array[--_size]);
+    }
+
+    iterator erase (iterator position) {
+      iterator it = position;
+      while (it != this->end() - 1) {
+        *it = *(it + 1);
+        it++;
+      }
+      _size--;
+      return (position);
+    }
+
+    iterator erase (iterator first, iterator last) {
+      iterator ret = first;
+      //size_type new_size = first - begin();
+      /*iterator it = last;
+      if (it == this->end())
+        it--;
+      else
+        it++;
+      iterator ret = first;
+          // should keep distance ?
+      iterator tmp = this->begin();
+      int posStart = 0;
+      int posEnd = 0;
+      while (tmp++ != first)
+        posStart++;
+      posEnd = posStart;
+      while (tmp++ != last)
+        posEnd++;
+      while (first != last) {
+        _alloc.destroy(_array + posStart++);
+        _alloc.construct(_array + posEnd++, *first);
+        first++;
+        if (it + 1 != this->end())
+          it++;
+        _size--;
+      }*/
+      return (ret);
     }
 
     void swap (vector& x) {
