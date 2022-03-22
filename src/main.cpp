@@ -1,6 +1,5 @@
 #include "./vector/vector.hpp"
-
-void	vector_test();
+#include "./vector/vector_test.hpp"
 
 int main() {
 	vector_test();

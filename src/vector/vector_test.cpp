@@ -2,13 +2,7 @@
 #include "./vector.hpp"
 #include <vector>
 #include <string.h>
-
-#define NAMESPACE ft
-#ifdef STD_TEST
-	#undef NAMESPACE
-	#define NAMESPACE std
-#endif
-// NAMESPACE::vector<int> foo;
+#include "vector_test.hpp"
 
 #define MAX_TEST 10000
 
@@ -118,7 +112,7 @@ void	vectorOperatorEqual() {
 	std::cout << "\n\t===" << std::endl;
 }
 
-void	vectorIterator() {
+void	vectorIteratorToInc() {
 	std::cout << "VectorIterator" << std::endl;
 	NAMESPACE::vector<int> NAMESPACE_vector(10, 8);
   std::vector<int> st_vector(10, 8);
@@ -437,7 +431,7 @@ void	vectorErase() {
 			std::cout << *it << " ";
 		std::cout << std::endl;
 	}*/
-	{
+	/*{
 		std::cout << "\n=== Erase with start + 3 ===" << std::endl;
 		NAMESPACE::vector<int> vector_copy(vector);
 		NAMESPACE::vector<int>::iterator it = vector_copy.erase(vector_copy.begin(), vector_copy.begin() + 3);
@@ -450,7 +444,7 @@ void	vectorErase() {
 		for (NAMESPACE::vector<int>::iterator it = vector_copy.begin(); it != vector_copy.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
-	}
+	}*/
 	std::cout << "TEST VECTOR" << std::endl;
 	NAMESPACE::vector<int> vct;
 	for (int i = 0; i < 15; i++)
@@ -533,91 +527,6 @@ void	vectorGetAllocator() {
 	std::cout << "\n\t===" << std::endl;
 }
 
-struct fooStruct {
-	std::string	message = "foo";
-};
-
-void	vectorConstIterator() {
-	std::cout << "Vector ConstIterator" << std::endl;
-	/*
-	**	Const:
-	**		can't assign like : *it = 5
-	*/
-
-	NAMESPACE::vector<int> vector;
-	for (unsigned long i = 0; i < 20; i++)
-		vector.push_back(i * 2);
-	{
-		std::cout << "=== Default Constructible ===" << std::endl;
-		NAMESPACE::vector<int>::const_iterator it;
-	}
-	{
-		std::cout << "=== Copy-constructible ===" << std::endl;
-		NAMESPACE::vector<int>::const_iterator begin = vector.begin();
-		NAMESPACE::vector<int>::const_iterator it(begin + 5);
-		std::cout << *it << std::endl;
-		/* Expression is not assignable */
-		//*it = 5;
-	}
-	{
-		std::cout << "=== Operator= ===" << std::endl;
-		NAMESPACE::vector<int>::const_iterator it;
-		it = vector.begin() + 5;
-		std::cout << *it << std::endl;
-		while (it != vector.end())
-			std::cout << *it++ << " ";
-		std::cout << std::endl;
-	}
-	{
-		std::cout << "=== Comparison equality/inequality operator ===" << std::endl;
-		NAMESPACE::vector<int>::const_iterator a = vector.begin();
-		NAMESPACE::vector<int>::const_iterator b = vector.begin() + 2;
-		NAMESPACE::vector<int>::iterator c = vector.begin() + 2;
-		if (a == b)
-			std::cout << "OK" << std::endl;
-		else
-			std::cout << "FALSE" << std::endl;
-		if (a != b)
-			std::cout << "OK" << std::endl;
-		else
-			std::cout << "FALSE" << std::endl;
-		int tmp = *b;
-		*c = *a;
-		if (a == b)
-			std::cout << "OK" << std::endl;
-		else
-			std::cout << "FALSE" << std::endl;
-		if (a != b)
-			std::cout << "OK" << std::endl;
-		else
-			std::cout << "FALSE" << std::endl;
-		*c = tmp;
-		a = a + 2;
-		if (a == b)
-			std::cout << "OK" << std::endl;
-		else
-			std::cout << "FALSE" << std::endl;
-		if (a != b)
-			std::cout << "OK" << std::endl;
-		else
-			std::cout << "FALSE" << std::endl;
-	}
-	{
-		struct fooStruct foo;
-		NAMESPACE::vector<struct fooStruct> v(10, foo);
-		NAMESPACE::vector<struct fooStruct>::const_iterator it = v.begin();
-		std::cout << it->message << std::endl;
-		it->message = "fooCHANGED";
-		std::cout << it->message << std::endl;
-		/*
-		Same Error for both.
-		ft::vector<int> vc(10, 8);
-		ft::vector<int>::const_iterator c = vc.begin();
-		std::cout << c->message << std::endl;
-		*/
-	}
-}
-
 void	vector_test() {
 	//simpleCreation();	//DONE
 	//vectorExpansion(); //DONE
@@ -636,4 +545,5 @@ void	vector_test() {
 	//vectorClear(); // DONE
 	//vectorGetAllocator(); // DONE
 	vectorConstIterator();
+	vectorIterator();
 }

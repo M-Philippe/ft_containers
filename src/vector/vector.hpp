@@ -243,10 +243,10 @@ namespace ft
       return (position);
     }
 
-    iterator erase (iterator first, iterator last) {
+    /*iterator erase (iterator first, iterator last) {
       iterator ret = first;
       //size_type new_size = first - begin();
-      /*iterator it = last;
+      iterator it = last;
       if (it == this->end())
         it--;
       else
@@ -268,9 +268,9 @@ namespace ft
         if (it + 1 != this->end())
           it++;
         _size--;
-      }*/
+      }
       return (ret);
-    }
+    }*/
 
     void swap (vector& x) {
       ft::swap(_size, x._size);
