@@ -13,9 +13,15 @@
 #endif
 // NAMESPACE::vector<int> foo;
 
+
+struct fooStruct {
+	std::string	message = "foo";
+};
+
 void	printVector(NAMESPACE::vector<int> vector);
 void	vector_test();
 void	vectorConstIterator();
 void	vectorIterator();
+void	vectorConstReverseIterator();
 
 #endif

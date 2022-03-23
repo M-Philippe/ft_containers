@@ -528,22 +528,23 @@ void	vectorGetAllocator() {
 }
 
 void	vector_test() {
-	//simpleCreation();	//DONE
-	//vectorExpansion(); //DONE
-	//vectorOperatorEqual(); //DONE
+	simpleCreation();	//DONE
+	vectorExpansion(); //DONE
+	vectorOperatorEqual(); //DONE
 	//vectorIterator(); // TODO
-	//vectorResize(); //DONE
-	//vectorReserve(); //DONE
+	vectorResize(); //DONE
+	vectorReserve(); //DONE
 	//vectorOperatorBrackets();
-	//vectorAt(); //DONE
-	//vectorFrontBack(); //DONE
+	vectorAt(); //DONE
+	vectorFrontBack(); //DONE
 	//vectorAssign(); // TODO
-	//vectorPushPopBack(); // DONE
+	vectorPushPopBack(); // DONE
 	//vectorInsert(); // TODO
 	//vectorErase(); // TOFINISH
-	//vectorSwap(); // DONE
-	//vectorClear(); // DONE
-	//vectorGetAllocator(); // DONE
+	vectorSwap(); // DONE
+	vectorClear(); // DONE
+	vectorGetAllocator(); // DONE
 	vectorConstIterator();
 	vectorIterator();
+	//vectorConstReverseIterator();
 }

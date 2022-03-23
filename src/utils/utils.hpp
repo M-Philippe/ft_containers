@@ -1,6 +1,8 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
+#include "../iterator/iterator_traits.hpp"
+
 namespace ft {
 
 	template <typename T>
@@ -8,6 +10,18 @@ namespace ft {
 		T tmp(a);
 		a = b;
 		b = tmp;
+	}
+
+	template<class InputIterator>
+	typename ft::iterator_traits<InputIterator>::difference_type
+		distance (InputIterator first, InputIterator last)
+	{
+		typename ft::iterator_traits<InputIterator>::difference_type distance = 0;
+		while (first != last) {
+			first++;
+			distance++;
+		}
+		return (distance);
 	}
 
 	template<bool Cond, class T = void> struct enable_if {};

@@ -5,10 +5,6 @@
 #include <iostream>
 #include "vector_test.hpp"
 
-struct fooStruct {
-	std::string	message = "foo";
-};
-
 void	vectorConstIterator() {
 	std::cout << "Vector ConstIterator" << std::endl;
 	/*
@@ -161,12 +157,12 @@ void	vectorConstIterator() {
 		std::cout << (a - b) << std::endl;
 		std::cout << *a << std::endl;
 		std::cout << *b << std::endl;
-		/*NAMESPACE::vector<int>::const_iterator c;
-		std::cout << (c - b) << std::endl;
-		std::cout << (b - c) << std::endl;
-		b = vector.begin();
-		std::cout << (c - b) << std::endl;
-		std::cout << (b - c) << std::endl;*/
+		//NAMESPACE::vector<int>::const_iterator c;
+		//std::cout << (c - b) << std::endl;
+		//std::cout << (b - c) << std::endl;
+		//b = vector.begin();
+		//std::cout << (c - b) << std::endl;
+		//std::cout << (b - c) << std::endl;
 	}
 	std::cout << "=== Compound assignments were tested ===" << std::endl;
 	{
@@ -217,6 +213,16 @@ void	vectorConstIterator() {
 		//std::cout << a[-6] << std::endl;
 		// impossible bc const
 		// a[0] = 4;
+	}
+	{
+		std::cout << "=== Check that it compiles -> means iterator_traits is implemented ===" << std::endl;
+		const int array[10] = {0,1,2,3,4,5,6,7,8,9};
+		const int* a = &array[0];
+		const int* b = &array[5];
+		std::cout << NAMESPACE::distance(a, b) << std::endl;
+		while (a != b)
+			std::cout << *(a++) << " ";
+		std::cout << std::endl;
 	}
 }
 
@@ -424,4 +430,29 @@ void	vectorIterator() {
 		std::cout << *a << std::endl;
 		std::cout << *b << std::endl;
 	}
+	{
+		std::cout << "=== Check that iterator can be cast to const_iterator ===" << std::endl;
+		NAMESPACE::vector<int>::iterator a = vector.begin();
+		NAMESPACE::vector<int>::const_iterator b = vector.begin() + 4;
+		std::cout << *a << std::endl;
+		std::cout << *b << std::endl;
+		b = a;
+		// a = b impossible for both
+		std::cout << *a << std::endl;
+		std::cout << *b << std::endl;
+	}
+	{
+		std::cout << "=== Check that it compiles -> means iterator_traits is implemented ===" << std::endl;
+		int array[10] = {0,1,2,3,4,5,6,7,8,9};
+		int *a = &array[0];
+		int *b = &array[5];
+		std::cout << NAMESPACE::distance(a, b) << std::endl;
+		while (a != b)
+			std::cout << *(a++) << " ";
+		std::cout << std::endl;
+	}
+}
+
+void	vectorConstReverseIterator() {
+	std::cout << "Vector ReverseConstIterator" << std::endl;
 }

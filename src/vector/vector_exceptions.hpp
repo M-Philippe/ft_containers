@@ -2,7 +2,7 @@
 # define VECTOR_EXCEPTIONS_HPP
 
 #include <string>
-#include <cstdio> // sprintf
+#include <cstdio> // sprintf (check stringstream to replace it)
 
 namespace ft {
 
