@@ -5,6 +5,7 @@
 #include "vector_exceptions.hpp"
 #include "../iterator/random_access_iterator.hpp"
 #include "../utils/utils.hpp"
+#include "../iterator/reverse_iterator.hpp"
 
 namespace ft
 {
@@ -20,6 +21,8 @@ namespace ft
 
     typedef typename ft::random_access_iterator<value_type> iterator;
     typedef typename ft::random_access_iterator<const value_type> const_iterator;
+    typedef ft::reverse_iterator<iterator> reverse_iterator;
+    typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
   private:
     T *_array;

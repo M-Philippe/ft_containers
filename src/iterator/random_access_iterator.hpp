@@ -35,11 +35,10 @@ template <typename T>
 
     ~random_access_iterator() {};
 
-    bool operator==(const random_access_iterator &second) { return (_link == second._link); }
+		friend bool operator==(const random_access_iterator& lhs, const random_access_iterator& rhs) { return (lhs._link == rhs._link); }
+		friend bool operator!= (const random_access_iterator& lhs, const random_access_iterator& rhs) { return !(lhs == rhs); }
 
-    bool operator!=(const random_access_iterator &second) { return (!(*this == second)); }
-
-    reference operator*() { return (*_link);  }
+    reference operator*() const { return (*_link);  }
 
     reference operator[](difference_type idx) { return (*(_link + idx));  }
 

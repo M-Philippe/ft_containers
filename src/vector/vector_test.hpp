@@ -23,5 +23,6 @@ void	vector_test();
 void	vectorConstIterator();
 void	vectorIterator();
 void	vectorConstReverseIterator();
+void	vectorReverseIterator();
 
 #endif

@@ -31,10 +31,12 @@ all:	Makefile $(EXEC_FT) $(EXEC_STD)
 $(EXEC_FT):	$(FT_OBJS)
 	@echo "\033[0;32mCompiling ft_test"
 	@$(CPP) -o $@ $^ $(FT_FLAGS)
+	@echo "\033[0;32mft_test compiled"
 
 $(EXEC_STD):	$(STD_OBJS)
 	@echo "\033[0;32mCompiling std_test"
 	@$(CPP) -o $@ $^ $(STD_FLAGS)
+	@echo "\033[0;32mstd_test compiled"
 
 ft_objs/%.o:	%.cpp src/**/*.hpp
 	@mkdir -p $(@D)
