@@ -31,6 +31,8 @@ void	simpleCreation() {
 	for (u_long i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << " ";
 	std::cout << std::endl;
+	//struct fooStruct foo;
+	//NAMESPACE::vector<int> vectorIterator(foo, foo);
 	NAMESPACE::vector<int> vectorIterator(vector.begin(), vector.end());
 	for (u_long i = 0; i < vectorIterator.size(); i++)
 		std::cout << vectorIterator[i] << " ";
@@ -553,12 +555,34 @@ void	vectorGetAllocator() {
 	std::cout << "\n\t===" << std::endl;
 }
 
+void isIntegralTest() {
+	//std::cout << std::boolalpha;
+	std::cout << "is_integral Test" << std::endl;
+	std::cout << NAMESPACE::is_integral<bool>::value << std::endl;
+	std::cout << std::boolalpha;
+	std::cout << NAMESPACE::is_integral<char>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<char16_t>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<char32_t>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<wchar_t>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<signed char>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<short int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<long int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<long long int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<unsigned char>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<unsigned short int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<unsigned int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<unsigned long int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<unsigned long long int>::value << std::endl;
+	std::cout << NAMESPACE::is_integral<struct fooStruct>::value << std::endl;
+}
+
 void	vector_test() {
-	//simpleCreation();	//DONE
+	simpleCreation();	//DONE
 	//vectorExpansion(); //DONE
 	//vectorOperatorEqual(); //DONE
-	vectorBeginEnd();
-	vectorRbeginRend();
+	//vectorBeginEnd(); DONE
+	//vectorRbeginRend(); DONE
 	//vectorResize(); //DONE
 	//vectorReserve(); //DONE
 	////vectorOperatorBrackets(); TODO
@@ -571,8 +595,9 @@ void	vector_test() {
 	//vectorSwap(); // DONE
 	//vectorClear(); // DONE
 	//vectorGetAllocator(); // DONE
-	vectorConstIterator();
-	vectorIterator();
-	vectorConstReverseIterator();
-	vectorReverseIterator();
+	//vectorConstIterator();
+	//vectorIterator();
+	//vectorConstReverseIterator();
+	//vectorReverseIterator();
+	isIntegralTest();
 }

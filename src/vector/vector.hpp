@@ -56,7 +56,7 @@ namespace ft
     vector(InputIterator first,
            InputIterator last,
            const allocator_type &alloc = allocator_type(),
-           typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = 0) : _alloc(alloc)
+           typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) : _alloc(alloc)
     {
       InputIterator tmp = first;
       unsigned long count = 0;
