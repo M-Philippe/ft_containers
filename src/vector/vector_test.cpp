@@ -112,43 +112,69 @@ void	vectorOperatorEqual() {
 	std::cout << "\n\t===" << std::endl;
 }
 
-void	vectorIteratorToInc() {
-	std::cout << "VectorIterator" << std::endl;
-	NAMESPACE::vector<int> NAMESPACE_vector(10, 8);
-  std::vector<int> st_vector(10, 8);
-  NAMESPACE::vector<int>::iterator NAMESPACE_it = NAMESPACE_vector.begin();
-  std::vector<int>::iterator st_it = st_vector.begin();
-
-  {
-    std::cout << "Test that iteration is good" << std::endl;
-		int i = 0;
-    while (st_it != st_vector.end()) {
-      (*NAMESPACE_it == *st_it) ? printOk() : printError("\n*NAMESPACE_it != *st_it");
-      ++i;
-      ++st_it;
-    }
-  }
-  {
-    std::cout << "\nTest that iteration stops at it.end()" << std::endl;
-		int i = 0;
-    while (NAMESPACE_it++ != NAMESPACE_vector.end()) {
-      ++i;
-    }
-		i == 10 ? printOk() : printError("\ni != 10");
-  }
+void	vectorBeginEnd() {
+	std::cout << "Vector Begin/End" << std::endl;
+	NAMESPACE::vector<int> vector;
+	for (int i = 0; i < 10; i++)
+		vector.push_back((i + 1) * 2);
 	{
-		std::cout << "\nOn an empty vector" << std::endl;
-		NAMESPACE::vector<int> NAMESPACE_empty_vector;
-		std::vector<int> st_empty_vector;
-		NAMESPACE::vector<int>::iterator NAMESPACE_it = NAMESPACE_empty_vector.begin();
-		std::vector<int>::iterator st_it = st_empty_vector.begin();
-		int i = 0;
-		while (NAMESPACE_it != NAMESPACE_empty_vector.end()) {
-      (*NAMESPACE_it == *st_it) ? printOk() : printError("\n*NAMESPACE_it != *st_it");
+		std::cout << "=== With regular iterator ===" << std::endl;
+		NAMESPACE::vector<int>::iterator start = vector.begin();
+		NAMESPACE::vector<int>::iterator end = vector.end();
+		while (start != end) {
+			std::cout << *start << " " << *end << std::endl;
+			start++;
 		}
-		i == 0 ? printOk() : printError("\ni != 0");
+		start = vector.begin();
+		*start = 42;
 	}
-	std::cout << "\n\t===" << std::endl;
+	{
+		std::cout << "=== With const iterator ===" << std::endl;
+		NAMESPACE::vector<int>::const_iterator start = vector.begin();
+		NAMESPACE::vector<int>::const_iterator end = vector.end();
+		while (start != end) {
+			std::cout << *start << " " << *end << std::endl;
+			start++;
+		}
+		start = vector.begin();
+		// Impossible bc const
+		//*start = 24;
+	}
+}
+
+void vectorRbeginRend() {
+	std::cout << "Vector Rbegin/Rend" << std::endl;
+	NAMESPACE::vector<int> vector;
+	for (int i = 0; i < 10; i++)
+		vector.push_back((i + 1) * 2);
+	{
+		std::cout << "=== With regular rev_iterator ===" << std::endl;
+		NAMESPACE::vector<int>::reverse_iterator rev_start = vector.rend() - 1;
+		NAMESPACE::vector<int>::reverse_iterator rev_end = vector.rbegin() + 1;
+		std::cout << *rev_start << std::endl;
+		std::cout << *rev_end << std::endl;
+		while (rev_start != rev_end)
+			std::cout << *(rev_end)++ << " ";
+		std::cout << std::endl;
+		rev_end = vector.rbegin() + 1;
+		while (rev_start != rev_end)
+			std::cout << *(rev_start)-- << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== With const_reverse_iterator ===" << std::endl;
+		NAMESPACE::vector<int>::const_reverse_iterator rev_start = vector.rend() - 1;
+		NAMESPACE::vector<int>::const_reverse_iterator rev_end = vector.rbegin() + 1;
+		std::cout << *rev_start << std::endl;
+		std::cout << *rev_end << std::endl;
+		while (rev_start != rev_end)
+			std::cout << *(rev_end)++ << " ";
+		std::cout << std::endl;
+		rev_end = vector.rbegin() + 1;
+		while (rev_start != rev_end)
+			std::cout << *(rev_start)-- << " ";
+		std::cout << std::endl;
+	}
 }
 
 void	vectorResize() {
@@ -531,6 +557,8 @@ void	vector_test() {
 	//simpleCreation();	//DONE
 	//vectorExpansion(); //DONE
 	//vectorOperatorEqual(); //DONE
+	vectorBeginEnd();
+	vectorRbeginRend();
 	//vectorResize(); //DONE
 	//vectorReserve(); //DONE
 	////vectorOperatorBrackets(); TODO
