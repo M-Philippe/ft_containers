@@ -396,31 +396,37 @@ void	vectorPushPopBack() {
 		NAMESPACE::vector<int> vector;
 		int sum = 0;
 		vector.push_back(100);
+		std::cout << vector.size() << " " << vector.capacity() << std::endl;
 		vector.push_back(200);
+		std::cout << vector.size() << " " << vector.capacity() << std::endl;
 		vector.push_back(300);
+		std::cout << vector.size() << " " << vector.capacity() << std::endl;
 
 		while (!vector.empty())
 		{
+			std::cout << vector.size() << " X " << vector.capacity() << std::endl;
 			sum += vector.back();
 			vector.pop_back();
 		}
 		std::cout << sum << std::endl;
-		vector.pop_back();
-		vector.pop_back();
-		std::cout << vector[0] << std::endl;
 	}
 	{
 		std::cout << "=== Push_back 1 million times ===" << std::endl;
 		NAMESPACE::vector<int> vector;
-		for (int i = 0; i < 1000000; i++)
+		for (int i = 0; i < 1000000; i++) {
 			vector.push_back(i * 2);
+			std::cout << vector.size() << " " << vector.capacity() << " ";
+		}
+		std::cout << std::endl;
 		NAMESPACE::vector<int>::iterator it = vector.begin();
 		while (it != vector.end())
 			std::cout << *(it++) << " ";
 		std::cout << std::endl;
 		std::cout << "=== Pop_back until empty ===" << std::endl;
-		while (!vector.empty())
+		while (!vector.empty()) {
 			vector.pop_back();
+			std::cout << vector.size() << " " << vector.capacity() << std::endl;
+		}
 		std::cout << vector.size() << " " << vector.capacity() << std::endl;
 		it = vector.begin();
 		while (it != vector.end())
@@ -435,7 +441,7 @@ void	vectorErase() {
 		for (unsigned long i = 0; i < vector.size(); i++) {
 		vector[i] = i;
 	}
-	/*{
+	{
 		std::cout << "\n=== Simple erase ===" << std::endl;
 		printVector(vector);
 		NAMESPACE::vector<int>::iterator b = vector.begin();
@@ -444,47 +450,41 @@ void	vectorErase() {
 		std::cout << "value: " << *it << std::endl;
 		std::cout << "size: " << vector.size() << std::endl;
 		std::cout << "capacity: " << vector.capacity() << std::endl;
-	}*/
-	{
-		/*	Provoke segfault for both.
-		std::cout << "\n=== Erase with end() as input ===" << std::endl;
-		NAMESPACE::vector<int>::iterator it = vector.erase(vector.end());
-		std::cout << *it << std::endl;
-		printVector(vector);*/
 	}
 	{
-		/*std::cout << "\n=== Erase last element ===" << std::endl;
+		//	Provoke segfault for both.
+		//std::cout << "\n=== Erase with end() as input ===" << std::endl;
+		//NAMESPACE::vector<int>::iterator it = vector.erase(vector.end());
+		//std::cout << *it << std::endl;
+		//printVector(vector);
+	}
+	{
+		std::cout << "\n=== Erase last element ===" << std::endl;
 		NAMESPACE::vector<int>::iterator it = vector.end() - 1;
 		it = vector.erase(vector.end() - 1);
 		std::cout << *it << std::endl;
 		if (*it == *(vector.end()))
-			std::cout << "TRUE" << std::endl;*/
+			std::cout << "TRUE" << std::endl;
+		std::cout << vector.size() << " " << vector.capacity() << std::endl;
 	}
 	{
-		/*std::cout << "\n=== Erase while i > 0 ===" << std::endl;
+		std::cout << "\n=== Erase while i > 0 ===" << std::endl;
 		NAMESPACE::vector<int>:: iterator b = vector.begin();
 		for (unsigned long i = vector.size(); i > 0; i = vector.size()) {
 			b = vector.erase(b);
 			std::cout << *b << std::endl;
 			printVector(vector);
-		}*/
-		/*std::vector<int>::iterator it;
-		std::vector<int> v;
-		ft::vector<int>::iterator itf;
-		ft::vector<int> vf;
-		while (it++ < v.end());
-		while (itf++ < vf.end());*/
+		}
+		//std::vector<int>::iterator it;
+		//std::vector<int> v;
+		//ft::vector<int>::iterator itf;
+		//ft::vector<int> vf;
+		//while (it++ < v.end());
+		//while (itf++ < vf.end());
 	}
-	/*{
-		NAMESPACE::vector<int>::iterator it = vector.begin() + 2;
-		std::cout << "value_before: " << *it << std::endl;
-		NAMESPACE::vector<int>::iterator x = it - 1;
-		std::cout << "value_after: " << *it << std::endl;
-	}*/
 	for (unsigned long i = 10; i < 20; i++)
-		vector.push_back(i);
-	//std::cout << vector_copy.size() << " " << vector_copy.capacity() << std::endl;
-	/*{
+		vector.push_back(i * 2);
+	{
 		std::cout << "\n=== Erase with range ===" << std::endl;
 		NAMESPACE::vector<int> vector_copy(vector);
 		NAMESPACE::vector<int>::iterator it = vector_copy.erase(vector_copy.begin() + 4, vector_copy.end() - 2);
@@ -493,10 +493,14 @@ void	vectorErase() {
 			std::cout << *it << " ";
 			it++;
 		}
+		std::cout << std::endl;
 		std::cout << "From begin iterator" << std::endl;
 		for (NAMESPACE::vector<int>::iterator it = vector_copy.begin(); it != vector_copy.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
+		std::vector<int> v;
+		// Come to this line later to fix capacity (maybe use insert)
+		//std::cout << vector_copy.size() << " " << vector_copy.capacity() << std::endl;
 	}
 	{
 		std::cout << "\n=== Erase with begin and end ===" << std::endl;
@@ -525,8 +529,8 @@ void	vectorErase() {
 		for (NAMESPACE::vector<int>::iterator it = vector_copy.begin(); it != vector_copy.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
-	}*/
-	/*{
+	}
+	{
 		std::cout << "\n=== Erase with end - 1 ===" << std::endl;
 		NAMESPACE::vector<int> vector_copy(vector);
 		NAMESPACE::vector<int>::iterator it = vector_copy.erase(vector_copy.begin() + 4, vector_copy.end() - 1);
@@ -539,8 +543,8 @@ void	vectorErase() {
 		for (NAMESPACE::vector<int>::iterator it = vector_copy.begin(); it != vector_copy.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
-	}*/
-	/*{
+	}
+	{
 		std::cout << "\n=== Erase with start + 3 ===" << std::endl;
 		NAMESPACE::vector<int> vector_copy(vector);
 		NAMESPACE::vector<int>::iterator it = vector_copy.erase(vector_copy.begin(), vector_copy.begin() + 3);
@@ -553,17 +557,19 @@ void	vectorErase() {
 		for (NAMESPACE::vector<int>::iterator it = vector_copy.begin(); it != vector_copy.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
-	}*/
-	std::cout << "TEST VECTOR" << std::endl;
-	NAMESPACE::vector<int> vct;
-	for (int i = 0; i < 15; i++)
-		vct.push_back(i);
-	for (unsigned long i = 0; i < vct.size(); i++)
-		std::cout << vct.at(i) << " ";
-	NAMESPACE::vector<int>::iterator a = vct.begin() + 1;
-	NAMESPACE::vector<int>::iterator b = vct.begin() + 8;
-	b - a;
-	std::cout << "\nRET: " << (b - a) << std::endl;
+	}
+	{
+		std::cout << "=== With big vector ===" << std::endl;
+		NAMESPACE::vector<int> v(1000000, 8);
+		NAMESPACE::vector<int>::iterator it = v.erase(v.begin() + 2, v.end() - 4);
+		while (it != v.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+		it = v.begin();
+		while (it != v.end())
+			std::cout <<  *(it++) << " ";
+		std::cout << std::endl;
+	}
 	std::cout << std::endl;
 }
 
@@ -670,9 +676,9 @@ void	vector_test() {
 	//vectorAt(); //DONE
 	//vectorFrontBack(); //DONE
 	//vectorAssign(); // DONE
-	vectorPushPopBack(); // DONE
+	//vectorPushPopBack(); // DONE
 	////vectorInsert(); // TODO
-	////vectorErase(); // TOFINISH
+	//vectorErase(); // DONE (check)
 	//vectorSwap(); // DONE
 	//vectorClear(); // DONE
 	//vectorGetAllocator(); // DONE

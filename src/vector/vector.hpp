@@ -6,6 +6,7 @@
 #include "../iterator/random_access_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../iterator/reverse_iterator.hpp"
+#include "../iterator/iterator_traits.hpp"
 
 namespace ft
 {
@@ -14,15 +15,18 @@ namespace ft
   {
   public:
     typedef T value_type;
-    typedef size_t size_type;
     typedef Alloc allocator_type;
     typedef typename allocator_type::reference reference;
     typedef typename allocator_type::const_reference const_reference;
-
+    typedef typename allocator_type::pointer pointer;
+    typedef typename allocator_type::const_pointer const_pointer;
     typedef typename ft::random_access_iterator<value_type> iterator;
     typedef typename ft::random_access_iterator<const value_type> const_iterator;
     typedef ft::reverse_iterator<iterator> reverse_iterator;
     typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+    typedef ptrdiff_t difference_type;
+    typedef size_t size_type;
+
 
   private:
     T *_array;
@@ -79,7 +83,7 @@ namespace ft
       _alloc = x._alloc;
       if (_capacity != 0)
         _array = _alloc.allocate(_capacity);
-      for (unsigned long i = 0; i < x._size; i++)
+      for (size_type i = 0; i < x._size; i++)
         _alloc.construct(_array + i, x._array[i]);
     }
 
@@ -241,6 +245,7 @@ namespace ft
 
     void push_back(const value_type &val)
     {
+      //std::cout << "INSIDE: " << _size << std::endl;
       if (_size < _capacity)
       {
         _array[_size] = val;
@@ -260,8 +265,9 @@ namespace ft
 
     void pop_back()
     {
-      if (_size > 0)
+      if (!empty()) {
         _alloc.destroy(&_array[--_size]);
+      }
     }
 
     iterator erase(iterator position)
@@ -276,34 +282,36 @@ namespace ft
       return (position);
     }
 
-    /*iterator erase (iterator first, iterator last) {
-      iterator ret = first;
-      //size_type new_size = first - begin();
-      iterator it = last;
-      if (it == this->end())
-        it--;
-      else
-        it++;
-      iterator ret = first;
-          // should keep distance ?
-      iterator tmp = this->begin();
-      int posStart = 0;
-      int posEnd = 0;
-      while (tmp++ != first)
-        posStart++;
-      posEnd = posStart;
-      while (tmp++ != last)
-        posEnd++;
-      while (first != last) {
-        _alloc.destroy(_array + posStart++);
-        _alloc.construct(_array + posEnd++, *first);
-        first++;
-        if (it + 1 != this->end())
-          it++;
-        _size--;
+    iterator erase (iterator first, iterator last) {
+      size_type indexLast = 0;
+      iterator start = begin();
+      iterator storeFirst = first;
+      while (start != last) {
+        start++;
+        indexLast++;
       }
-      return (ret);
-    }*/
+      ft::vector<T> tmp;
+      iterator end = this->end() - 1;
+      while (last - 1 != end) {
+        tmp.push_back(*end);
+        this->pop_back();
+        end--;
+      }
+      while (first != last) {
+        this->pop_back();
+        first++;
+        indexLast--;
+      }
+      while (tmp.size() > 0) {
+        this->push_back(tmp.back());
+        tmp.pop_back();
+      }
+      iterator it = begin();
+      size_type i = 0;
+      while (i++ != indexLast)
+        it++;
+      return (it);
+    }
 
     void swap(vector &x)
     {
