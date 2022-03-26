@@ -30,6 +30,8 @@ namespace ft
     size_type _capacity;
     allocator_type _alloc;
 
+    size_type calculateCapacity() {  }
+
   public:
     /*
     **      CONSTRUCTORS
@@ -215,10 +217,26 @@ namespace ft
     **      MODIFIERS
     */
 
+    /*
+    range (1)
+    template <class InputIterator>
+    void assign (InputIterator first, InputIterator last);
+    */
+
     void assign(size_type n, const value_type &val)
     {
-      for (size_type i = 0; i < n; ++i)
+      if (n > _capacity) {
+        for (size_type i = 0; i < _size; ++i)
+          _alloc.destroy(_array + i);
+        _alloc.deallocate(_array, _size);
+        _capacity > n ? _capacity = n * 2 : _capacity = n;
+        _array = _alloc.allocate(_capacity);
+      }
+      for (size_type i = 0; i < n; ++i) {
+        _alloc.destroy(_array + i);
         _alloc.construct(_array + i, val);
+      }
+      _size = n;
     }
 
     void push_back(const value_type &val)

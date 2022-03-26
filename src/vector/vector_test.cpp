@@ -348,6 +348,67 @@ void	vectorPushPopBack() {
 	std::cout << "\n\t===" << std::endl;
 }
 
+void	vectorAssign() {
+	std::cout << "VectorAssign" << std::endl;
+	NAMESPACE::vector<int> vector;
+	for (int i = 0; i < 30; i++)
+		vector.push_back(i);
+	std::cout << vector.size() << " " << vector.capacity() << " " << vector.max_size() << std::endl;
+	{
+		std::cout << "=== n <= _size ===" << std::endl;
+		for (int j = 0; j <= 30; j++) {
+			NAMESPACE::vector<int> v;
+			for (int i = 0; i < 30; i++)
+				v.push_back(i);
+			v.assign(j, 42);
+			for (unsigned long i = 0; i < v.size(); i++)
+				std::cout << v.at(i) << " ";
+			std::cout << std::endl;
+			std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
+		}
+	}
+	{
+		std::cout << "=== n > _size ===" << std::endl;
+		for (int j = 1000; j < 10000; j++) {
+			vector.assign(j, 42);
+			for (unsigned long i = 0; i < vector.size(); i++)
+				std::cout << vector.at(i) << " ";
+			std::cout << std::endl;
+			std::cout << vector.size() << " " << vector.capacity() << " " << vector.max_size() << std::endl;
+		}
+	}
+	{
+		std::cout << "=== from Empty vector ===" << std::endl;
+		NAMESPACE::vector<int> v;
+		std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
+		for (int i = 0; i < 100; i++) {
+			v.assign(i, i);
+			for (unsigned long j = 0; j < v.size(); j++)
+				std::cout << v.at(j) << " ";
+			std::cout << std::endl;
+			std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
+		}
+	}
+	{
+		std::cout << "=== from vector to emptyVector ===" << std::endl;
+		NAMESPACE::vector<int> v(10, 8);
+		std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
+		printVector(v);
+		v.assign(0, 10);
+		for (unsigned long j = 0; j < v.size(); j++)
+			std::cout << v[j] << " ";
+		std::cout << std::endl;
+		std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
+		std::cout << v.empty() << std::endl;
+		v.assign(5, 2);
+		for (unsigned long j = 0; j < 10; j++)
+			std::cout << v[j] << " ";
+		std::cout << std::endl;
+		std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
+		std::cout << v.empty() << std::endl;
+	}
+}
+
 void	vectorErase() {
 	std::cout << "VectorErase" << std::endl;
 	NAMESPACE::vector<int> vector(7);
@@ -578,7 +639,7 @@ void isIntegralTest() {
 }
 
 void	vector_test() {
-	simpleCreation();	//DONE
+	//simpleCreation();	//DONE
 	//vectorExpansion(); //DONE
 	//vectorOperatorEqual(); //DONE
 	//vectorBeginEnd(); DONE
@@ -588,7 +649,7 @@ void	vector_test() {
 	////vectorOperatorBrackets(); TODO
 	//vectorAt(); //DONE
 	//vectorFrontBack(); //DONE
-	////vectorAssign(); // TODO
+	//vectorAssign(); // DONE
 	//vectorPushPopBack(); // DONE
 	////vectorInsert(); // TODO
 	////vectorErase(); // TOFINISH
@@ -599,5 +660,5 @@ void	vector_test() {
 	//vectorIterator();
 	//vectorConstReverseIterator();
 	//vectorReverseIterator();
-	isIntegralTest();
+	//isIntegralTest();
 }
