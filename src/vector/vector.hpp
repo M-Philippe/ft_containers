@@ -7,7 +7,7 @@
 #include "../utils/utils.hpp"
 #include "../iterator/reverse_iterator.hpp"
 #include "../iterator/iterator_traits.hpp"
-
+#include <chrono>
 namespace ft
 {
   template <class T, class Alloc = std::allocator<T> >
@@ -71,9 +71,10 @@ namespace ft
         count++;
       }
       _capacity = count;
-      _array = _alloc.allocate(_capacity);
+      if (_capacity != 0)
+        _array = _alloc.allocate(_capacity);
       for (_size = 0; _size < count; ++_size)
-        _alloc.construct(_array + _size, *first);
+        _alloc.construct(_array + _size, *(first++));
     }
 
     vector(const vector &x)
@@ -245,7 +246,6 @@ namespace ft
 
     void push_back(const value_type &val)
     {
-      //std::cout << "INSIDE: " << _size << std::endl;
       if (_size < _capacity)
       {
         _array[_size] = val;
@@ -267,6 +267,38 @@ namespace ft
     {
       if (!empty()) {
         _alloc.destroy(&_array[--_size]);
+      }
+    }
+
+    iterator insert (iterator position, const value_type& val) {
+      size_type indexPosition = position - begin();
+      this->insert(position, 1, val);
+      return (iterator(begin() + indexPosition));
+    }
+
+    void insert (iterator position, size_type n, const value_type& val) {
+      size_type indexPosition = position - begin();
+      if (n + size() >= _capacity) {
+        ft::vector<value_type> tmp(*this);
+        this->clear();
+        size_type count = 0;
+        while (count < indexPosition)
+          this->push_back(tmp[count++]);
+        for (size_type i = 0; i < n; i++)
+          this->push_back(val);
+        while (count < tmp.size())
+          this->push_back(tmp[count++]);
+      } else {
+        ft::vector<value_type> tmp(begin() + indexPosition, end());
+        for (size_type i = 0; i < n; i++) {
+          _alloc.destroy(this->_array + indexPosition);
+          _alloc.construct(this->_array + indexPosition++, val);
+        }
+        for (size_type i = 0; i < tmp.size(); i++) {
+          _alloc.destroy(this->_array + indexPosition);
+          _alloc.construct(this->_array + indexPosition++, tmp[i]);
+        }
+        _size += n;
       }
     }
 

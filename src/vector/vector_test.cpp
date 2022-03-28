@@ -435,6 +435,180 @@ void	vectorPushPopBack() {
 	}
 }
 
+void	vectorInsert() {
+	std::cout << "VectorInsert" << std::endl;
+	/*
+	**	Fill insert
+	*/
+	{
+		std::cout << "=== Fill insert (One Element) size + 1 < _capacity ===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		vector.pop_back();
+		vector.pop_back();
+		std::cout << "capacity: " << vector.capacity() << std::endl;
+		vector.insert(vector.begin() + 2, 1, 42);
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		vector.insert(vector.begin() + 1, 5, 78);
+		it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+		vector.insert(vector.end(), 5, 21);
+		it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== Fill insert size + 1 == _capacity ===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		vector.pop_back();
+		vector.insert(vector.begin() + 2, 1, 78);
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		v1.pop_back();
+		v1.insert(v1.begin(), 1, 42);
+		it = v1.begin();
+		while (++it != v1.end())
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int> v2(10, 8);
+		v2.pop_back();
+		v2.insert(v2.begin(), 1, 42);
+		it = v2.begin();
+		while (++it != v2.end())
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== Fill Insert size + n > _capacity ===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		vector.insert(vector.begin() + 2, 3, 42);
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== Fill Insert to end ===" << std::endl;
+		NAMESPACE::vector<int> vector(1000, 8);
+		NAMESPACE::vector<int>::iterator ret;
+		for (unsigned long i = 0; i < 10; i++) {
+			ret = vector.insert(vector.end(), i * 10);
+			std::cout << vector.size() << " " << vector.capacity() << std::endl;
+			while (ret != vector.end())
+				std::cout << *(ret++) << " ";
+			std::cout << std::endl;
+		}
+			NAMESPACE::vector<int>::iterator it = vector.begin();
+			while (it != vector.end())
+				std::cout << *(it++) << " ";
+			std::cout << std::endl;
+	}
+	/*{
+		std::cout << "=== big insert begin + 2 ===" << std::endl;
+		NAMESPACE::vector<int> vector(5, 8);
+		for (unsigned long i = 0; i < 5; i++)
+			vector[i] = i * 2;
+		printVector(vector);
+		vector.insert(vector.begin() + 2, 10000000, 42);
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== big insert begin ===" << std::endl;
+		NAMESPACE::vector<int> vector(5, 8);
+		for (unsigned long i = 0; i < 5; i++)
+			vector[i] = i * 2;
+		printVector(vector);
+		vector.insert(vector.begin(), 10000000, 42);
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== big insert end ===" << std::endl;
+		NAMESPACE::vector<int> vector(5, 8);
+		for (unsigned long i = 0; i < 5; i++)
+			vector[i] = i * 2;
+		printVector(vector);
+		vector.insert(vector.end(), 10000000, 42);
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}*/
+	/*
+	**	Simple insert
+	*/
+	{
+		std::cout << "=== n + size() < _capacity ===" << std::endl;
+		NAMESPACE::vector<int> vector(15, 8);
+		vector.reserve(30);
+		for (unsigned long i = 0; i < 15; i++)
+			vector[i] = i * 2;
+		printVector(vector);
+		std::cout << vector.size() << " " << vector.capacity() << std::endl;
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin() + 2, 42);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+		ret = vector.insert(vector.begin(), 34);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+		ret = vector.insert(vector.end(), 34);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+	return;
+	{
+		std::cout << "=== n + size == _capacity ===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		vector.pop_back();
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin() + 2, 78);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+	}
+	{
+		std::cout << "===  + size() + 1 > _capacity ===" << std::endl;
+		NAMESPACE::vector<int> vector(5, 8);
+		for (unsigned long i = 0; i < 5; i++)
+			vector[i] = i * 2;
+		//NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin() + 2, 42);
+		//./while ()
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+}
+
 void	vectorErase() {
 	std::cout << "VectorErase" << std::endl;
 	NAMESPACE::vector<int> vector(7);
@@ -677,7 +851,7 @@ void	vector_test() {
 	//vectorFrontBack(); //DONE
 	//vectorAssign(); // DONE
 	//vectorPushPopBack(); // DONE
-	////vectorInsert(); // TODO
+	vectorInsert(); // TODO
 	//vectorErase(); // DONE (check)
 	//vectorSwap(); // DONE
 	//vectorClear(); // DONE
