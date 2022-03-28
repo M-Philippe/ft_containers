@@ -510,7 +510,7 @@ void	vectorInsert() {
 				std::cout << *(it++) << " ";
 			std::cout << std::endl;
 	}
-	/*{
+	{
 		std::cout << "=== big insert begin + 2 ===" << std::endl;
 		NAMESPACE::vector<int> vector(5, 8);
 		for (unsigned long i = 0; i < 5; i++)
@@ -545,7 +545,7 @@ void	vectorInsert() {
 		while (it != vector.end())
 			std::cout << *(it)++ << " ";
 		std::cout << std::endl;
-	}*/
+	}
 	/*
 	**	Simple insert
 	*/
@@ -582,7 +582,6 @@ void	vectorInsert() {
 			std::cout << *(it)++ << " ";
 		std::cout << std::endl;
 	}
-	return;
 	{
 		std::cout << "=== n + size == _capacity ===" << std::endl;
 		NAMESPACE::vector<int> vector(10, 8);
@@ -596,12 +595,83 @@ void	vectorInsert() {
 			std::cout << *it << " ";
 	}
 	{
-		std::cout << "===  + size() + 1 > _capacity ===" << std::endl;
+		std::cout << "=== n + size == _capacity (begin)===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		vector.pop_back();
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin(), 78);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+	}
+	{
+		std::cout << "=== n + size == _capacity (end)===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		vector.pop_back();
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.end(), 78);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (++it != vector.end())
+			std::cout << *it << " ";
+	}
+	{
+		std::cout << "=== size() + 1 > _capacity ===" << std::endl;
 		NAMESPACE::vector<int> vector(5, 8);
 		for (unsigned long i = 0; i < 5; i++)
 			vector[i] = i * 2;
-		//NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin() + 2, 42);
-		//./while ()
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin() + 2, 42);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== size() + 1 > _capacity begin ===" << std::endl;
+		NAMESPACE::vector<int> vector(5, 8);
+		for (unsigned long i = 0; i < 5; i++)
+			vector[i] = i * 2;
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin(), 42);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== size() + 1 > _capacity end ===" << std::endl;
+		NAMESPACE::vector<int> vector(5, 8);
+		for (unsigned long i = 0; i < 5; i++)
+			vector[i] = i * 2;
+		NAMESPACE::vector<int>::iterator ret = vector.insert(vector.end(), 42);
+		while (ret != vector.end())
+			std::cout << *(ret++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it)++ << " ";
+		std::cout << std::endl;
+	}
+	{
+		/*
+			Bottleneck here.
+		*/
+		std::cout << "=== Big Simple Insert ===" << std::endl;
+		NAMESPACE::vector<int> vector;
+		for (int i = 0; i < 10000; i++) {
+			NAMESPACE::vector<int>::iterator ret = vector.insert(vector.begin(), i);
+			//while (ret != vector.end())
+			std::cout << *(ret) << " ";
+			std::cout << std::endl;
+		}
 		NAMESPACE::vector<int>::iterator it = vector.begin();
 		while (it != vector.end())
 			std::cout << *(it)++ << " ";
@@ -838,6 +908,69 @@ void isIntegralTest() {
 	std::cout << NAMESPACE::is_integral<struct fooStruct>::value << std::endl;
 }
 
+bool	fooComp(int a, int b) {
+	return (a < b);
+}
+
+void	vectorEqual() {
+	std::cout << "NAMESPACE::equal" << std::endl;
+	/*
+	**	Equal isn't protected.
+	*/
+	{	NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		v2[9] = 15;
+		std::cout << std::boolalpha;
+		std::cout << NAMESPACE::equal(v1.begin(), v1.end(), v2.begin()) << std::endl;
+		std::cout << NAMESPACE::equal(v1.begin(), v1.end(), v2.begin(), fooComp) << std::endl;
+	}
+ 		std::cout << "=== NAMESPACE::lexicographical_compare ===" << std::endl;
+	{
+		std::cout << "=== Same Size vector ===" << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v1[9] = 42;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[9] = 78;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+	}
+	{
+		std::cout << "=== v1 < v2 ===" << std::endl;
+		NAMESPACE::vector<int> v1(5, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v1[3] = 3;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[9] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[3] = 8;
+		v2[4] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+	}
+	{
+		std::cout << "=== v1 > v2 ===" << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(5, 8);
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[3] = 3;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v1[9] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v1[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v1[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v1[3] = 8;
+		v1[4] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+	}
+}
+
 void	vector_test() {
 	//simpleCreation();	//DONE
 	//vectorExpansion(); //DONE
@@ -851,7 +984,7 @@ void	vector_test() {
 	//vectorFrontBack(); //DONE
 	//vectorAssign(); // DONE
 	//vectorPushPopBack(); // DONE
-	vectorInsert(); // TODO
+	//vectorInsert(); // TODO
 	//vectorErase(); // DONE (check)
 	//vectorSwap(); // DONE
 	//vectorClear(); // DONE
@@ -861,4 +994,5 @@ void	vector_test() {
 	//vectorConstReverseIterator();
 	//vectorReverseIterator();
 	//isIntegralTest();
+	vectorEqual();
 }

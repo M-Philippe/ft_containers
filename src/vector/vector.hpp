@@ -278,16 +278,20 @@ namespace ft
 
     void insert (iterator position, size_type n, const value_type& val) {
       size_type indexPosition = position - begin();
-      if (n + size() >= _capacity) {
-        ft::vector<value_type> tmp(*this);
-        this->clear();
+      if (n + _size >= _capacity) {
+        ft::vector<value_type> tmp(begin() + indexPosition, end());
+        if (_capacity == 0)
+          this->reserve(1);
+        else if (n + _size > _capacity * 2)
+          this->reserve((n + _size) * 2);
+        else
+          this->reserve(_capacity * 2);
         size_type count = 0;
-        while (count < indexPosition)
-          this->push_back(tmp[count++]);
         for (size_type i = 0; i < n; i++)
-          this->push_back(val);
+          _alloc.construct(_array + indexPosition++, val);
         while (count < tmp.size())
-          this->push_back(tmp[count++]);
+          _alloc.construct(_array + indexPosition++, tmp[count++]);
+        _size += n;
       } else {
         ft::vector<value_type> tmp(begin() + indexPosition, end());
         for (size_type i = 0; i < n; i++) {
