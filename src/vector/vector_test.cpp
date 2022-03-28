@@ -912,6 +912,86 @@ bool	fooComp(int a, int b) {
 	return (a < b);
 }
 
+void	vectorComparison() {
+	std::cout << "Vector Comparison" << std::endl;
+	std::cout << std::boolalpha;
+	{
+		std::cout << "=== Same Size ===" << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+		v1[7] = 9;
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+		v2[3] = 9;
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+	}
+	{
+		std::cout << "=== v1.size() < v2.size() ===" << std::endl;
+		NAMESPACE::vector<int> v1(8, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+		v1[7] = 9;
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+		v2[3] = 9;
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+	}
+	{
+		std::cout << "=== v1.size() > v2.size() ===" << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(6, 8);
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+		v1[7] = 9;
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+		v2[3] = 9;
+		std::cout << (v1 == v2) << std::endl;
+		std::cout << (v1 != v2) << std::endl;
+		std::cout << (v1 < v2) << std::endl;
+		std::cout << (v1 <= v2) << std::endl;
+		std::cout << (v1 > v2) << std::endl;
+		std::cout << (v1 >= v2) << std::endl;
+	}
+}
+
 void	vectorEqual() {
 	std::cout << "NAMESPACE::equal" << std::endl;
 	/*
@@ -933,6 +1013,9 @@ void	vectorEqual() {
 		v1[9] = 42;
 		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
 		v2[9] = 78;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
+		v2[9] = 78;
+		v2[3] = 9;
 		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
 	}
 	{
@@ -994,5 +1077,6 @@ void	vector_test() {
 	//vectorConstReverseIterator();
 	//vectorReverseIterator();
 	//isIntegralTest();
+	vectorComparison();
 	vectorEqual();
 }

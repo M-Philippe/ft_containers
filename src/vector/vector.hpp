@@ -372,7 +372,47 @@ namespace ft
 
     allocator_type get_allocator() const { return (_alloc); }
 
+
+    /*
+    **      NON-MEMBERS FUNCTIONS
+    */
+
+    template <class T_, class Alloc_>
+    friend bool operator== (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
+    template <class T_, class Alloc_>
+    friend bool operator!= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
+    template <class T_, class Alloc_>
+    friend bool operator<  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
+    template <class T_, class Alloc_>
+    friend bool operator<= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
+    template <class T_, class Alloc_>
+    friend bool operator>  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
+    template <class T_, class Alloc_>
+    friend bool operator>= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
   }; // class vector
+
+  template <class T, class Alloc>
+  bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    if (lhs.size() != rhs.size())
+      return (false);
+    else
+      return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+  }
+
+  template <class T, class Alloc>
+  bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) { return !(rhs == lhs); }
+
+  template <class T, class Alloc>
+  bool operator<(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+    return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+  }
+
+  template <class T_, class Alloc_>
+  bool operator<= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs) { return !(rhs < lhs); }
+  template <class T_, class Alloc_>
+  bool operator>  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs) { return rhs < lhs; }
+  template <class T_, class Alloc_>
+  bool operator>= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs) { return !(lhs < rhs); }
 
 } // namespace ft
 
