@@ -389,6 +389,9 @@ namespace ft
     friend bool operator>  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
     template <class T_, class Alloc_>
     friend bool operator>= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
+
+    template <class T_, class Alloc_>
+    void swap (vector<T_, Alloc_>& x, vector<T_, Alloc_>& y);
   }; // class vector
 
   template <class T, class Alloc>
@@ -413,6 +416,9 @@ namespace ft
   bool operator>  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs) { return rhs < lhs; }
   template <class T_, class Alloc_>
   bool operator>= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs) { return !(lhs < rhs); }
+
+  template <class T, class Alloc>
+  void swap(vector<T, Alloc>& lhs, vector<T, Alloc>& rhs) { lhs.swap(rhs); }
 
 } // namespace ft
 

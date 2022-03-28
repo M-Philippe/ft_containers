@@ -836,6 +836,10 @@ void	vectorSwap() {
 	std::cout << std::endl;
 	for (u_long i = 0; i < vector2.size(); i++)
 		std::cout << vector2[i] << " ";
+	std::cout << std::endl;
+	std::cout << "Allocate on swapped vector" << std::endl;
+	for (unsigned long i = 0; i < 50; i++)
+		vector.push_back(i * 2);
 	std::cout << "\nBACK" << std::endl;
 	vector2.swap(vector);
 	for (u_long i = 0; i < vector.size(); i++)
@@ -863,6 +867,26 @@ void	vectorSwap() {
 	for (u_long i = 0; i < empty2.size(); i++)
 		std::cout << empty2[i] << " ";
 	std::cout << std::endl;
+	std::cout << "Swap Big vector" << std::endl;
+	NAMESPACE::vector<int> a(1000000, 3);
+	NAMESPACE::vector<int> b(1000000, 4);
+	a.swap(b);
+	NAMESPACE::vector<int>::iterator a_it = a.begin();
+	NAMESPACE::vector<int>::iterator b_it = b.begin();
+	while (a_it != a.end())
+		std::cout << *(a_it++) << " ";
+	std::cout << std::endl;
+	while (b_it != b.end())
+		std::cout << *(b_it++) << " ";
+	std::cout << std::endl;
+	a.swap(b);
+	a_it = a.begin();
+	b_it = b.begin();
+	while (a_it != a.end())
+		std::cout << *(a_it++) << " ";
+	std::cout << std::endl;
+	while (b_it != b.end())
+		std::cout << *(b_it++) << " ";
 	std::cout << "\n\t===" << std::endl;
 }
 
@@ -1069,7 +1093,7 @@ void	vector_test() {
 	//vectorPushPopBack(); // DONE
 	//vectorInsert(); // TODO
 	//vectorErase(); // DONE (check)
-	//vectorSwap(); // DONE
+	vectorSwap(); // DONE
 	//vectorClear(); // DONE
 	//vectorGetAllocator(); // DONE
 	//vectorConstIterator();
@@ -1077,6 +1101,6 @@ void	vector_test() {
 	//vectorConstReverseIterator();
 	//vectorReverseIterator();
 	//isIntegralTest();
-	vectorComparison();
-	vectorEqual();
+	//vectorComparison();
+	//vectorEqual();
 }
