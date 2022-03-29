@@ -195,6 +195,7 @@ namespace ft
     */
 
     reference operator[](size_type n) { return (_array[n]); }
+    const_reference operator[](size_type n) const { return (_array[n]); }
 
     reference at(size_type n)
     {

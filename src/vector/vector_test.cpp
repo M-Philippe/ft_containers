@@ -273,7 +273,16 @@ void	vectorReserve() {
 }
 
 void	vectorOperatorBrackets() {
-
+	std::cout << "Operator Brackets" << std::endl;
+	NAMESPACE::vector<int> vector(10);
+	for (int i = 0; i < 10; i++)
+		vector[i] = (i+1) * 2;
+	std::cout << vector[3] << std::endl;
+	const int a = vector[7];
+	std::cout << a << std::endl;
+	const NAMESPACE::vector<int> vector_const(10, 8);
+	int b = vector_const[3];
+	std::cout << b << std::endl;
 }
 
 void	vectorAt() {
@@ -1199,7 +1208,7 @@ void	vector_test() {
 	//vectorRbeginRend(); DONE
 	//vectorResize(); //DONE
 	//vectorReserve(); //DONE
-	////vectorOperatorBrackets(); TODO
+	vectorOperatorBrackets(); //DONE
 	//vectorAt(); //DONE
 	//vectorFrontBack(); //DONE
 	//vectorAssign(); // DONE
@@ -1215,5 +1224,5 @@ void	vector_test() {
 	//vectorReverseIterator();
 	//isIntegralTest();
 	//vectorComparison();
-	vectorEqual();
+	//vectorEqual();
 }
