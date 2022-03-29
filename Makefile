@@ -18,6 +18,7 @@ STD_FLAGS = -Wall -Wextra -g3 -fsanitize=address  -DSTD_TEST
 SRCS	=	src/main.cpp\
 				src/vector/vector_test.cpp\
 				src/vector/vector_test_iterator.cpp\
+				src/stack/stack_test.cpp\
 
 FT_OBJS	=	$(SRCS:%.cpp=ft_objs/%.o)
 STD_OBJS = $(SRCS:%.cpp=std_objs/%.o)
