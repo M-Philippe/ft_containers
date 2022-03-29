@@ -1090,8 +1090,8 @@ void	vectorEqual() {
 		NAMESPACE::vector<int> v2(10, 8);
 		v2[9] = 15;
 		std::cout << std::boolalpha;
-		std::cout << NAMESPACE::equal(v1.begin(), v1.end(), v2.begin()) << std::endl;
-		std::cout << NAMESPACE::equal(v1.begin(), v1.end(), v2.begin(), fooComp) << std::endl;
+		//std::cout << NAMESPACE::equal(v1.begin(), v1.end(), v2.begin()) << std::endl;
+		//std::cout << NAMESPACE::equal(v1.begin(), v1.end(), v2.begin(), fooComp) << std::endl;
 	}
  		std::cout << "=== NAMESPACE::lexicographical_compare ===" << std::endl;
 	{
@@ -1141,6 +1141,54 @@ void	vectorEqual() {
 		v1[4] = 1;
 		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end()) << std::endl;
 	}
+ 		std::cout << "=== NAMESPACE::lexicographical_compare with comp ===" << std::endl;
+	{
+		std::cout << "=== Same Size vector ===" << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v1[9] = 42;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[9] = 78;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[9] = 78;
+		v2[3] = 9;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+	}
+	{
+		std::cout << "=== v1 < v2 ===" << std::endl;
+		NAMESPACE::vector<int> v1(5, 8);
+		NAMESPACE::vector<int> v2(10, 8);
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v1[3] = 3;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[9] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[3] = 8;
+		v2[4] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+	}
+	{
+		std::cout << "=== v1 > v2 ===" << std::endl;
+		NAMESPACE::vector<int> v1(10, 8);
+		NAMESPACE::vector<int> v2(5, 8);
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v2[3] = 3;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v1[9] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v1[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v1[3] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+		v1[3] = 8;
+		v1[4] = 1;
+		std::cout << NAMESPACE::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), fooComp) << std::endl;
+	}
 }
 
 void	vector_test() {
@@ -1154,7 +1202,7 @@ void	vector_test() {
 	////vectorOperatorBrackets(); TODO
 	//vectorAt(); //DONE
 	//vectorFrontBack(); //DONE
-	vectorAssign(); // DONE
+	//vectorAssign(); // DONE
 	//vectorPushPopBack(); // DONE
 	//vectorInsert(); // TODO
 	//vectorErase(); // DONE (check)
@@ -1167,5 +1215,5 @@ void	vector_test() {
 	//vectorReverseIterator();
 	//isIntegralTest();
 	//vectorComparison();
-	//vectorEqual();
+	vectorEqual();
 }
