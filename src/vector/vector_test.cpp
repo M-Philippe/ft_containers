@@ -677,6 +677,56 @@ void	vectorInsert() {
 			std::cout << *(it)++ << " ";
 		std::cout << std::endl;
 	}
+	std::cout << "Insert with range" << std::endl;
+	{
+		NAMESPACE::vector<int> vector(10, 8);
+		NAMESPACE::vector<int> vectorToAdd(4, 42);
+		vector.insert(vector.begin(), vectorToAdd.begin(), vectorToAdd.end());
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it_add = vectorToAdd.begin();
+		while (it_add != vectorToAdd.end())
+			std::cout << *(it_add++) << " ";
+		std::cout << std::endl;
+		vector.insert(vector.end(), vectorToAdd.begin() + 1, vectorToAdd.end() - 1);
+		it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+		it_add = vectorToAdd.begin();
+		while (it_add != vectorToAdd.end())
+			std::cout << *(it_add++) << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== Big Insert Range ===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		NAMESPACE::vector<int> vectorToAdd(1000000, 42);
+		vector.insert(vector.begin(), vectorToAdd.begin(), vectorToAdd.end());
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+		NAMESPACE::vector<int>::iterator it_add = vectorToAdd.begin();
+		while (it_add != vectorToAdd.end())
+			std::cout << *(it_add++) << " ";
+		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== Big Insert Range middle ===" << std::endl;
+		NAMESPACE::vector<int> vector(10, 8);
+		for (unsigned long i = 0; i < 10000; i++) {
+			NAMESPACE::vector<int> vectorToAdd(5, i * 2);
+			std::cout << "I: " << i << std::endl;
+			vector.insert(vector.begin(), vectorToAdd.begin() + 2, vectorToAdd.end() - 1);
+		}
+		NAMESPACE::vector<int>::iterator it = vector.begin();
+		while (it != vector.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+	}
 }
 
 void	vectorErase() {
@@ -1091,9 +1141,9 @@ void	vector_test() {
 	//vectorFrontBack(); //DONE
 	//vectorAssign(); // DONE
 	//vectorPushPopBack(); // DONE
-	//vectorInsert(); // TODO
+	vectorInsert(); // TODO
 	//vectorErase(); // DONE (check)
-	vectorSwap(); // DONE
+	//vectorSwap(); // DONE
 	//vectorClear(); // DONE
 	//vectorGetAllocator(); // DONE
 	//vectorConstIterator();

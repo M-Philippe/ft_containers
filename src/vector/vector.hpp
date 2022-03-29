@@ -306,6 +306,39 @@ namespace ft
       }
     }
 
+    template <class InputIterator>
+    void insert (iterator position, InputIterator first, InputIterator last,
+    typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) {
+      size_type indexPosition = position - begin();
+      size_type n = last - first;
+      if (n + _size >= _capacity) {
+        ft::vector<value_type> tmp(begin() + indexPosition, end());
+        if (_capacity == 0)
+          this->reserve(1);
+        else if (n + _size > _capacity * 2)
+          this->reserve((n + _size) * 2);
+        else
+          this->reserve(_capacity * 2);
+        size_type count = 0;
+        while (first != last)
+          _alloc.construct(this->_array + indexPosition++, *(first++));
+        while (count < tmp.size())
+          _alloc.construct(this->_array + indexPosition++, tmp[count++]);
+        _size += n;
+      } else {
+        ft::vector<value_type> tmp(begin() + indexPosition, end());
+        while (first != last) {
+          _alloc.destroy(this->_array + indexPosition);
+          _alloc.construct(this->_array + indexPosition++, *(first++));
+        }
+        for (size_type i = 0; i < tmp.size(); i++) {
+          _alloc.destroy(this->_array + indexPosition);
+          _alloc.construct(this->_array + indexPosition++, tmp[i]);
+        }
+        _size += n;
+      }
+    }
+
     iterator erase(iterator position)
     {
       iterator it = position;
