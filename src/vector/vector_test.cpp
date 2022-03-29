@@ -333,7 +333,7 @@ void vectorFrontBack() {
 	while (!vector.empty()) {
 		vector.clear();
 	}
-	std::cout << vector.size() << " " << vector.capacity() << " " << vector.front() << " " << vector.back() << std::endl;
+	std::cout << vector.size() << " " << vector.capacity() << " " << vector.front() << " " << std::endl;
 	std::cout << "\n\t===" << std::endl;
 }
 
@@ -1201,28 +1201,28 @@ void	vectorEqual() {
 }
 
 void	vector_test() {
-	//simpleCreation();	//DONE
-	//vectorExpansion(); //DONE
-	//vectorOperatorEqual(); //DONE
-	//vectorBeginEnd(); DONE
-	//vectorRbeginRend(); DONE
-	//vectorResize(); //DONE
-	//vectorReserve(); //DONE
-	vectorOperatorBrackets(); //DONE
-	//vectorAt(); //DONE
-	//vectorFrontBack(); //DONE
-	//vectorAssign(); // DONE
-	//vectorPushPopBack(); // DONE
-	//vectorInsert(); // TODO
-	//vectorErase(); // DONE (check)
-	//vectorSwap(); // DONE
-	//vectorClear(); // DONE
-	//vectorGetAllocator(); // DONE
-	//vectorConstIterator();
-	//vectorIterator();
-	//vectorConstReverseIterator();
-	//vectorReverseIterator();
-	//isIntegralTest();
-	//vectorComparison();
-	//vectorEqual();
+	simpleCreation();	// DONE
+	vectorExpansion(); // DONE
+	vectorOperatorEqual(); // DONE
+	vectorBeginEnd(); // DONE
+	vectorRbeginRend(); // DONE
+	vectorResize(); // DONE
+	vectorReserve(); // DONE
+	vectorOperatorBrackets(); // DONE
+	vectorAt(); // DONE
+	vectorFrontBack(); // DONE
+	vectorAssign(); // DONE
+	vectorPushPopBack(); // DONE
+	vectorInsert(); // TODO
+	vectorErase(); // DONE
+	vectorSwap(); // DONE
+	vectorClear(); // DONE
+	vectorGetAllocator(); // DONE
+	vectorConstIterator(); // DONE
+	vectorIterator(); // DONE
+	vectorConstReverseIterator(); // DONE
+	vectorReverseIterator(); // DONE
+	isIntegralTest(); // DONE
+	vectorComparison(); // DONE
+	vectorEqual(); // DONE
 }
