@@ -222,11 +222,11 @@ namespace ft
     **      MODIFIERS
     */
 
-    /*
-    range (1)
     template <class InputIterator>
-    void assign (InputIterator first, InputIterator last);
-    */
+    void assign (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) {
+      this->clear();
+      *this = vector(first, last);
+    }
 
     void assign(size_type n, const value_type &val)
     {

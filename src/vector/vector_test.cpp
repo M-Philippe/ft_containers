@@ -387,6 +387,21 @@ void	vectorAssign() {
 		std::cout << v.size() << " " << v.capacity() << " " << v.max_size() << std::endl;
 		std::cout << v.empty() << std::endl;
 	}
+	std::cout << "=== Assign range ===" << std::endl;
+	{
+		NAMESPACE::vector<int> vectorToAssign(10, 7);
+		NAMESPACE::vector<int> vectorBase(1000, 42);
+		vectorToAssign.assign(vectorBase.begin(), vectorBase.end() - 1);
+		NAMESPACE::vector<int>::iterator it = vectorToAssign.begin();
+		while (it != vectorToAssign.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+		vectorToAssign.assign(vectorBase.begin() + 4, vectorBase.end() - 77);
+		it = vectorToAssign.begin();
+		while (it != vectorToAssign.end())
+			std::cout << *(it++) << " ";
+		std::cout << std::endl;
+	}
 }
 
 void	vectorPushPopBack() {
@@ -1139,9 +1154,9 @@ void	vector_test() {
 	////vectorOperatorBrackets(); TODO
 	//vectorAt(); //DONE
 	//vectorFrontBack(); //DONE
-	//vectorAssign(); // DONE
+	vectorAssign(); // DONE
 	//vectorPushPopBack(); // DONE
-	vectorInsert(); // TODO
+	//vectorInsert(); // TODO
 	//vectorErase(); // DONE (check)
 	//vectorSwap(); // DONE
 	//vectorClear(); // DONE
