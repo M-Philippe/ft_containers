@@ -9,9 +9,6 @@ namespace ft {
 	class stack {
 
 		public:
-			//value_type	The first template parameter (T)	Type of the elements
-			//container_type	The second template parameter (Container)	Type of the underlying container
-			//size_type	an unsigned integral type	usually the same as size_t
 			typedef T	value_type;
 			typedef Container	container_type;
 			typedef size_t	size_typ;
