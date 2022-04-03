@@ -14,7 +14,7 @@
 #include <string.h>
 
 struct fooStruct {
-	std::string	message = "foo";
+	std::string	message;
 };
 
 void	printVector(NAMESPACE::vector<int> vector);

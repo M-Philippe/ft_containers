@@ -28,22 +28,22 @@ void	simpleCreation() {
 	std::cout << "\n\t===" << std::endl;
 	std::cout << "=== RangeConstructor ===" << std::endl;
 	NAMESPACE::vector<int> vector(18, 5);
-	for (u_long i = 0; i < vector.size(); i++)
+	for (unsigned long i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << " ";
 	std::cout << std::endl;
 	//struct fooStruct foo;
 	//NAMESPACE::vector<int> vectorIterator(foo, foo);
 	NAMESPACE::vector<int> vectorIterator(vector.begin(), vector.end());
-	for (u_long i = 0; i < vectorIterator.size(); i++)
+	for (unsigned long i = 0; i < vectorIterator.size(); i++)
 		std::cout << vectorIterator[i] << " ";
 	NAMESPACE::vector<int> a(5, 10);
 	NAMESPACE::vector<int> b(a);
-	for (u_long i = 0; i < a.size(); i++) {
+	for (unsigned long i = 0; i < a.size(); i++) {
 		if (a[i] != b[i])
 			printError("False");
 	}
 	a.clear();
-	for (u_long i = 0; i < a.size(); i++) {
+	for (unsigned long i = 0; i < a.size(); i++) {
 		std::cout << b[i] << std::endl;
 	}
 	std::cout << b.size() <<  " " << b.capacity() << " " << b.max_size() << std::endl;
@@ -897,18 +897,18 @@ void	vectorSwap() {
 	NAMESPACE::vector<int> vector(3, 100);
 	NAMESPACE::vector<int> vector2(5, 200);
 
-	for (u_long i = 0; i < vector.size(); i++)
+	for (unsigned long i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << " ";
 	std::cout << std::endl;
-	for (u_long i = 0; i < vector2.size(); i++)
+	for (unsigned long i = 0; i < vector2.size(); i++)
 		std::cout << vector2[i] << " ";
 	std::cout << std::endl;
 	std::cout << "AFTER" << std::endl;
 	vector.swap(vector2);
-	for (u_long i = 0; i < vector.size(); i++)
+	for (unsigned long i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << " ";
 	std::cout << std::endl;
-	for (u_long i = 0; i < vector2.size(); i++)
+	for (unsigned long i = 0; i < vector2.size(); i++)
 		std::cout << vector2[i] << " ";
 	std::cout << std::endl;
 	std::cout << "Allocate on swapped vector" << std::endl;
@@ -916,18 +916,18 @@ void	vectorSwap() {
 		vector.push_back(i * 2);
 	std::cout << "\nBACK" << std::endl;
 	vector2.swap(vector);
-	for (u_long i = 0; i < vector.size(); i++)
+	for (unsigned long i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << " ";
 	std::cout << std::endl;
-	for (u_long i = 0; i < vector2.size(); i++)
+	for (unsigned long i = 0; i < vector2.size(); i++)
 		std::cout << vector2[i] << " ";
 	std::cout << "\n=== On empty vector ===" << std::endl;
 	NAMESPACE::vector<int> empty;
 	empty.swap(vector);
-	for (u_long i = 0; i < vector.size(); i++)
+	for (unsigned long i = 0; i < vector.size(); i++)
 		std::cout << vector[i] << " ";
 	std::cout << std::endl;
-	for (u_long i = 0; i < empty.size(); i++)
+	for (unsigned long i = 0; i < empty.size(); i++)
 		std::cout << empty[i] << " ";
 	std::cout << std::endl;
 	empty.swap(vector);
@@ -935,10 +935,10 @@ void	vectorSwap() {
 	std::cout << empty.empty() << std::endl;
 	NAMESPACE::vector<int> empty2;
 	empty.swap(empty2);
-	for (u_long i = 0; i < empty.size(); i++)
+	for (unsigned long i = 0; i < empty.size(); i++)
 		std::cout << empty[i] << " ";
 	std::cout << std::endl;
-	for (u_long i = 0; i < empty2.size(); i++)
+	for (unsigned long i = 0; i < empty2.size(); i++)
 		std::cout << empty2[i] << " ";
 	std::cout << std::endl;
 	std::cout << "Swap Big vector" << std::endl;
@@ -987,23 +987,21 @@ void	vectorGetAllocator() {
 void isIntegralTest() {
 	//std::cout << std::boolalpha;
 	std::cout << "is_integral Test" << std::endl;
-	std::cout << NAMESPACE::is_integral<bool>::value << std::endl;
-	std::cout << std::boolalpha;
-	std::cout << NAMESPACE::is_integral<char>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<char16_t>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<char32_t>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<wchar_t>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<signed char>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<short int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<long int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<long long int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<unsigned char>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<unsigned short int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<unsigned int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<unsigned long int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<unsigned long long int>::value << std::endl;
-	std::cout << NAMESPACE::is_integral<struct fooStruct>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<bool>::value << std::endl;
+	//std::cout << std::boolalpha;
+	//std::cout << NAMESPACE::is_integral<char>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<wchar_t>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<signed char>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<short int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<long int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<long long int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<unsigned char>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<unsigned short int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<unsigned int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<unsigned long int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<unsigned long long int>::value << std::endl;
+	//std::cout << NAMESPACE::is_integral<struct fooStruct>::value << std::endl;
 }
 
 bool	fooComp(int a, int b) {

@@ -19,32 +19,33 @@ namespace ft {
 
   }; // length_error
 
-  class out_of_range : public std::exception
-  {
+  class out_of_range : public std::exception {
     public:
       out_of_range(size_t size, size_t n) {
         _size = size;
         _n = n;
         assemble_error_message();
       }
+      ~out_of_range() throw() {}
 
       void assemble_error_message() {
-        ret = "vector::_M_range_check: __n (which is ";
+        _ret = "vector::_M_range_check: __n (which is ";
         char s[sizeof(int) * 8 + 1];
         sprintf(s, "%zu", _n);
-        ret += s;
-        ret += ") >= this->size() (which is ";
+        _ret += s;
+        _ret += ") >= this->size() (which is ";
         sprintf(s, "%zu", _size);
-        ret = ret + s;
-        ret += ")";
+        _ret = _ret + s;
+        _ret += ")";
       }
 
-      const char* what() const throw() { return(ret.c_str()); }
+      const char* what() const throw() { return(_ret.c_str()); }
+
 
     private:
       size_t _size;
       size_t _n;
-      std::string ret;
+      std::string _ret;
   }; // out_of_range
 
 } // namespace ft

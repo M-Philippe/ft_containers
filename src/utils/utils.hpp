@@ -108,8 +108,6 @@ namespace ft {
 
 	template <> struct is_integral_type<bool> : public is_integral_res<true, bool> {};
 	template <> struct is_integral_type<char> : public is_integral_res<true, char> {};
-	template <> struct is_integral_type<char16_t> : public is_integral_res<true, char16_t> {};
-	template <> struct is_integral_type<char32_t> : public is_integral_res<true, char32_t> {};
 	template <> struct is_integral_type<wchar_t> : public is_integral_res<true, wchar_t> {};
 	template <> struct is_integral_type<signed char> : public is_integral_res<true, signed char> {};
 	template <> struct is_integral_type<short int> : public is_integral_res<true, short int> {};
@@ -124,6 +122,7 @@ namespace ft {
 
 	template <typename T>
   struct is_integral : public is_integral_type<T> { };
+
 } // namespace ft
 
 #endif
