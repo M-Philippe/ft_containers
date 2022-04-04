@@ -110,8 +110,8 @@ namespace ft {
 				-	check rules / fix tree.
 		*/
 
-		bool	insert_branch_left(node_pointer current, const value_type& val) {
-			if (current->leftChild == NULL) {
+		bool	insert_in_tree(node_pointer current, const value_type& val) {
+			if (current->leftChild == NULL && val.first < current->data->first) {
 				node_pointer nodeAdded = _alloc_node.allocate(1);
 				nodeAdded->data = _alloc.allocate(1);
 				_alloc.construct(nodeAdded->data, val);
@@ -120,22 +120,9 @@ namespace ft {
 				nodeAdded->color = false;
 				current->leftChild = nodeAdded;
 				_size++;
-				//balance_tree();
+				// balance tree
 				return true;
-			} else {
-				current = current->leftChild;
-				if (val.first == current->data->first)
-					return false;
-				else if (val.first < current->data->first)
-					return insert_branch_left(current, val);
-				else if (val.first > current->data->first)
-					return insert_branch_right(current, val);
-			}
-			return (false);
-		}
-
-		bool	insert_branch_right(node_pointer current, const value_type& val) {
-			if (current->rightChild == NULL) {
+			} else if (current->rightChild == NULL && val.first > current->data->first) {
 				node_pointer nodeAdded = _alloc_node.allocate(1);
 				nodeAdded->data = _alloc.allocate(1);
 				_alloc.construct(nodeAdded->data, val);
@@ -144,17 +131,18 @@ namespace ft {
 				nodeAdded->color = false;
 				current->rightChild = nodeAdded;
 				_size++;
+				// balance tree
 				return true;
-			} else {
-				current = current->rightChild;
+			}
+			else {
 				if (val.first == current->data->first)
 					return false;
 				else if (val.first < current->data->first)
-					return insert_branch_left(current, val);
+					return insert_in_tree(current->leftChild, val);
 				else if (val.first > current->data->first)
-					return insert_branch_right(current, val);
+					return insert_in_tree(current->rightChild, val);
 			}
-			return (false);
+			return false;
 		}
 
 		// true if created elements or false if already existing elements.
@@ -170,18 +158,9 @@ namespace ft {
 				_alloc.construct(_head->data, val);
 				_size++;
 				return (true);
-			} else {
-				node_pointer current = _head;
-				if (current->data->first == val.first)
-					return (false);
-				else if (val.first < current->data->first) {
-					return insert_branch_left(current, val);
-				}
-				else if (val.first > current->data->first) {
-					return insert_branch_right(current, val);
-				}
 			}
-			return (false);
+			node_pointer current = _head;
+			return insert_in_tree(current, val);
 		}
 
 		void	printNode(node_pointer node) {
