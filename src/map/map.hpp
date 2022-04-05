@@ -8,6 +8,8 @@
 #include "map_iterator.hpp"
 #include "../utils/utils.hpp"
 
+#include <stdlib.h>
+
 namespace ft {
 
 	template < class Key /* map::key_type */, class T /* map::mapped_type */, class Compare = std::less<Key> /* map::key_compare */, class Alloc = std::allocator<pair<const Key,T> /* map::allocator_type */> >
@@ -120,6 +122,30 @@ namespace ft {
 			return false;
 		}
 
+		void	rotateAroundGrandparentOuterchild(node_pointer node) {
+			// node don't move.
+			node_pointer parent = node->parent;
+			node_pointer grandparent = node->parent->parent;
+			if (grandparent == _head)
+				_head = node;
+			if (grandparent->parent->data->first < grandparent->data->first) {
+				grandparent->parent->rightChild = parent;
+			} else
+				grandparent->parent->leftChild = parent;
+			if (node == parent->leftChild) {
+				grandparent->parent = parent;
+				parent->rightChild = grandparent;
+			} else {
+				grandparent->parent = parent;
+				parent->leftChild = grandparent;
+			}
+			grandparent->leftChild = NULL;
+			grandparent->rightChild = NULL;
+			parent->black = true;
+			grandparent->black = false;
+		}
+
+
 		void	rotateAroundGrandparent(node_pointer node, node_pointer parent, node_pointer grandparent) {
 			(void)parent;
 			if (grandparent->parent == NULL)
@@ -142,13 +168,13 @@ namespace ft {
 		}
 
 		void	printNodeAndChild(node_pointer node) {
-			std::cout << "NODE: " << node->data->first << (node->black == true ? " | black" : " | white") << std::endl;
+			std::cout << "NODE: " << node->data->first << (node->black == true ? " | black" : " | red") << std::endl;
 			if (node->leftChild != NULL)
-					std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data->first << (node->leftChild->black == true ? " | black" : " | white") << std::endl;
+					std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data->first << (node->leftChild->black == true ? " | black" : " | red") << std::endl;
 			else
 					std::cout << "\t\tLEFT_CHILD: NULL" << std::endl;
 			if (node->rightChild != NULL)
-					std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data->first << (node->rightChild->black == true ? " | black" : " | white") << std::endl;
+					std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data->first << (node->rightChild->black == true ? " | black" : " | red") << std::endl;
 			else
 					std::cout << "\t\tRIGHT_CHILD: NULL" << std::endl;
 		}
@@ -188,15 +214,21 @@ namespace ft {
 		*/
 		void	fixTreeProperties(node_pointer node) {
 			node_pointer uncle = getUncleNode(node);
+			if (node == _head && node->black == true)
+				return;
 			if (node->parent->black == false && !isNodeBlack(uncle)) { /* case 1 */
 				node->parent->black = true;
 				uncle->black = true;
 				if (node->parent->parent != _head)
 					node->parent->parent->black = false;
 				fixTreeProperties(node->parent->parent);
-			} else if (node->parent->black == false && isNodeBlack(uncle) && isInnerGrandchild(node, node->parent, node->parent->parent)) { /* case 2 */
+			} else if (node->parent->black == false && isNodeBlack(uncle) && isInnerGrandchild(node, node->parent, node->parent->parent)) {
+				/* case 2 */
 				// rotate around parent, rotate around grandparent and recolor.
 				rotateAroundParent(node, node->parent, node->parent->parent);
+			} else if (node->parent->black == false && isNodeBlack(uncle) && !isInnerGrandchild(node, node->parent, node->parent->parent)) {
+				/* case 3 */
+				rotateAroundGrandparentOuterchild(node);
 			}
 		}
 

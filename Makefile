@@ -12,8 +12,8 @@
 
 CPP	=	clang++
 
-FT_FLAGS	=	-Wall -Wextra -g3 -std=c++98
-STD_FLAGS = -Wall -Wextra -g3 -std=c++98  -DSTD_TEST
+FT_FLAGS	=	-Wall -Wextra -g3 -std=c++98 -fsanitize=address
+STD_FLAGS = -Wall -Wextra -g3 -std=c++98 -fsanitize=address  -DSTD_TEST
 
 SRCS	=	src/main.cpp\
 				src/vector/vector_test.cpp\

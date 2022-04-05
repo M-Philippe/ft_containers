@@ -8,12 +8,7 @@
 #include <time.h>       /* time */
 #include <set>
 
-
-
-void	map_test() {
-	std::cout << "map Test" << std::endl;
-	//for (int i = 0; i < 1000000; i++) {
-	srand(time(NULL));
+void	map_case1() {
 	NAMESPACE::map<int, float> map;
 	map.insert(NAMESPACE::make_pair(42, 1.02));
 	map.insert(NAMESPACE::make_pair(2, 2.56));
@@ -26,6 +21,29 @@ void	map_test() {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
 		it++;
 	}
-	//map.print();
 	std::cout << "===" << std::endl;
+}
+
+void	map_case2() {
+	NAMESPACE::map<int, float> map;
+	map.insert(NAMESPACE::make_pair(17, 1.02));
+	map.insert(NAMESPACE::make_pair(9, 1.32));
+	map.insert(NAMESPACE::make_pair(19, 1.82));
+	map.insert(NAMESPACE::make_pair(75, 1.92));
+	map.insert(NAMESPACE::make_pair(81, 1.12));
+	std::cout << "Print Vector:" << std::endl;
+	NAMESPACE::map<int, float>::iterator it = map.begin();
+	while (it != map.end()) {
+		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+		it++;
+	}
+	std::cout << "===" << std::endl;
+}
+
+void	map_test() {
+	std::cout << "map Test" << std::endl;
+	srand(time(NULL));
+	map_case1();
+	map_case2();
+	return;
 }
