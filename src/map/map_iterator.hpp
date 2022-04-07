@@ -40,7 +40,9 @@ namespace ft {
 
 			reference operator*() { return *_node->data; }
 
-			pointer operator->() { return _node->data; }
+			//pointer operator->() { return _node->data; }
+			// The cast is temporary. Typedef will be wired when map_iterator will cease to be dependant of pair data.
+			ft::pair<const Key, T>* operator->() { return reinterpret_cast<ft::pair<const Key, T>*>(_node->data); }
 
 			void	moveToLeftmostNode() {
 				while (_node->leftChild != NULL)
@@ -62,7 +64,7 @@ namespace ft {
 					_node = _node->rightChild;
 					return *this;
 				}
-				return (*this);
+				return *this;
 			}
 
 			/* post-increment */
