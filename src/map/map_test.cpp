@@ -77,7 +77,7 @@ void	map_case1() {
 	map.insert(NAMESPACE::make_pair(9, 2.00));
 	map.insert(NAMESPACE::make_pair(1, 2.70));
 	map.insert(NAMESPACE::make_pair(78, 4.98));
-	std::cout << "Print Vector:" << std::endl;
+	std::cout << "Print Map:" << std::endl;
 	NAMESPACE::map<int, float>::iterator it = map.begin();
 	while (it != map.end()) {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
@@ -93,7 +93,7 @@ void	map_case2() {
 	map.insert(NAMESPACE::make_pair(19, 1.82));
 	map.insert(NAMESPACE::make_pair(75, 1.92));
 	map.insert(NAMESPACE::make_pair(81, 1.12));
-	std::cout << "Print Vector:" << std::endl;
+	std::cout << "Print Map:" << std::endl;
 	NAMESPACE::map<int, float>::iterator it = map.begin();
 	while (it != map.end()) {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
@@ -125,7 +125,7 @@ void	map_case3() {
 	map.insert(NAMESPACE::make_pair(1, 1.12));
 	map.insert(NAMESPACE::make_pair(3, 1.12));
 	map.insert(NAMESPACE::make_pair(80, 1.12));
-	std::cout << "Print Vector:" << std::endl;
+	std::cout << "Print Map:" << std::endl;
 	NAMESPACE::map<int, float>::iterator it = map.begin();
 	while (it != map.end()) {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;

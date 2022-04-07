@@ -7,15 +7,15 @@
 #include <stdlib.h> // tmp
 
 namespace ft {
-	template <typename T, typename Key, typename N /* node_pointer */>
+	template <typename N /* node_pointer */, typename T /* node_pointer->data */>
 	class map_iterator : public ft::iterator<ft::bidirectional_iterator_tag, T>
 	{
 
 		public:
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::value_type value_type;
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::difference_type difference_type;
-			typedef typename ft::pair<const Key, T>* pointer;
-			typedef typename ft::pair<const Key, T>& reference;
+			typedef T* pointer;
+			typedef T& reference;
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category iterator_category;
 			typedef N node_pointer;
 
@@ -39,10 +39,7 @@ namespace ft {
 			~map_iterator() {}
 
 			reference operator*() { return *_node->data; }
-
-			//pointer operator->() { return _node->data; }
-			// The cast is temporary. Typedef will be wired when map_iterator will cease to be dependant of pair data.
-			ft::pair<const Key, T>* operator->() { return reinterpret_cast<ft::pair<const Key, T>*>(_node->data); }
+			pointer operator->() { return _node->data; }
 
 			void	moveToLeftmostNode() {
 				while (_node->leftChild != NULL)

@@ -3,6 +3,8 @@
 
 #include "map_iterator.hpp"
 
+#include <iostream> // tmp (std::cout, std::endl)
+
 namespace ft {
 
 	template <typename T, class Compare, class Alloc>
@@ -13,6 +15,7 @@ namespace ft {
 			typedef T	value_type;
 			typedef Alloc allocator_type;
 			typedef typename allocator_type::pointer pointer;
+			typedef typename allocator_type::reference reference;
 			typedef Compare data_compare;
 			typedef size_t size_type;
 
@@ -29,7 +32,7 @@ namespace ft {
 
 		public:
 
-			typedef typename ft::map_iterator<int, float, node_pointer> iterator;
+			typedef typename ft::map_iterator<node_pointer, T> iterator;
 
 			iterator begin() {
 				return iterator(_head);
@@ -76,6 +79,14 @@ namespace ft {
 				}
 				node_pointer current = _head;
 				return insert_in_tree(current, val);
+			}
+
+			void	print() {
+				node* node = _head;
+				std::cout << "STARTING BY HEAD: " << std::endl;
+				printNodeAndChild(node);
+				printX(node->leftChild);
+				printX(node->rightChild);
 			}
 
 		private:
@@ -286,28 +297,16 @@ namespace ft {
 			printX(node->rightChild);
 		}
 
-		void	print() {
-			node* node = _head;
-			std::cout << "STARTING BY HEAD: " << std::endl;
-			printNodeAndChild(node);
-			printX(node->leftChild);
-			printX(node->rightChild);
+		void	recursive_deletion(node_pointer node) {
+			if (!node)
+				return;
+			recursive_deletion(node->leftChild);
+			recursive_deletion(node->rightChild);
+			_data_allocator.destroy(node->data);
+			_data_allocator.deallocate(node->data, 1);
+			_node_allocator.deallocate(node, 1);
+			_size--;
 		}
-
-			void	recursive_deletion(node_pointer node) {
-				if (!node)
-					return;
-				recursive_deletion(node->leftChild);
-				recursive_deletion(node->rightChild);
-				_data_allocator.destroy(node->data);
-				_data_allocator.deallocate(node->data, 1);
-				_node_allocator.deallocate(node, 1);
-				_size--;
-			}
-
-		private:
-
-
 
 			allocator_type	_data_allocator;
 			allocator_node	_node_allocator;
