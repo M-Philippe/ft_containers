@@ -7,8 +7,37 @@
 
 namespace ft {
 
-	template <typename T, class Compare, class Alloc>
-	class bst_red_black {
+	template <typename T, class Compare, bool instance>
+	class bst_red_black_map {};
+
+	template <typename T, class Compare>
+	class bst_red_black_map<T, Compare, true> {
+		public:
+			typedef Compare data_compare;
+			bst_red_black_map() { _comp = data_compare(); }
+			~bst_red_black_map() {}
+			bool comp_binded(T lhs, T rhs) {
+				return _comp(lhs.first, rhs.first);
+			}
+		private:
+			data_compare _comp;
+	};
+
+	template <typename T, class Compare>
+	class bst_red_black_map<T, Compare, false> {
+		public:
+			typedef Compare data_compare;
+			bst_red_black_map() { _comp = data_compare(); }
+			~bst_red_black_map() {}
+			bool comp_binded(T lhs, T rhs) {
+				return _comp(lhs, rhs);
+			}
+		private:
+			data_compare _comp;
+	};
+
+	template <typename T, class Compare, class Alloc, bool instance_of_map = true>
+	class bst_red_black : bst_red_black_map<T, Compare, instance_of_map> {
 
 		private:
 
@@ -250,7 +279,7 @@ namespace ft {
 			else {
 				if (val == current->data)
 					return false;
-				else if (_comp(val.first, current->data.first))
+				else if (this->comp_binded(val, current->data)) /* val.first < current->data.first */
 					return insert_in_tree(current->leftChild, val);
 				else if (val.first > current->data.first)
 					return insert_in_tree(current->rightChild, val);
