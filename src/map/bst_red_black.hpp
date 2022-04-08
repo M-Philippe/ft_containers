@@ -20,11 +20,12 @@ namespace ft {
 			typedef size_t size_type;
 
 			typedef struct map_node {
+				T data;
 				map_node* leftChild;
 				map_node*	rightChild;
 				map_node*	parent;
 				bool	black;
-				pointer data;
+				map_node(const T& newData = T()) : data(newData), leftChild(NULL), rightChild(NULL), parent(NULL), black(false) {}
 			} node;
 
 		typedef typename Alloc::template rebind<node>::other allocator_node;
@@ -32,15 +33,13 @@ namespace ft {
 
 		public:
 
-			typedef typename ft::map_iterator<node_pointer, T> iterator;
+			typedef typename ft::map_iterator<node_pointer, T, Compare> iterator;
+			typedef typename ft::map_iterator<node_pointer, const T, Compare> const_iterator;
 
-			iterator begin() {
-				return iterator(_head);
-			}
-
-			iterator end() {
-				return iterator(_head, true);
-			}
+			iterator begin() { return iterator(_head); }
+			const_iterator begin() const { return const_iterator(_head); }
+			iterator end() { return iterator(_head, true); }
+			const_iterator end() const { return const_iterator(_head, true); }
 
 			bst_red_black(const data_compare& comp = data_compare(), const allocator_type& alloc = allocator_type()) {
 				_data_allocator = alloc;
@@ -50,6 +49,12 @@ namespace ft {
 				_size = 0;
 			}
 
+			node_pointer new_node(const T& newData = T()) {
+				node_pointer node = _node_allocator.allocate(1);
+				_node_allocator.construct(node, newData);
+				return node;
+			}
+
 			~bst_red_black() {
 				if (!_head)
 					return;
@@ -57,8 +62,7 @@ namespace ft {
 					recursive_deletion(_head->leftChild);
 				if (_head->rightChild)
 					recursive_deletion(_head->rightChild);
-				_data_allocator.destroy(_head->data);
-				_data_allocator.deallocate(_head->data, 1);
+				_node_allocator.destroy(_head);
 				_node_allocator.deallocate(_head, 1);
 				_size--;
 			}
@@ -66,16 +70,10 @@ namespace ft {
 			// true if created elements or false if already existing elements.
 			bool insert (const value_type& val) {
 				if (!_head) {
-					_head = _node_allocator.allocate(1);
-					value_type t = val;
-					_head->leftChild = NULL;
-					_head->rightChild = NULL;
-					_head->parent = NULL;
+					_head = new_node(val);
 					_head->black = true;
-					_head->data = _data_allocator.allocate(1);
-					_data_allocator.construct(_head->data, val);
 					_size++;
-					return (true);
+					return true;
 				}
 				node_pointer current = _head;
 				return insert_in_tree(current, val);
@@ -91,12 +89,12 @@ namespace ft {
 
 		private:
 
-				node_pointer getUncleNode(node_pointer node) {
+		node_pointer getUncleNode(node_pointer node) {
 			if (node->parent == NULL || node->parent->parent == NULL)
 				return NULL;
 			node_pointer parentNode = node->parent;
 			node_pointer grandParentNode = parentNode->parent;
-			if (parentNode->data->first < grandParentNode->data->first)
+			if (parentNode->data.first < grandParentNode->data.first)
 				return grandParentNode->rightChild;
 			else
 				return grandParentNode->leftChild;
@@ -110,9 +108,9 @@ namespace ft {
 		}
 
 		bool isInnerGrandchild(node_pointer node, node_pointer parent, node_pointer grandparent) {
-			if (parent->data->first < grandparent->data->first && parent->data->first < node->data->first)
+			if (parent->data.first < grandparent->data.first && parent->data.first < node->data.first)
 				return true;
-			else if (parent->data->first > grandparent->data->first && parent->data->first > node->data->first)
+			else if (parent->data.first > grandparent->data.first && parent->data.first > node->data.first)
 				return true;
 			return false;
 		}
@@ -123,7 +121,7 @@ namespace ft {
 			node_pointer grandparent = node->parent->parent;
 			if (grandparent == _head)
 				_head = node;
-			if (grandparent->parent->data->first < grandparent->data->first) {
+			if (grandparent->parent->data.first < grandparent->data.first) {
 				grandparent->parent->rightChild = parent;
 			} else
 				grandparent->parent->leftChild = parent;
@@ -149,7 +147,7 @@ namespace ft {
 				grandparent->parent->leftChild = node;
 			} else
 				grandparent->parent->rightChild = node;
-			if (node->data->first < grandparent->data->first) {
+			if (node->data.first < grandparent->data.first) {
 				node->rightChild = grandparent;
 				grandparent->leftChild = NULL;
 			}
@@ -163,19 +161,19 @@ namespace ft {
 		}
 
 		void	printNodeAndChild(node_pointer node) {
-			std::cout << "NODE: " << node->data->first << (node->black == true ? " | black" : " | red") << std::endl;
+			std::cout << "NODE: " << node->data.first << (node->black == true ? " | black" : " | red") << std::endl;
 			if (node->leftChild != NULL)
-					std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data->first << (node->leftChild->black == true ? " | black" : " | red") << std::endl;
+					std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data.first << (node->leftChild->black == true ? " | black" : " | red") << std::endl;
 			else
 					std::cout << "\t\tLEFT_CHILD: NULL" << std::endl;
 			if (node->rightChild != NULL)
-					std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data->first << (node->rightChild->black == true ? " | black" : " | red") << std::endl;
+					std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data.first << (node->rightChild->black == true ? " | black" : " | red") << std::endl;
 			else
 					std::cout << "\t\tRIGHT_CHILD: NULL" << std::endl;
 		}
 
 		void	rotateAroundParent(node_pointer node, node_pointer parent, node_pointer grandparent) {
-			if (node->data->first < parent->data->first) {
+			if (node->data.first < parent->data.first) {
 				if (grandparent->leftChild == parent) {
 					grandparent->leftChild = node;
 					node->parent = grandparent;
@@ -188,7 +186,7 @@ namespace ft {
 					node->rightChild = parent;
 				}
 				parent->leftChild = NULL;
-			} else if (node->data->first > parent->data->first) {
+			} else if (node->data.first > parent->data.first) {
 					// Bug in ths if;else ?
 					if (grandparent->leftChild == parent)
 						grandparent->leftChild = node;
@@ -212,6 +210,9 @@ namespace ft {
 			node_pointer uncle = getUncleNode(node);
 			if (node == _head && node->black == true)
 				return;
+			std::cout << "BEFORE SEGV: " << node->data.first << std::endl;
+			std::cout << node->parent << std::endl;
+			std::cout << node->parent->data.first << std::endl;
 			if (node->parent->black == false && !isNodeBlack(uncle)) { /* case 1 */
 				node->parent->black = true;
 				uncle->black = true;
@@ -232,39 +233,29 @@ namespace ft {
 		}
 
 		bool	insert_in_tree(node_pointer current, const value_type& val) {
-			if (current->leftChild == NULL && val.first < current->data->first) {
-				node_pointer nodeAdded = _node_allocator.allocate(1);
-				nodeAdded->data = _data_allocator.allocate(1);
-				_data_allocator.construct(nodeAdded->data, val);
-				nodeAdded->leftChild = NULL;
-				nodeAdded->rightChild = NULL;
-				nodeAdded->black = false;
-				nodeAdded->parent = current;
+			if (current->leftChild == NULL && val.first < current->data.first) {
+				node_pointer nodeAdded = new_node(val);
 				current->leftChild = nodeAdded;
+				nodeAdded->parent = current;
 				_size++;
 				if (current->black == false)
 					fixTreeProperties(nodeAdded);
 				return true;
-			} else if (current->rightChild == NULL && val.first > current->data->first) {
-				node_pointer nodeAdded = _node_allocator.allocate(1);
-				nodeAdded->data = _data_allocator.allocate(1);
-				_data_allocator.construct(nodeAdded->data, val);
-				nodeAdded->leftChild = NULL;
-				nodeAdded->rightChild = NULL;
-				nodeAdded->black = false;
-				nodeAdded->parent = current;
+			} else if (current->rightChild == NULL && val.first > current->data.first) {
+				node_pointer nodeAdded = new_node(val);
 				current->rightChild = nodeAdded;
+				nodeAdded->parent = current;
 				_size++;
 				if (current->black == false)
 					fixTreeProperties(nodeAdded);
 				return true;
 			}
 			else {
-				if (val.first == current->data->first)
+				if (val.first == current->data.first)
 					return false;
-				else if (val.first < current->data->first)
+				else if (val.first < current->data.first)
 					return insert_in_tree(current->leftChild, val);
-				else if (val.first > current->data->first)
+				else if (val.first > current->data.first)
 					return insert_in_tree(current->rightChild, val);
 			}
 			return false;
@@ -302,8 +293,7 @@ namespace ft {
 				return;
 			recursive_deletion(node->leftChild);
 			recursive_deletion(node->rightChild);
-			_data_allocator.destroy(node->data);
-			_data_allocator.deallocate(node->data, 1);
+			_node_allocator.destroy(node);
 			_node_allocator.deallocate(node, 1);
 			_size--;
 		}

@@ -25,6 +25,7 @@ namespace ft {
 		typedef typename allocator_type::const_pointer const_pointer;
 		// iterator	a bidirectional iterator to value_type	convertible to const_iterator
 		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::iterator iterator;
+		typedef typename ft::bst_red_black<const value_type, Compare, Alloc>::const_iterator const_iterator;
 		// const_iterator	a bidirectional iterator to const value_type
 		// reverse_iterator	reverse_iterator<iterator>
 		// const_reverse_iterator	reverse_iterator<const_iterator>
