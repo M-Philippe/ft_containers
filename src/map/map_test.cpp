@@ -83,6 +83,11 @@ void	map_case1() {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
 		it++;
 	}
+	NAMESPACE::map<int, float>::const_iterator ite = map.begin();
+	while (ite != map.end()) {
+		std::cout << "[" << ite->first << "] | [" << ite->second << "]" << std::endl;
+		ite++;
+	}
 	std::cout << "===" << std::endl;
 }
 

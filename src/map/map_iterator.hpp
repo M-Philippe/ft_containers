@@ -5,6 +5,7 @@
 #include "../utils/utils.hpp"
 
 #include <stdlib.h> // tmp
+#include <iostream> // tmp std::cout std::endl
 
 namespace ft {
 	template <typename N /* node_pointer */, typename T /* node_pointer->data */, class Compare>
@@ -31,6 +32,8 @@ namespace ft {
 			}
 			map_iterator(N node) {
 				_comp = data_compare();
+				if (node == NULL)
+					return;
 				while (node->leftChild != NULL)
 					node = node->leftChild;
 				_node = node;
@@ -48,7 +51,9 @@ namespace ft {
 			}
 			~map_iterator() {}
 
-			operator map_iterator<N, const T, Compare>() {  return (map_iterator<N, const T, Compare>(_node));  }
+			operator map_iterator<N, const T, Compare>() {
+				return (map_iterator<N, const T, Compare>(_node));
+			}
 
 			reference operator*() { return *_node->data; }
 			pointer operator->() { return &_node->data; }
