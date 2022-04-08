@@ -32,8 +32,10 @@ namespace ft {
 			}
 			map_iterator(N node) {
 				_comp = data_compare();
-				if (node == NULL)
+				if (node == NULL) {
+					_node = NULL;
 					return;
+				}
 				while (node->leftChild != NULL)
 					node = node->leftChild;
 				_node = node;

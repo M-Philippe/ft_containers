@@ -210,9 +210,6 @@ namespace ft {
 			node_pointer uncle = getUncleNode(node);
 			if (node == _head && node->black == true)
 				return;
-			std::cout << "BEFORE SEGV: " << node->data.first << std::endl;
-			std::cout << node->parent << std::endl;
-			std::cout << node->parent->data.first << std::endl;
 			if (node->parent->black == false && !isNodeBlack(uncle)) { /* case 1 */
 				node->parent->black = true;
 				uncle->black = true;
@@ -251,9 +248,9 @@ namespace ft {
 				return true;
 			}
 			else {
-				if (val.first == current->data.first)
+				if (val == current->data)
 					return false;
-				else if (val.first < current->data.first)
+				else if (_comp(val.first, current->data.first))
 					return insert_in_tree(current->leftChild, val);
 				else if (val.first > current->data.first)
 					return insert_in_tree(current->rightChild, val);
