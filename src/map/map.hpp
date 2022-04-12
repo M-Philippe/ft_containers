@@ -47,7 +47,7 @@ namespace ft {
 		const_iterator end() const { return bst.end(); }
 
 		// true if created elements or false if already existing elements.
-		bool insert (const value_type& val) { return bst.insert(val); }
+		bool insert (const value_type& val) { bst.add_node(val); return false; }
 		void print() { bst.print(); }
 		size_type size() const { return bst.size(); }
 

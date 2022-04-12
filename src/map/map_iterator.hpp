@@ -32,20 +32,7 @@ namespace ft {
 			}
 			map_iterator(N node) {
 				_comp = data_compare();
-				if (node == NULL) {
-					_node = NULL;
-					return;
-				}
-				while (node->leftChild != NULL)
-					node = node->leftChild;
 				_node = node;
-			}
-			map_iterator(N node, bool goRight) {
-				(void)goRight;
-				_comp = data_compare();
-				while (node->rightChild != NULL)
-					node = node->rightChild;
-				_node = node->rightChild;
 			}
 			map_iterator(const map_iterator& org) {
 				_comp = org._comp;
@@ -67,30 +54,15 @@ namespace ft {
 
 			/* pre-increment */
 			map_iterator operator++() {
-				node_pointer current = _node;
-				if (_node->rightChild != NULL) {
-					_node = _node->rightChild;
-					moveToLeftmostNode();
-					return *this;
-				} else if (_node->parent != NULL && !_comp(_node->parent->data.first, current->data.first)) {
-					/*_node->parent->data->first > current->data->first*/
-					_node = _node->parent;
-					return *this;
-				} else {
-					// might check here.
-					_node = _node->rightChild;
-					return *this;
+				node_pointer parent = _node->parent;
+				if (_node->rightChild) {
+					for (_node = _node->rightChild; _node->leftChild; _node = _node->leftChild);
 				}
+				else if (_node == parent->leftChild)
+					_node = parent;
+				else
+					for (_node = _node->parent; _node == _node->parent->rightChild; _node = _node->parent);
 				return *this;
-				//node_pointer parent = _node->parent;
-				//if (_node->rightChild) {
-				//	for (_node = _node->rightChild; _node->leftChild; _node = _node->leftChild);
-				//}
-				//else if (_node == parent->leftChild)
-				//	_node = parent;
-				//else
-				//	for (_node = _node->parent; _node == _node->parent->rightChild; _node = _node->parent);
-				//return *this;
 			}
 
 			/* post-increment */

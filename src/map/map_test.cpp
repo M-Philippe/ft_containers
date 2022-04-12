@@ -83,11 +83,6 @@ void	map_case1() {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
 		it++;
 	}
-	NAMESPACE::map<int, float>::const_iterator ite = map.begin();
-	while (ite != map.end()) {
-		std::cout << "[" << ite->first << "] | [" << ite->second << "]" << std::endl;
-		ite++;
-	}
 	std::cout << "===" << std::endl;
 }
 
@@ -125,7 +120,6 @@ void	map_case3() {
 	map.insert(NAMESPACE::make_pair(67, 1.12));
 	map.insert(NAMESPACE::make_pair(46, 1.12));
 	map.insert(NAMESPACE::make_pair(98, 1.12));
-	print_exit(map);
 	map.insert(NAMESPACE::make_pair(89, 1.12));
 	map.insert(NAMESPACE::make_pair(1, 1.12));
 	map.insert(NAMESPACE::make_pair(3, 1.12));
@@ -139,11 +133,45 @@ void	map_case3() {
 	std::cout << "===" << std::endl;
 }
 
+void	map_case4() {
+	NAMESPACE::map<int, float> map;
+	map.insert(NAMESPACE::make_pair(0, 1.02));
+	map.insert(NAMESPACE::make_pair(-1, 1.02));
+	map.insert(NAMESPACE::make_pair(-2, 1.02));
+	map.insert(NAMESPACE::make_pair(-10, 1.02));
+	//map.insert(NAMESPACE::make_pair(-5, 1.02));
+	//map.insert(NAMESPACE::make_pair(10, 1.02));
+	//map.insert(NAMESPACE::make_pair(9, 1.02));
+	//map.insert(NAMESPACE::make_pair(8, 1.02));
+	//map.insert(NAMESPACE::make_pair(6, 1.02));
+	//map.insert(NAMESPACE::make_pair(7, 1.02));
+//print_exit(map);
+	std::cout << "Print Map:" << std::endl;
+	NAMESPACE::map<int, float>::iterator it = map.begin();
+//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+//	it++;
+//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+//	it++;
+//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+//	it++;
+//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+//	it++;
+//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+//	//std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+//return;
+	while (it != map.end()) {
+		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+		it++;
+	}
+	std::cout << "===" << std::endl;
+}
+
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
 	map_case1();
-	//map_case2();
+	map_case2();
 	//map_case3();
+	map_case4();
 	return;
 }

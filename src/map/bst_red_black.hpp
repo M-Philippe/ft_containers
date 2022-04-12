@@ -51,8 +51,9 @@ namespace ft {
 				map_node* leftChild;
 				map_node*	rightChild;
 				map_node*	parent;
-				bool	black;
-				map_node(const T& newData = T()) : data(newData), leftChild(NULL), rightChild(NULL), parent(NULL), black(false) {}
+				bool	black; // to remove.
+				int color; // 0 -> black ; 1 -> red.
+				map_node(const T& newData = T()) : data(newData), leftChild(NULL), rightChild(NULL), parent(NULL), black(false), color(1) {}
 			} node;
 
 		typedef typename Alloc::template rebind<node>::other allocator_node;
@@ -63,10 +64,10 @@ namespace ft {
 			typedef typename ft::map_iterator<node_pointer, T, Compare> iterator;
 			typedef typename ft::map_iterator<node_pointer, const T, Compare> const_iterator;
 
-			iterator begin() { return iterator(_head); }
-			const_iterator begin() const { return const_iterator(_head); }
-			iterator end() { return iterator(_head, true); }
-			const_iterator end() const { return const_iterator(_head, true); }
+			iterator begin() { return iterator(_begin->parent); }
+			const_iterator begin() const { return const_iterator(_begin->parent); }
+			iterator end() { return iterator(_end); }
+			const_iterator end() const { return const_iterator(_end); }
 
 			bst_red_black(const data_compare& comp = data_compare(), const allocator_type& alloc = allocator_type()) {
 				_data_allocator = alloc;
@@ -74,12 +75,10 @@ namespace ft {
 				_comp = comp;
 				_head = NULL;
 				_size = 0;
-			}
-
-			node_pointer new_node(const T& newData = T()) {
-				node_pointer node = _node_allocator.allocate(1);
-				_node_allocator.construct(node, newData);
-				return node;
+				_begin = new_node();
+				_end = new_node();
+				_begin->parent = _end;
+				_end->parent = _begin;
 			}
 
 			~bst_red_black() {
@@ -94,18 +93,6 @@ namespace ft {
 				_size--;
 			}
 
-			// true if created elements or false if already existing elements.
-			bool insert (const value_type& val) {
-				if (!_head) {
-					_head = new_node(val);
-					_head->black = true;
-					_size++;
-					return true;
-				}
-				node_pointer current = _head;
-				return insert_in_tree(current, val);
-			}
-
 			void	print() {
 				node* node = _head;
 				std::cout << "STARTING BY HEAD: " << std::endl;
@@ -114,218 +101,210 @@ namespace ft {
 				printX(node->rightChild);
 			}
 
+			void add_node(T data) {
+				node_pointer newNode = new_node(data);
+				unset_bounds();
+				if (!_head) {
+					_head = newNode;
+					_head->black = true;
+					_head->color = 0;
+					++_size;
+				} else {
+					recursive_add(_head, newNode);
+				}
+				set_bounds();
+			}
+
 		private:
 
-		node_pointer getUncleNode(node_pointer node) {
-			if (node->parent == NULL || node->parent->parent == NULL)
-				return NULL;
-			node_pointer parentNode = node->parent;
-			node_pointer grandParentNode = parentNode->parent;
-			if (parentNode->data.first < grandParentNode->data.first)
-				return grandParentNode->rightChild;
-			else
-				return grandParentNode->leftChild;
-		}
-
-		bool isNodeBlack(node_pointer node) {
-			if (node == NULL || node->black == true)
-				return true;
-			else
-				return false;
-		}
-
-		bool isInnerGrandchild(node_pointer node, node_pointer parent, node_pointer grandparent) {
-			if (parent->data.first < grandparent->data.first && parent->data.first < node->data.first)
-				return true;
-			else if (parent->data.first > grandparent->data.first && parent->data.first > node->data.first)
-				return true;
-			return false;
-		}
-
-		void	rotateAroundGrandparentOuterchild(node_pointer node) {
-			// node don't move.
-			node_pointer parent = node->parent;
-			node_pointer grandparent = node->parent->parent;
-			if (grandparent == _head)
-				_head = node;
-			if (grandparent->parent->data.first < grandparent->data.first) {
-				grandparent->parent->rightChild = parent;
-			} else
-				grandparent->parent->leftChild = parent;
-			if (node == parent->leftChild) {
-				grandparent->parent = parent;
-				parent->rightChild = grandparent;
-			} else {
-				grandparent->parent = parent;
-				parent->leftChild = grandparent;
+			node_pointer new_node(const T& newData = T()) {
+				node_pointer node = _node_allocator.allocate(1);
+				_node_allocator.construct(node, newData);
+				return node;
 			}
-			grandparent->leftChild = NULL;
-			grandparent->rightChild = NULL;
-			parent->black = true;
-			grandparent->black = false;
-		}
 
-
-		void	rotateAroundGrandparent(node_pointer node, node_pointer parent, node_pointer grandparent) {
-			(void)parent;
-			if (grandparent->parent == NULL)
-				_head = node;
-			else if (grandparent->parent->leftChild == grandparent) {
-				grandparent->parent->leftChild = node;
-			} else
-				grandparent->parent->rightChild = node;
-			if (node->data.first < grandparent->data.first) {
-				node->rightChild = grandparent;
-				grandparent->leftChild = NULL;
-			}
-			else {
-				node->leftChild = grandparent;
-				grandparent->rightChild = NULL;
-			}
-			grandparent->parent = node;
-			grandparent->black = false;
-			node->black = true;
-		}
-
-		void	printNodeAndChild(node_pointer node) {
-			std::cout << "NODE: " << node->data.first << (node->black == true ? " | black" : " | red") << std::endl;
-			if (node->leftChild != NULL)
-					std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data.first << (node->leftChild->black == true ? " | black" : " | red") << std::endl;
-			else
-					std::cout << "\t\tLEFT_CHILD: NULL" << std::endl;
-			if (node->rightChild != NULL)
-					std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data.first << (node->rightChild->black == true ? " | black" : " | red") << std::endl;
-			else
-					std::cout << "\t\tRIGHT_CHILD: NULL" << std::endl;
-		}
-
-		void	rotateAroundParent(node_pointer node, node_pointer parent, node_pointer grandparent) {
-			if (node->data.first < parent->data.first) {
-				if (grandparent->leftChild == parent) {
-					grandparent->leftChild = node;
-					node->parent = grandparent;
-					parent->parent = node;
-					node->rightChild = parent;
+			void recursive_add(node_pointer parent, node_pointer newNode) {
+				if (this->comp_binded(parent->data, newNode->data) > 0) {
+					if (!parent->rightChild) {
+						newNode->parent = parent;
+						parent->rightChild = newNode;
+						++_size;
+					} else {
+						recursive_add(parent->rightChild, newNode);
+					}
 				} else {
-					grandparent->rightChild = node;
-					node->parent = grandparent;
-					parent->parent = node;
-					node->rightChild = parent;
+					if (!parent->leftChild) {
+						newNode->parent = parent;
+						parent->leftChild = newNode;
+						++_size;
+					} else {
+						recursive_add(parent->leftChild, newNode);
+					}
 				}
-				parent->leftChild = NULL;
-			} else if (node->data.first > parent->data.first) {
-					// Bug in ths if;else ?
-					if (grandparent->leftChild == parent)
-						grandparent->leftChild = node;
-					else
-						grandparent->rightChild = node;
-					node->parent = grandparent;
-					parent->parent = node;
-					node->leftChild = parent;
-					parent->rightChild = NULL;
+				fixInsert(newNode);
 			}
-			rotateAroundGrandparent(node, parent, grandparent);
-		}
 
-		/*
-			Case X: parent and node are red
-			Case 1: Parent and uncle nodes are red
-			Case 2: Parent node is red, uncle node is black, inserted node is "inner grandchild"
-			Case 3: Parent node is red, uncle node is black, inserted node is "outer grandchild"
-		*/
-		void	fixTreeProperties(node_pointer node) {
-			node_pointer uncle = getUncleNode(node);
-			if (node == _head && node->black == true)
-				return;
-			if (node->parent->black == false && !isNodeBlack(uncle)) { /* case 1 */
-				node->parent->black = true;
-				uncle->black = true;
-				if (node->parent->parent != _head)
-					node->parent->parent->black = false;
-				// original: fixTreeProperties(node->parent->parent);
-				fixTreeProperties(node->parent->parent);
-			} else if (node->parent->black == false && isNodeBlack(uncle) && isInnerGrandchild(node, node->parent, node->parent->parent)) {
-				/* case 2 */
-				// rotate around parent, rotate around grandparent and recolor.
-				rotateAroundParent(node, node->parent, node->parent->parent);
-				//fixTreeProperties(node->parent);
-			} else if (node->parent->black == false && isNodeBlack(uncle) && !isInnerGrandchild(node, node->parent, node->parent->parent)) {
-				/* case 3 */
-				rotateAroundGrandparentOuterchild(node);
-				//fixTreeProperties(node->parent);
+			void fixInsert(node_pointer node) {
+				node_pointer aunt;
+				while (node->parent && node->parent->color == 1) {
+					if (node->parent == node->parent->parent->rightChild) {
+						aunt = node->parent->parent->leftChild;
+						if (aunt && aunt->color == 1) {	// Color Flip
+							aunt->color = 0;
+							node->parent->color = 0;
+							node->parent->parent->color = 1;
+							node = node->parent->parent;
+						} else {
+							if (node == node->parent->leftChild) {
+								node = node->parent;
+								rightRotation(node);
+							}
+							node->parent->color = 0;
+							node->parent->parent->color = 1;
+							leftRotation(node->parent->parent);
+						}
+					} else {
+						aunt = node->parent->parent->rightChild;
+						if (aunt && aunt->color == 1) {
+							aunt->color = 0;
+							node->parent->color = 0;
+							node->parent->parent->color = 1;
+							node = node->parent->parent;
+						} else {
+							if (node == node->parent->rightChild) {
+								node = node->parent;
+								leftRotation(node);
+							}
+							node->parent->color = 0;
+							node->parent->parent->color = 1;
+							rightRotation(node->parent->parent);
+						}
+					}
+					if (node == _head)
+						break;
+				}
+				_head->color = 0;
 			}
-		}
 
-		bool	insert_in_tree(node_pointer current, const value_type& val) {
-			if (current->leftChild == NULL && val.first < current->data.first) {
-				node_pointer nodeAdded = new_node(val);
-				current->leftChild = nodeAdded;
-				nodeAdded->parent = current;
-				_size++;
-				if (current->black == false)
-					fixTreeProperties(nodeAdded);
-				return true;
-			} else if (current->rightChild == NULL && val.first > current->data.first) {
-				node_pointer nodeAdded = new_node(val);
-				current->rightChild = nodeAdded;
-				nodeAdded->parent = current;
-				_size++;
-				if (current->black == false)
-					fixTreeProperties(nodeAdded);
-				return true;
+			void leftRotation(node_pointer node) {
+				node_pointer tmp = node->rightChild;
+				node->rightChild = tmp->leftChild;
+				if (tmp->leftChild != NULL)
+					tmp->leftChild->parent = node;
+				tmp->parent = node->parent;
+				if (node->parent == NULL)
+					_head = tmp;
+				else if (node == node->parent->leftChild)
+					node->parent->leftChild = tmp;
+				else
+					node->parent->rightChild = tmp;
+				tmp->leftChild = node;
+				node->parent = tmp;
 			}
-			else {
-				if (val == current->data)
-					return false;
-				else if (this->comp_binded(val, current->data)) /* val.first < current->data.first */
-					return insert_in_tree(current->leftChild, val);
-				else if (val.first > current->data.first)
-					return insert_in_tree(current->rightChild, val);
-			}
-			return false;
-		}
 
-		void	printNode(node_pointer node) {
-			if (node == NULL)
-				return;
-			printNodeAndChild(node);
-			node_pointer tmp = node;
-			node = node->leftChild;
-			std::cout << "GOING LEFT" << std::endl;
-			while (node != NULL) {
+			void rightRotation(node_pointer node) {
+				node_pointer tmp = node->leftChild;
+				node->leftChild = tmp->rightChild;
+				if (tmp->rightChild != NULL)
+					tmp->rightChild->parent = node;
+				tmp->parent = node->parent;
+				if (node->parent == NULL)
+					_head = tmp;
+				else if (node == node->parent->rightChild)
+					node->parent->rightChild = tmp;
+				else
+					node->parent->leftChild = tmp;
+				tmp->rightChild = node;
+				node->parent = tmp;
+			}
+
+			node_pointer get_min(node_pointer node) {
+				while (node->leftChild)
+					node = node->leftChild;
+				//std::cout << "LAST_MIN: " << node->data.first << std::endl;
+				return node;
+			}
+
+			node_pointer get_max(node_pointer node) {
+				while (node->rightChild)
+					node = node->rightChild;
+				return node;
+			}
+
+			void set_bounds() {
+				if (_size) {
+					_begin->parent = get_min(_head);
+					_end->parent = get_max(_head);
+					_begin->parent->leftChild = _begin;
+					_end->parent->rightChild = _end;
+				} else {
+					_begin->parent = _end;
+					_end->parent = _begin;
+				}
+			}
+
+			void unset_bounds() {
+				if (_begin->parent && _begin->parent != _end)
+					_begin->parent->leftChild = NULL;
+				if (_end->parent && _end->parent != _begin)
+					_end->parent->rightChild = NULL;
+			}
+
+			void	printNodeAndChild(node_pointer node) {
+				std::cout << "NODE: " << node->data.first << (node->black == true ? " | black" : " | red") << std::endl;
+				if (node->leftChild != NULL)
+						std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data.first << (node->leftChild->black == true ? " | black" : " | red") << std::endl;
+				else
+						std::cout << "\t\tLEFT_CHILD: NULL" << std::endl;
+				if (node->rightChild != NULL)
+						std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data.first << (node->rightChild->black == true ? " | black" : " | red") << std::endl;
+				else
+						std::cout << "\t\tRIGHT_CHILD: NULL" << std::endl;
+			}
+
+			void	printNode(node_pointer node) {
+				if (node == NULL)
+					return;
 				printNodeAndChild(node);
+				node_pointer tmp = node;
 				node = node->leftChild;
-			}
-			std::cout << "GOING RIGHT" << std::endl;
-			tmp = tmp->rightChild;
-			while (tmp != NULL) {
-				printNodeAndChild(tmp);
+				std::cout << "GOING LEFT" << std::endl;
+				while (node != NULL) {
+					printNodeAndChild(node);
+					node = node->leftChild;
+				}
+				std::cout << "GOING RIGHT" << std::endl;
 				tmp = tmp->rightChild;
+				while (tmp != NULL) {
+					printNodeAndChild(tmp);
+					tmp = tmp->rightChild;
+				}
 			}
-		}
 
-		void	printX(node_pointer node) {
-			if (node == NULL)
-				return;
-			printNodeAndChild(node);
-			printX(node->leftChild);
-			printX(node->rightChild);
-		}
+			void	printX(node_pointer node) {
+				if (node == NULL)
+					return;
+				printNodeAndChild(node);
+				printX(node->leftChild);
+				printX(node->rightChild);
+			}
 
-		void	recursive_deletion(node_pointer node) {
-			if (!node)
-				return;
-			recursive_deletion(node->leftChild);
-			recursive_deletion(node->rightChild);
-			_node_allocator.destroy(node);
-			_node_allocator.deallocate(node, 1);
-			_size--;
-		}
+			void	recursive_deletion(node_pointer node) {
+				if (!node)
+					return;
+				recursive_deletion(node->leftChild);
+				recursive_deletion(node->rightChild);
+				_node_allocator.destroy(node);
+				_node_allocator.deallocate(node, 1);
+				_size--;
+			}
 
 			allocator_type	_data_allocator;
 			allocator_node	_node_allocator;
 			data_compare		_comp;
 			node_pointer		_head;
+			node_pointer		_begin;
+			node_pointer		_end;
 			size_type				_size;
 
 
