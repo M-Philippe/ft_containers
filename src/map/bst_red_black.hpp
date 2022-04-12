@@ -16,9 +16,8 @@ namespace ft {
 			typedef Compare data_compare;
 			bst_red_black_map() { _comp = data_compare(); }
 			~bst_red_black_map() {}
-			bool comp_binded(T lhs, T rhs) {
-				return _comp(lhs.first, rhs.first);
-			}
+			bool comp_binded(T lhs, T rhs) { return _comp(lhs.first, rhs.first); }
+
 		private:
 			data_compare _comp;
 	};
@@ -29,9 +28,8 @@ namespace ft {
 			typedef Compare data_compare;
 			bst_red_black_map() { _comp = data_compare(); }
 			~bst_red_black_map() {}
-			bool comp_binded(T lhs, T rhs) {
-				return _comp(lhs, rhs);
-			}
+			bool comp_binded(T lhs, T rhs) { return _comp(lhs, rhs); }
+
 		private:
 			data_compare _comp;
 	};
