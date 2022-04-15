@@ -139,26 +139,36 @@ void	map_case4() {
 	map.insert(NAMESPACE::make_pair(-1, 1.02));
 	map.insert(NAMESPACE::make_pair(-2, 1.02));
 	map.insert(NAMESPACE::make_pair(-10, 1.02));
-	//map.insert(NAMESPACE::make_pair(-5, 1.02));
-	//map.insert(NAMESPACE::make_pair(10, 1.02));
-	//map.insert(NAMESPACE::make_pair(9, 1.02));
-	//map.insert(NAMESPACE::make_pair(8, 1.02));
-	//map.insert(NAMESPACE::make_pair(6, 1.02));
-	//map.insert(NAMESPACE::make_pair(7, 1.02));
-//print_exit(map);
+	map.insert(NAMESPACE::make_pair(-5, 1.02));
+	map.insert(NAMESPACE::make_pair(10, 1.02));
+	map.insert(NAMESPACE::make_pair(9, 1.02));
+	map.insert(NAMESPACE::make_pair(8, 1.02));
+	map.insert(NAMESPACE::make_pair(6, 1.02));
+	map.insert(NAMESPACE::make_pair(7, 1.02));
+	map.erase(6);
+	// map.print();
 	std::cout << "Print Map:" << std::endl;
 	NAMESPACE::map<int, float>::iterator it = map.begin();
-//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
-//	it++;
-//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
-//	it++;
-//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
-//	it++;
-//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
-//	it++;
-//	std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
-//	//std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
-//return;
+	while (it != map.end()) {
+		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
+		it++;
+	}
+	std::cout << "===" << std::endl;
+}
+
+void	map_case5() {
+	NAMESPACE::map<int, float> map;
+	for (int i = 0; i < 200; ++i)
+		map.insert(NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
+	if (map.empty()) {
+		std::cout << "Empty" << std::endl;
+	} else {
+		std::cout << "Size: " << map.size() << std::endl;
+	}
+	std::cout << "Is there the number 100 : " << map.count(100) << std::endl;
+
+	std::cout << "Print Map:" << std::endl;
+	NAMESPACE::map<int, float>::iterator it = map.begin();
 	while (it != map.end()) {
 		std::cout << "[" << it->first << "] | [" << it->second << "]" << std::endl;
 		it++;
@@ -171,7 +181,8 @@ void	map_test() {
 	//pair_relational_operators();
 	map_case1();
 	map_case2();
-	//map_case3();
+	map_case3();
 	map_case4();
+	map_case5();
 	return;
 }

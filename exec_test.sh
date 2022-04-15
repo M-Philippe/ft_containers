@@ -17,8 +17,10 @@ then
 	exit
 fi
 
-/usr/bin/time --format="%C took %e seconds" ./ft_test > ft_results.txt
-/usr/bin/time --format="%C took %e seconds" ./std_test > std_results.txt
+# /usr/bin/time --format="%C took %e seconds" ./ft_test > ft_results.txt
+# /usr/bin/time --format="%C took %e seconds" ./std_test > std_results.txt
+time ./ft_test > ft_results.txt
+time ./std_test > std_results.txt
 
 diff ft_results.txt std_results.txt > /dev/null
 if [ $? -eq 0 ]

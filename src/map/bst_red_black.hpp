@@ -2,6 +2,7 @@
 # define BST_RED_BLACK_HPP
 
 #include "map_iterator.hpp"
+#include "../utils/utils.hpp"
 
 #include <iostream> // tmp (std::cout, std::endl)
 
@@ -17,6 +18,16 @@ namespace ft {
 			bst_red_black_map() { _comp = data_compare(); }
 			~bst_red_black_map() {}
 			bool comp_binded(T lhs, T rhs) { return _comp(lhs.first, rhs.first); }
+			// template <typename key_type>
+			// bool comp_binded(T lhs, key_type rhs) { return _comp(lhs.first, rhs); }
+			template <typename key_type>
+			bool comp_binded(T lhs, key_type rhs) const { return _comp(lhs.first, rhs); }
+
+			// template <typename key_type>
+			// bool equal_binded(T lhs, key_type rhs) { return lhs.first == rhs; }
+			template <typename key_type>
+			bool equal_binded(T lhs, key_type rhs) const { return lhs.first == rhs; }
+			bool equal_binded(T lhs, T rhs) { return lhs.first == rhs.first; }
 
 		private:
 			data_compare _comp;
@@ -29,6 +40,12 @@ namespace ft {
 			bst_red_black_map() { _comp = data_compare(); }
 			~bst_red_black_map() {}
 			bool comp_binded(T lhs, T rhs) { return _comp(lhs, rhs); }
+			template <typename key_type>
+			bool comp_binded(T lhs, key_type rhs) const { return _comp(lhs, rhs); }
+
+			template <typename key_type>
+			bool equal_binded(T lhs, key_type rhs) const { return lhs == rhs; }
+			bool equal_binded(T lhs, T rhs) { return lhs == rhs; }
 
 		private:
 			data_compare _comp;
@@ -46,15 +63,15 @@ namespace ft {
 			typedef Compare data_compare;
 			typedef size_t size_type;
 
-			typedef struct map_node {
-				T data;
-				map_node* leftChild;
+			typedef struct	map_node {
+				map_node*	leftChild;
 				map_node*	rightChild;
 				map_node*	parent;
-				bool	black; // to remove.
-				int color; // 0 -> black ; 1 -> red.
-				map_node(const T& newData = T()) : data(newData), leftChild(NULL), rightChild(NULL), parent(NULL), black(false), color(1) {}
-			} node;
+				T 			data;
+				int 		color; 			/* 0 -> black ; 1 -> red */
+
+				map_node(const T& newData = T()) : leftChild(NULL), rightChild(NULL), parent(NULL), data(newData),  color(1) {}
+			} 				node;
 
 		typedef typename Alloc::template rebind<node>::other allocator_node;
 		typedef typename allocator_node::pointer node_pointer;
@@ -64,10 +81,10 @@ namespace ft {
 			typedef typename ft::map_iterator<node_pointer, T, Compare> iterator;
 			typedef typename ft::map_iterator<node_pointer, const T, Compare> const_iterator;
 
-			iterator begin() { return iterator(_begin->parent); }
-			const_iterator begin() const { return const_iterator(_begin->parent); }
-			iterator end() { return iterator(_end); }
-			const_iterator end() const { return const_iterator(_end); }
+			iterator 		begin() { return iterator(_begin->parent); }
+			iterator 		end() { return iterator(_end); }
+			const_iterator 	begin() const { return const_iterator(_begin->parent); }
+			const_iterator 	end() const { return const_iterator(_end); }
 
 			bst_red_black(const data_compare& comp = data_compare(), const allocator_type& alloc = allocator_type()) {
 				_data_allocator = alloc;
@@ -101,47 +118,171 @@ namespace ft {
 				printX(node->rightChild);
 			}
 
-			void add_node(T data) {
-				node_pointer newNode = new_node(data);
-				unset_bounds();
-				if (!_head) {
-					_head = newNode;
-					_head->black = true;
-					_head->color = 0;
-					++_size;
-				} else {
-					recursive_add(_head, newNode);
-				}
-				set_bounds();
+			/*		Insertion		*/
+			pair<iterator, bool>  insert(const value_type& val) {
+				return add_node(val);
 			}
 
-		private:
+			iterator insert(iterator position, const value_type& val) {
+				(void) position;
+				return add_node(val).first;
+			}
 
+			void insert(iterator first, iterator last) {
+				for (iterator next = first; first != last; first = next) {
+					++next;
+					add_node(*first);
+				}
+			}
+
+			/* 		Deletion 	   */
+			template <typename key_type>
+			size_t erase(const key_type& key) {
+				node_pointer node = _head;
+				node_pointer toDelete = NULL;
+
+				unset_bounds();
+				while (node != NULL) {
+					if (this->equal_binded(node->data, key)) {
+						toDelete = node;
+						break;
+					}
+					else if (this->comp_binded(node->data, key) > 0)
+						node = node->rightChild;
+					else
+						node = node->leftChild;
+				}
+				set_bounds();
+				if (!toDelete) {
+					return 0;
+				} else {
+					return deleteNode(toDelete);
+				}
+			}
+
+			void erase(iterator position) {
+				if (*position)
+					deleteNode(*position);
+			}
+
+			void erase (iterator first, iterator  last) {
+				if (first == last)
+					return;
+				for (iterator next = first; first != last; first = next) {
+					++next;
+					deleteNode(*first);
+				}
+			}
+
+			/* 		Utils 	   */
+			size_type	size() const {
+				return _size;
+			}
+
+			template <typename key_type>
+			const_iterator find(const key_type& k) const {
+				iterator ret = iterator(_end);
+				unset_bounds();
+				for (node_pointer node = _head; node != NULL; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
+					if (this->equal_binded(node->data, k))
+						ret = iterator(node);
+				set_bounds();
+				return ret;
+			}
+
+			template <typename key_type>
+			iterator find(const key_type& k) {
+				iterator ret = iterator(_end);
+				unset_bounds();
+				for (node_pointer node = _head; node != NULL; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
+					if (this->equal_binded(node->data, k))
+						ret = iterator(node);
+				set_bounds();
+				return ret;
+			}
+
+			template <typename key_type>
+			size_type	count(const key_type& key) const {
+				return (find(key) == _end) ? 0 : 1;
+			}
+
+			template <typename key_type>
+			pair<iterator, iterator> equal_range(const key_type& k) {
+				pair<iterator, iterator> ret;
+				iterator first = find(k);
+				iterator second = first;
+				if (*first != _end) {
+					++second;
+					return ret = make_pair(first, second);
+				}
+				unset_bounds();
+				node_pointer y;
+				for (node_pointer x = _head; x != NULL; y = x) {
+					if (this->comp_binded(x->data, k) > 0)
+						x = x->rightChild;
+					else
+						x = x->leftChild;
+				}
+				set_bounds();
+				first = iterator(y);
+				++first;
+				second = first;
+				return make_pair(first, second);
+			}
+
+
+		private:
+			allocator_type		_data_allocator;
+			allocator_node		_node_allocator;
+			data_compare		_comp;
+			node_pointer		_head;
+			node_pointer		_begin;
+			node_pointer		_end;
+			size_type			_size;
+
+			/*		Insertion		*/
 			node_pointer new_node(const T& newData = T()) {
 				node_pointer node = _node_allocator.allocate(1);
 				_node_allocator.construct(node, newData);
 				return node;
 			}
 
-			void recursive_add(node_pointer parent, node_pointer newNode) {
-				if (this->comp_binded(parent->data, newNode->data) > 0) {
-					if (!parent->rightChild) {
-						newNode->parent = parent;
-						parent->rightChild = newNode;
-						++_size;
-					} else {
-						recursive_add(parent->rightChild, newNode);
-					}
+			pair<iterator, bool> add_node(T data) {
+				node_pointer newNode = new_node(data);
+				pair<iterator, bool> ret;
+				ret = ft::make_pair(iterator(newNode), true);
+				unset_bounds();
+				if (!_head) {
+					_head = newNode;
+					_head->color = 0;
+					++_size;
 				} else {
-					if (!parent->leftChild) {
-						newNode->parent = parent;
-						parent->leftChild = newNode;
+					node_pointer x = _head;
+					node_pointer y =  x;
+					while (x != NULL) {
+						y = x;
+						if (this->equal_binded(newNode->data, x->data)) {
+							ret.first = iterator(x);
+							ret.second = false;
+							break;
+						}
+						if (this->comp_binded(x->data, newNode->data) > 0)
+							x = x->rightChild;
+						else
+							x = x->leftChild;
+					}
+					if (ret.second) {
+						if (this->comp_binded(y->data, newNode->data) > 0)
+							y->rightChild = newNode;
+						else
+							y->leftChild = newNode;
+						newNode->parent = y;
 						++_size;
-					} else {
-						recursive_add(parent->leftChild, newNode);
+						fixInsert(newNode);
 					}
 				}
-				fixInsert(newNode);
+				set_bounds();
+				return ret;
 			}
 
 			void fixInsert(node_pointer node) {
@@ -186,6 +327,7 @@ namespace ft {
 				_head->color = 0;
 			}
 
+			/*		Rotation	  */
 			void leftRotation(node_pointer node) {
 				node_pointer tmp = node->rightChild;
 				node->rightChild = tmp->leftChild;
@@ -218,20 +360,123 @@ namespace ft {
 				node->parent = tmp;
 			}
 
-			node_pointer get_min(node_pointer node) {
+			/* 		Deletion 	   */
+			size_t deleteNode(node_pointer toDelete) {
+				node_pointer x, y;
+				// checkTreeProperties(_head);
+				unset_bounds();
+				y = toDelete;
+				int y_original_color = y->color;
+				if (toDelete->leftChild == NULL) {
+					x = toDelete->rightChild;
+					rbTransplant(toDelete, toDelete->rightChild);
+				} else if (toDelete->rightChild == NULL) {
+					x = toDelete->leftChild;
+					rbTransplant(toDelete, toDelete->leftChild);
+				} else {
+					y = get_min(toDelete->rightChild);
+					y_original_color = y->color;
+					x = y->rightChild;
+					if (y->parent == toDelete) {
+						x->parent = y;
+					} else {
+						rbTransplant(y, y->rightChild);
+						y->rightChild = toDelete->rightChild;
+						y->rightChild->parent = y;
+					}
+					rbTransplant(toDelete, y);
+					y->leftChild = toDelete->leftChild;
+					y->leftChild->parent = y;
+					y->color = toDelete->color;
+				}
+				delete(toDelete);
+				if (y_original_color == 0 && x)
+					fixDelete(x);
+				set_bounds();
+				return 1;
+			}
+
+			void fixDelete(node_pointer node) {
+				node_pointer sibling;
+				while (node != _head && node->color == 0) {
+					if (node == node->parent->leftChild) {		// Left Child
+						sibling = node->parent->rightChild;
+						if (sibling->color == 1) {
+							sibling->color = 0;
+							node->parent->color = 1;
+							leftRotation(node->parent);
+							sibling = node->parent->rightChild;
+						}
+						if (sibling->leftChild->color == 0 && sibling->rightChild->color == 0) {
+							sibling->color = 1;
+							node = node->parent;
+						} else {
+							if (sibling->rightChild->color == 0) {
+								sibling->leftChild->color = 0;
+								sibling->color = 1;
+								rightRotation(sibling);
+								sibling = node->parent->rightChild;
+							}
+							sibling->color = node->parent->color;
+							node->parent->color = 0;
+							sibling->rightChild->color = 0;
+							leftRotation(node->parent);
+							node = _head;
+						}
+					} else {									// Right Child
+						sibling = node->parent->leftChild;
+						if (sibling->color == 1) {
+							sibling->color = 0;
+							node->parent->color = 1;
+							rightRotation(node->parent);
+							sibling = node->parent->leftChild;
+						}
+						if (sibling->leftChild->color == 0 && sibling->rightChild->color == 0) {
+							sibling->color = 1;
+							node = node->parent;
+						} else {
+							if (sibling->leftChild->color == 0) {
+								sibling->rightChild->color = 0;
+								sibling->color = 1;
+								leftRotation(sibling);
+								sibling = node->parent->leftChild;
+							}
+							sibling->color = node->parent->color;
+							node->parent->color = 0;
+							sibling->leftChild->color = 0;
+							rightRotation(node->parent);
+							node = _head;
+						}
+					}
+				}
+				node->color = 0;
+			}
+
+			void rbTransplant(node_pointer a, node_pointer b) {
+				if (a->parent == NULL)
+					_head = b;
+				else if (a == a->parent->leftChild)
+					a->parent->leftChild = b;
+				else
+					a->parent->rightChild = b;
+				if (b)
+					b->parent = a->parent;
+			}
+
+			/* 		Utils		*/
+			node_pointer get_min(node_pointer node) const {
 				while (node->leftChild)
 					node = node->leftChild;
-				//std::cout << "LAST_MIN: " << node->data.first << std::endl;
 				return node;
 			}
 
-			node_pointer get_max(node_pointer node) {
+			node_pointer get_max(node_pointer node) const {
 				while (node->rightChild)
 					node = node->rightChild;
 				return node;
 			}
 
-			void set_bounds() {
+			void set_bounds() const {
 				if (_size) {
 					_begin->parent = get_min(_head);
 					_end->parent = get_max(_head);
@@ -243,21 +488,66 @@ namespace ft {
 				}
 			}
 
-			void unset_bounds() {
+			void unset_bounds() const {
 				if (_begin->parent && _begin->parent != _end)
 					_begin->parent->leftChild = NULL;
 				if (_end->parent && _end->parent != _begin)
 					_end->parent->rightChild = NULL;
 			}
 
+			void	recursive_deletion(node_pointer node) {
+				if (!node)
+					return;
+				recursive_deletion(node->leftChild);
+				recursive_deletion(node->rightChild);
+				_node_allocator.destroy(node);
+				_node_allocator.deallocate(node, 1);
+				_size--;
+			}
+
+			void	checkTreeProperties(node_pointer head) {
+				unset_bounds();
+				if (_head->color != 0)
+					std::cout << " Bad head color." << std::endl;
+				if (!checkTwoConsecutivesRed(head))
+					std::cout << " Two consecutives red nodes." << std::endl;
+				blackNodes(head);
+				print();
+				set_bounds();
+			}
+
+			int blackNodes(node_pointer node) {
+				if (node == NULL)
+					return 1;
+				int rightBlackNodes = blackNodes(node->rightChild);
+				int leftBlackNodes = blackNodes(node->leftChild);
+				if (rightBlackNodes != leftBlackNodes)
+					std::cout << "bad Number Black Nodes" << std::endl;
+				if (node->color == 0)
+					++leftBlackNodes;
+				return leftBlackNodes;
+			}
+
+			bool	checkTwoConsecutivesRed(node_pointer node) {
+				bool ret = true;
+				if (!node)
+					return true;
+				if (node->color == 1 && node->parent->color == 1)
+					return false;
+				ret *= checkTwoConsecutivesRed(node->leftChild);
+				ret *= checkTwoConsecutivesRed(node->rightChild);
+				return ret;
+			}
+
+			/*		TO DELETE		*/
 			void	printNodeAndChild(node_pointer node) {
-				std::cout << "NODE: " << node->data.first << (node->black == true ? " | black" : " | red") << std::endl;
+				std::cout << "NODE: " << node->data.first << (node->color == 0 ? " | black" : " | red") << std::endl;
 				if (node->leftChild != NULL)
-						std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data.first << (node->leftChild->black == true ? " | black" : " | red") << std::endl;
+						std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data.first << (node->leftChild->color == 0 ? " | black" : " | red") << std::endl;
 				else
 						std::cout << "\t\tLEFT_CHILD: NULL" << std::endl;
 				if (node->rightChild != NULL)
-						std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data.first << (node->rightChild->black == true ? " | black" : " | red") << std::endl;
+						std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data.first << (node->rightChild->color == 0 ? " | black" : " | red") << std::endl;
 				else
 						std::cout << "\t\tRIGHT_CHILD: NULL" << std::endl;
 			}
@@ -288,25 +578,6 @@ namespace ft {
 				printX(node->leftChild);
 				printX(node->rightChild);
 			}
-
-			void	recursive_deletion(node_pointer node) {
-				if (!node)
-					return;
-				recursive_deletion(node->leftChild);
-				recursive_deletion(node->rightChild);
-				_node_allocator.destroy(node);
-				_node_allocator.deallocate(node, 1);
-				_size--;
-			}
-
-			allocator_type	_data_allocator;
-			allocator_node	_node_allocator;
-			data_compare		_comp;
-			node_pointer		_head;
-			node_pointer		_begin;
-			node_pointer		_end;
-			size_type				_size;
-
 
 	}; // class bst_red_black
 

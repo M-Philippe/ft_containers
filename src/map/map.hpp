@@ -41,15 +41,28 @@ namespace ft {
 
 		~map() {}
 
-		iterator begin() { return bst.begin(); }
-		const_iterator begin() const { return bst.begin(); }
-		iterator end() { return bst.end(); }
-		const_iterator end() const { return bst.end(); }
+		/*     Iterator     */
+		iterator 		begin() { return bst.begin(); }
+		const_iterator 	begin() const { return bst.begin(); }
+		iterator 		end() { return bst.end(); }
+		const_iterator 	end() const { return bst.end(); }
 
-		// true if created elements or false if already existing elements.
-		bool insert (const value_type& val) { bst.add_node(val); return false; }
+		/*     Insertion / Deletion     */
+		void 					erase(iterator first) { bst.erase(first); }
+		void 					erase(iterator first, iterator last) { bst.erase(first, last); }
+		size_type 				erase(const key_type& k) { return bst.erase(k); }
+		pair<iterator, bool>	insert(const value_type& val) { return bst.insert(val); }
+		iterator				insert(iterator position, const value_type& k) { return bst.insert(position, k); }
+		void					insert(iterator first, iterator last) { bst.insert(first, last); }
+
+		/*     Utils     */
+		size_type	size() const { return bst.size(); }
+		size_type	count(const key_type& k) const { return bst.count(k); }
+		bool		empty() const { return bst.size() == 0; }
+
+
+		/*     To Delete     */
 		void print() { bst.print(); }
-		size_type size() const { return bst.size(); }
 
 	private:
 		bst_red_black<value_type, Compare, Alloc> bst;

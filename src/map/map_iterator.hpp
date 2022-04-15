@@ -54,19 +54,37 @@ namespace ft {
 
 			/* pre-increment */
 			map_iterator operator++() {
-				node_pointer parent = _node->parent;
 				if (_node->rightChild) {
 					for (_node = _node->rightChild; _node->leftChild; _node = _node->leftChild);
 				}
-				else if (_node == parent->leftChild)
-					_node = parent;
-				else
+				else if (_node == _node->parent->leftChild)
+					_node = _node->parent;
+				else {
 					for (_node = _node->parent; _node == _node->parent->rightChild; _node = _node->parent);
+					_node = _node->parent;
+				}
 				return *this;
 			}
 
+			map_iterator operator--() {
+				if (_node->leftChild) {
+					for (_node = _node->leftChild; _node->rightChild; _node = _node->rightChild);
+				} else if (_node == _node->parent->rightChild) {
+					_node = _node->parent;
+				} else {
+					for (_node = _node->parent; _node == _node->parent->leftChild; _node = _node->parent);
+					_node = _node->parent;
+				}
+				return *this;
+			}
 			/* post-increment */
 			map_iterator operator++(int) {
+				map_iterator it(*this);
+				++(*this);
+				return it;
+			}
+
+			map_iterator operator--(int) {
 				map_iterator it(*this);
 				++(*this);
 				return it;
