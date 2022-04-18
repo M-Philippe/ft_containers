@@ -94,6 +94,11 @@ namespace ft {
 		size_type 				erase(const key_type& k) { return bst.erase(k); }
 
 		/*
+		**		OBSERVERS
+		*/
+		key_compare key_comp() const { return key_compare(); }
+
+		/*
 		**		OPERATIONS
 		*/
 		iterator find (const key_type& k) { return bst.find(k); }

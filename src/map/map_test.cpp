@@ -638,6 +638,17 @@ void	map_case5() {
 	std::cout << "===" << std::endl;
 }
 
+void	map_key_comp() {
+	NAMESPACE::map<int, float> map1;
+	map1.insert(NAMESPACE::make_pair(3, 1.02));
+	NAMESPACE::map<int, float> map2;
+	map2.insert(NAMESPACE::make_pair(2, 1.45));
+	NAMESPACE::map<int, float>::key_compare comp = map1.key_comp();
+	std::cout << std::boolalpha;
+	std::cout << comp(map1.begin()->first, map2.begin()->first) << std::endl;
+	std::cout << comp(map1.begin()->first, map1.begin()->first) << std::endl;
+}
+
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
@@ -645,7 +656,8 @@ void	map_test() {
 	//map_insert_1();
 	//map_insert_2();
 	//map_insert_3();
-	map_operator_brackets();
+	//map_operator_brackets();
+	map_key_comp();
 	// to delete.
 	//map_case1();
 	//map_case2();
