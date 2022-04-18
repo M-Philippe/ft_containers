@@ -106,6 +106,7 @@ namespace ft {
 		size_type	count(const key_type& k) const { return bst.count(k); }
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
 		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
+		void swap (map& x) { bst.swap(x.bst); }
 		void clear() {
 			if (bst.size() != 0)
 				bst.clear();

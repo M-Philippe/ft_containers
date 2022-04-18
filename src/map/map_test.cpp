@@ -638,6 +638,52 @@ void	map_case5() {
 	std::cout << "===" << std::endl;
 }
 
+void	map_swap() {
+	NAMESPACE::map<int, float> map;
+	NAMESPACE::map<int, float> map2;
+	for (int i = 0; i < 4; i++)
+		map.insert(NAMESPACE::make_pair(i + 1, 1.03 + i));
+	//NAMESPACE::map<int, float>::iterator it1 = map.begin();
+	//NAMESPACE::map<int, float>::iterator it2 = map2.begin();
+	NAMESPACE::map<int, float>::iterator t_it1 = map.begin();
+	NAMESPACE::map<int, float>::iterator t_it2 = map2.begin();
+	std::cout << "BEFORE SWAP" << std::endl;
+	while (t_it1 != map.end())
+		std::cout << (t_it1++)->first << " ";
+	std::cout << std::endl;
+	while (t_it2 != map2.end())
+		std::cout << (t_it2++)->first << " ";
+	std::cout << std::endl;
+	map.swap(map2);
+	std::cout << "AFTER SWAP" << std::endl;
+	//while (it1 != map2.end())
+	//	std::cout << (it1++)->first << " ";
+	//std::cout << std::endl;
+	//while (it2 != map.end())
+	//	std::cout << (it2++)->first << " ";
+	//std::cout << std::endl;
+	t_it1 = map.begin();
+	t_it2 = map2.begin();
+	while (t_it1 != map.end())
+		std::cout << (t_it1++)->first << " ";
+	std::cout << std::endl;
+	while (t_it2 != map2.end())
+		std::cout << (t_it2++)->first << " ";
+	std::cout << std::endl;
+	map.insert(NAMESPACE::make_pair(55, 34));
+	map2.insert(NAMESPACE::make_pair(55, 34));
+	map.swap(map2);
+	std::cout << "RE-SWAP" << std::endl;
+	t_it1 = map.begin();
+	t_it2 = map2.begin();
+	while (t_it1 != map.end())
+		std::cout << (t_it1++)->first << " ";
+	std::cout << std::endl;
+	while (t_it2 != map2.end())
+		std::cout << (t_it2++)->first << " ";
+	std::cout << std::endl;
+}
+
 void	map_clear() {
 	std::cout << "map clear" << std::endl;
 	{
@@ -701,12 +747,13 @@ void	map_get_allocator() {
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
-	map_constructor();
-	map_insert_1();
+	//map_constructor();
+	//map_insert_1();
 	//map_insert_2();
 	//map_insert_3();
 	//map_operator_brackets();
-	map_clear();
+	map_swap();
+	//map_clear();
 	//map_key_comp();
 	//map_get_allocator();
 	// to delete.

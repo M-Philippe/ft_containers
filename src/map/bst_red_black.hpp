@@ -180,6 +180,16 @@ namespace ft {
 				}
 			}
 
+			void	swap(bst_red_black& swap_bst) {
+				ft::swap(_data_allocator, swap_bst._data_allocator);
+				ft::swap(_node_allocator, swap_bst._node_allocator);
+				ft::swap(_comp, swap_bst._comp);
+				ft::swap(_head, swap_bst._head);
+				ft::swap(_begin, swap_bst._begin);
+				ft::swap(_end, swap_bst._end);
+				ft::swap(_size, swap_bst._size);
+			}
+
 			void	clear() {
 				unset_bounds();
 				if (!_head) {
