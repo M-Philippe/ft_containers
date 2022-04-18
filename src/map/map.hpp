@@ -48,12 +48,12 @@ namespace ft {
 		const_iterator 	end() const { return bst.end(); }
 
 		/*     Insertion / Deletion     */
-		void 					erase(iterator first) { bst.erase(first); }
-		void 					erase(iterator first, iterator last) { bst.erase(first, last); }
-		size_type 				erase(const key_type& k) { return bst.erase(k); }
 		pair<iterator, bool>	insert(const value_type& val) { return bst.insert(val); }
 		iterator				insert(iterator position, const value_type& k) { return bst.insert(position, k); }
 		void					insert(iterator first, iterator last) { bst.insert(first, last); }
+		void 					erase(iterator first) { bst.erase(first); }
+		void 					erase(iterator first, iterator last) { bst.erase(first, last); }
+		size_type 				erase(const key_type& k) { return bst.erase(k); }
 
 		/*     Utils     */
 		size_type	size() const { return bst.size(); }
