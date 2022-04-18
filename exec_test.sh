@@ -3,9 +3,9 @@
 #./ft_test > ft_results
 #./std_test > std_results
 
-RED="\e[31m"
-NC="\e[37m"
-GREEN="\e[32m"
+RED="\033[31m"
+NC="\033[37m"
+GREEN="\033[32m"
 
 if [ "$1" = "-show" ]
 then
@@ -23,7 +23,7 @@ if [ "$OSTYPE" = "linux-gnu" ]
 then
 	/usr/bin/time --format="%C took %e seconds" ./ft_test > ft_results.txt
 	/usr/bin/time --format="%C took %e seconds" ./std_test > std_results.txt
-elif [ "$OSTYPE" = "mac"* ]
+elif [ "$OSTYPE" = "darwin20" ]
 then
 	time ./ft_test > ft_results.txt
 	time ./std_test > std_results.txt
