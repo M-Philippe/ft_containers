@@ -44,7 +44,7 @@ namespace ft {
 				return (map_iterator<N, const T, Compare>(_node));
 			}
 
-			reference operator*() { return *_node->data; }
+			reference operator*() { return _node->data; }
 			pointer operator->() { return &_node->data; }
 
 			void	moveToLeftmostNode() {
@@ -86,7 +86,7 @@ namespace ft {
 
 			map_iterator operator--(int) {
 				map_iterator it(*this);
-				++(*this);
+				--(*this);
 				return it;
 			}
 

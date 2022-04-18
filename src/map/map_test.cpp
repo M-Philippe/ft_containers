@@ -2,6 +2,8 @@
 #include "map_test.hpp"
 #include <map>
 #include <utility>
+#include "../vector/vector.hpp"
+#include <vector>
 
 // TMP
 #include <stdlib.h>     /* srand, rand */
@@ -132,25 +134,46 @@ void	map_insert_1() {
 		NAMESPACE::pair<NAMESPACE::map<int, float>::iterator, bool> ret;
 		ret = map.insert(NAMESPACE::make_pair(17, 1.02));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(9, 1.32));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(9, 1.32));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 		ret = map.insert(NAMESPACE::make_pair(19, 1.82));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(75, 1.92));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(75, 1.92));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 		ret = map.insert(NAMESPACE::make_pair(8, 1.12));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(10, 1.12));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(10, 1.12));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 		ret = map.insert(NAMESPACE::make_pair(34, 1.12));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(67, 1.12));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(67, 1.12));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 		ret = map.insert(NAMESPACE::make_pair(46, 1.12));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(98, 1.12));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(98, 1.12));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 		ret = map.insert(NAMESPACE::make_pair(89, 1.12));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(1, 1.12));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(1, 1.12));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 		ret = map.insert(NAMESPACE::make_pair(3, 1.12));
 		std::cout << "BOOL: " << ret.second << std::endl;
-		print_after_insert(ret.first, map.begin(), map.end());ret = map.insert(NAMESPACE::make_pair(80, 1.12));
+		print_after_insert(ret.first, map.begin(), map.end());
+		ret = map.insert(NAMESPACE::make_pair(80, 1.12));
+		std::cout << "BOOL: " << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
 	}
 	{
 		std::cout << "\t=== Case_4 ===" << std::endl;
@@ -189,6 +212,180 @@ void	map_insert_1() {
 		ret = map.insert(NAMESPACE::make_pair(9, 1.32));
 		std::cout << "BOOL: " << ret.second << std::endl;
 		print_after_insert(ret.first, map.begin(), map.end());
+	}
+	{
+		std::cout << "\t=== Big Insert ===" << std::endl;
+		NAMESPACE::map<int, float> map;
+		NAMESPACE::pair<NAMESPACE::map<int, float>::iterator, bool> ret;
+		for (int i = 0; i < 1000000; i++) {
+			ret = map.insert(NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
+		}
+		std::cout << ret.second << std::endl;
+		print_after_insert(ret.first, map.begin(), map.end());
+	}
+	// Add test to check no leaks with empty map.
+}
+
+void	map_insert_2() {
+	std::cout << "Map Insert (second proto)" << std::endl;
+	{
+		std::cout << "\t=== Case_1 ===" << std::endl;
+		NAMESPACE::map<int, float> map;
+		NAMESPACE::map<int, float>::iterator ret = map.begin();
+		ret = map.insert(ret, NAMESPACE::make_pair(42, 1.02));
+		std::cout << std::boolalpha;
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(2, 2.56));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(9, 2.00));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(1, 2.70));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(78, 4.98));
+		print_after_insert(ret, map.begin(), map.end());
+		std::cout << "\t===" << std::endl;
+	}
+	{
+		std::cout << "\t=== Case_2 ===" << std::endl;
+		NAMESPACE::map<int, float> map;
+		NAMESPACE::map<int, float>::iterator ret = map.begin();
+		ret = map.insert(ret, NAMESPACE::make_pair(17, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(9, 1.32));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(19, 1.82));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(75, 1.92));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(81, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		std::cout << "\t===" << std::endl;
+	}
+	{
+		std::cout << "\t=== Case_3 ===" << std::endl;
+		NAMESPACE::map<int, float> map;
+		NAMESPACE::map<int, float>::iterator ret = map.begin();
+		ret = map.insert(ret, NAMESPACE::make_pair(17, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(9, 1.32));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(19, 1.82));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(75, 1.92));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(8, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(10, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(34, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(67, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(46, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(98, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(89, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(1, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(3, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(80, 1.12));
+		print_after_insert(ret, map.begin(), map.end());
+	}
+	{
+		std::cout << "\t=== Case_4 ===" << std::endl;
+		NAMESPACE::map<int, float> map;
+		NAMESPACE::map<int, float>::iterator ret = map.begin();
+		ret = map.insert(ret, NAMESPACE::make_pair(0, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(9, 1.32));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(-1, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(-2, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(-10, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(-5, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(10, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(8, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(6, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(7, 1.02));
+		print_after_insert(ret, map.begin(), map.end());
+		ret = map.insert(ret, NAMESPACE::make_pair(9, 1.32));
+		print_after_insert(ret, map.begin(), map.end());
+	}
+	{
+		std::cout << "\t=== Big Insert ===" << std::endl;
+		NAMESPACE::map<int, float> map;
+		NAMESPACE::map<int, float>::iterator ret = map.begin();
+		for (int i = 0; i < 1000000; i++) {
+			ret = map.insert(ret, NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
+		}
+		print_after_insert(ret, map.begin(), map.end());
+	}
+}
+
+void	map_insert_3() {
+	std::cout << "map_insert_3" << std::endl;
+	NAMESPACE::map<int, float> map;
+	for (int i = 0; i < 100; i++)
+		map.insert(NAMESPACE::make_pair((i + 1) * 2, 1.02));
+	NAMESPACE::map<int, float>::iterator begin = map.begin();
+	NAMESPACE::map<int, float>::iterator end = map.end();
+	{
+		NAMESPACE::map<int, float> map2;
+		map2.insert(begin, end);
+		NAMESPACE::map<int, float>::iterator b = map2.begin();
+		while (b != map2.end())
+			std::cout << (b++)->first << " ";
+		std::cout << std::endl;
+	}
+	{
+		NAMESPACE::map<int, float> map2;
+		for (int i = 0; i++ < 15; begin++);
+		end--; end--; end--;
+		map2.insert(begin, end);
+		NAMESPACE::map<int, float>::iterator b = map2.begin();
+		while (b != map2.end())
+			std::cout << (b++)->first << " ";
+		std::cout << std::endl;
+	}
+	{
+		NAMESPACE::map<int, float> map2;
+		NAMESPACE::map<int, float>::iterator begin2 = map.begin();
+		while (begin2 != end)
+			begin2++;
+		begin2--;
+		map2.insert(begin2, end);
+		NAMESPACE::map<int, float>::iterator b = map2.begin();
+		while (b != map2.end())
+			std::cout << (b++)->first << " ";
+		std::cout << std::endl;
+		begin2++;
+		map2.insert(begin2, end);
+		b = map2.begin();
+		while (b != map2.end())
+			std::cout << (b++)->first << " ";
+		std::cout << std::endl;
+	}
+	{
+		NAMESPACE::map<int, float> map2;
+		for (int i = 0; i++ < 15; begin++);
+		end--; end--; end--;
+		NAMESPACE::map<int, float>::const_iterator const_begin = begin;
+		NAMESPACE::map<int, float>::const_iterator const_end = end;
+		map2.insert(const_begin, const_end);
+		NAMESPACE::map<int, float>::iterator b = map2.begin();
+		while (b != map2.end())
+			std::cout << (b++)->first << " ";
+		std::cout << std::endl;
 	}
 }
 
@@ -302,6 +499,8 @@ void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
 	map_insert_1();
+	map_insert_2();
+	map_insert_3();
 	//map_case1();
 	//map_case2();
 	//map_case3();

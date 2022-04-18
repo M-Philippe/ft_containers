@@ -128,11 +128,10 @@ namespace ft {
 				return add_node(val).first;
 			}
 
-			void insert(iterator first, iterator last) {
-				for (iterator next = first; first != last; first = next) {
-					++next;
-					add_node(*first);
-				}
+			template <class InputIterator>
+			void	insert(InputIterator first, InputIterator last) {
+				while (first != last)
+					add_node(*(first++));
 			}
 
 			/* 		Deletion 	   */
@@ -280,6 +279,10 @@ namespace ft {
 						++_size;
 						fixInsert(newNode);
 					}
+				}
+				if (!ret.second) {
+          _node_allocator.destroy(newNode);
+          _node_allocator.deallocate(newNode, 1);
 				}
 				set_bounds();
 				return ret;

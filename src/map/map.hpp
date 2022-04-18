@@ -23,10 +23,8 @@ namespace ft {
 		typedef typename allocator_type::const_reference const_reference;
 		typedef typename allocator_type::pointer pointer;
 		typedef typename allocator_type::const_pointer const_pointer;
-		// iterator	a bidirectional iterator to value_type	convertible to const_iterator
 		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::iterator iterator;
 		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::const_iterator const_iterator;
-		// const_iterator	a bidirectional iterator to const value_type
 		// reverse_iterator	reverse_iterator<iterator>
 		// const_reverse_iterator	reverse_iterator<const_iterator>
 		typedef ptrdiff_t difference_type;
@@ -50,7 +48,9 @@ namespace ft {
 		/*     Insertion / Deletion     */
 		pair<iterator, bool>	insert(const value_type& val) { return bst.insert(val); }
 		iterator				insert(iterator position, const value_type& k) { return bst.insert(position, k); }
-		void					insert(iterator first, iterator last) { bst.insert(first, last); }
+		template <class InputIterator>
+		void	insert(InputIterator first, InputIterator last) { bst.insert(first, last); }
+
 		void 					erase(iterator first) { bst.erase(first); }
 		void 					erase(iterator first, iterator last) { bst.erase(first, last); }
 		size_type 				erase(const key_type& k) { return bst.erase(k); }
