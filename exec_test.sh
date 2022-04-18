@@ -1,9 +1,11 @@
+#! /usr/bin/env bash
+
 #./ft_test > ft_results
 #./std_test > std_results
 
-GREEN="\033[0;32m"
-RED="\033[0;31m"
-BLACK="\033[0;37m"
+RED="\e[31m"
+NC="\e[37m"
+GREEN="\e[32m"
 
 if [ "$1" = "-show" ]
 then
@@ -17,18 +19,27 @@ then
 	exit
 fi
 
-# /usr/bin/time --format="%C took %e seconds" ./ft_test > ft_results.txt
-# /usr/bin/time --format="%C took %e seconds" ./std_test > std_results.txt
-time ./ft_test > ft_results.txt
-time ./std_test > std_results.txt
+if [ "$OSTYPE" = "linux-gnu" ]
+then
+	/usr/bin/time --format="%C took %e seconds" ./ft_test > ft_results.txt
+	/usr/bin/time --format="%C took %e seconds" ./std_test > std_results.txt
+elif [ "$OSTYPE" = "mac"* ]
+then
+	time ./ft_test > ft_results.txt
+	time ./std_test > std_results.txt
+else
+	echo -e "${RED} Unknown platform, impossible to display execution time.${NC}"
+	./ft_test > ft_results.txt
+	./std_test > std_results.txt
+fi
 
 diff ft_results.txt std_results.txt > /dev/null
 if [ $? -eq 0 ]
 then
-	echo "$GREEN=== VectorTest OK :) ===$BLACK"
+	echo -e "${GREEN}=== VectorTest OK :) ===${NC}"
 else
-	echo "$RED=== VectorTest BAD :'( ===$BLACK"
-	echo "$(diff ft_results.txt std_results.txt)"
+	echo -e "${RED}=== VectorTest BAD :'( ===${NC}"
+	echo -e "$(diff ft_results.txt std_results.txt)"
 fi
 
-echo "$GREEN=== All tests done ===$BLACK"
+echo -e "$GREEN=== All tests done ===${NC}"
