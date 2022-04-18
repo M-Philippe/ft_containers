@@ -194,6 +194,9 @@ namespace ft {
 					recursive_deletion(_head->rightChild);
 				_node_allocator.destroy(_head);
 				_node_allocator.deallocate(_head, 1);
+				_begin = NULL;
+				_end = NULL;
+				_head = NULL;
 				_size = 0;
 			}
 

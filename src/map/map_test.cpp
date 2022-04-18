@@ -638,6 +638,32 @@ void	map_case5() {
 	std::cout << "===" << std::endl;
 }
 
+void	map_clear() {
+	std::cout << "map clear" << std::endl;
+	{
+		std::cout << "\t=== big clear ===" << std::endl;
+		NAMESPACE::map<int, int> map;
+		for (int i = 0; i < 100000; i++)
+			map.insert(NAMESPACE::make_pair(i, 1));
+		map.clear();
+		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+		map.clear();
+		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+		map.clear();
+		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+	}
+	{
+		std::cout << "\t=== on empty map ===" << std::endl;
+		NAMESPACE::map<int, int> map;
+		map.clear();
+		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+		map.clear();
+		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+		map.clear();
+		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+	}
+}
+
 void	map_key_comp() {
 	NAMESPACE::map<int, float> map1;
 	map1.insert(NAMESPACE::make_pair(3, 1.02));
@@ -661,13 +687,14 @@ void	map_get_allocator() {
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
-	//map_constructor();
-	//map_insert_1();
-	//map_insert_2();
-	//map_insert_3();
-	//map_operator_brackets();
-	map_key_comp();
-	map_get_allocator();
+	map_constructor();
+	map_insert_1();
+	map_insert_2();
+	map_insert_3();
+	map_operator_brackets();
+	map_clear();
+	//map_key_comp();
+	//map_get_allocator();
 	// to delete.
 	//map_case1();
 	//map_case2();
