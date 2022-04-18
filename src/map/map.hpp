@@ -108,6 +108,11 @@ namespace ft {
 		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
 		void clear() { bst.clear(); }
 
+		/*
+		**		ALLOCATOR
+		*/
+		allocator_type get_allocator() const { return allocator_type(); }
+
 		/*     To Delete     */
 		void print() { bst.print(); }
 

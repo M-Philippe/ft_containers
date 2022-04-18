@@ -649,6 +649,15 @@ void	map_key_comp() {
 	std::cout << comp(map1.begin()->first, map1.begin()->first) << std::endl;
 }
 
+void	map_get_allocator() {
+	ft::map<int, float> map1;
+	std::map<int, float> map2;
+	if (map1.get_allocator() == map2.get_allocator())
+		std::cout << "OK" << std::endl;
+	else
+		std::cout << "WRONG" << std::endl;
+}
+
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
@@ -658,6 +667,7 @@ void	map_test() {
 	//map_insert_3();
 	//map_operator_brackets();
 	map_key_comp();
+	map_get_allocator();
 	// to delete.
 	//map_case1();
 	//map_case2();
