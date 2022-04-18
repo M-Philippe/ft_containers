@@ -513,6 +513,25 @@ void	map_insert_3() {
 	}
 }
 
+void	map_operator_brackets() {
+	std::cout << "Operator brackets" << std::endl;
+	{
+		NAMESPACE::map<int, float> map;
+		for (int i = 0; i < 1000; i++)
+			map.insert(NAMESPACE::make_pair(i, 1.03));
+		std::cout << map[3] << std::endl;
+		NAMESPACE::map<int, float>::iterator begin = map.begin();
+		while (begin != map.end())
+			std::cout << begin->first << " " << (begin++)->second << " ";
+		std::cout << std::endl;
+		std::cout << map[-1] << std::endl;
+		begin = map.begin();
+		while (begin != map.end())
+			std::cout << begin->first << " " << (begin++)->second << " ";
+		std::cout << std::endl;
+	}
+}
+
 void	map_case1() {
 	NAMESPACE::map<int, float> map;
 	map.insert(NAMESPACE::make_pair(42, 1.02));
@@ -623,9 +642,10 @@ void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
 	//map_constructor();
-	map_insert_1();
-	map_insert_2();
-	map_insert_3();
+	//map_insert_1();
+	//map_insert_2();
+	//map_insert_3();
+	map_operator_brackets();
 	// to delete.
 	//map_case1();
 	//map_case2();

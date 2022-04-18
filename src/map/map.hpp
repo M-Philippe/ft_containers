@@ -73,6 +73,15 @@ namespace ft {
 		size_type	max_size() const { return bst.max_size(); }
 
 		/*
+		**		ELEMENT ACCESS
+		*/
+		mapped_type& operator[] (const key_type& k) {
+			ft::pair<key_type, mapped_type> pairToInsert;
+			pairToInsert.first = k;
+			return bst.insert(pairToInsert).first->second;
+		}
+
+		/*
 		**		MODIFIERS
 		*/
 		pair<iterator, bool>	insert(const value_type& val) { return bst.insert(val); }
