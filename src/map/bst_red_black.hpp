@@ -99,15 +99,15 @@ namespace ft {
 
 			~bst_red_black() {
 				clear();
+				_node_allocator.destroy(_begin);
+				_node_allocator.deallocate(_begin, 1);
+				_node_allocator.destroy(_end);
+				_node_allocator.deallocate(_end, 1);
 			}
 
 			bst_red_black& operator=(const bst_red_black& x) {
 				clear();
 				_head = NULL;
-				_begin = new_node();
-				_end = new_node();
-				_begin->parent = _end;
-				_end->parent = _begin;
 				insert(x.begin(), x.end());
 				return *this;
 			}
@@ -181,11 +181,9 @@ namespace ft {
 			}
 
 			void	clear() {
+				unset_bounds();
 				if (!_head) {
-					_node_allocator.destroy(_begin);
-					_node_allocator.deallocate(_begin, 1);
-					_node_allocator.destroy(_end);
-					_node_allocator.deallocate(_end, 1);
+					set_bounds();
 					return;
 				}
 				if (_head->leftChild)
@@ -194,10 +192,9 @@ namespace ft {
 					recursive_deletion(_head->rightChild);
 				_node_allocator.destroy(_head);
 				_node_allocator.deallocate(_head, 1);
-				_begin = NULL;
-				_end = NULL;
 				_head = NULL;
 				_size = 0;
+				set_bounds();
 			}
 
 			/*

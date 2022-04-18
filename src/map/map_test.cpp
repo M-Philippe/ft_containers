@@ -651,6 +651,13 @@ void	map_clear() {
 		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
 		map.clear();
 		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+		map.insert(NAMESPACE::make_pair(4, 8));
+		map.insert(NAMESPACE::make_pair(3, 8));
+		map.insert(NAMESPACE::make_pair(1, 8));
+		NAMESPACE::map<int, int>::iterator it = map.begin();
+		while (it != map.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
 	}
 	{
 		std::cout << "\t=== on empty map ===" << std::endl;
@@ -661,6 +668,13 @@ void	map_clear() {
 		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
 		map.clear();
 		std::cout << map.size() << " " << map.max_size() << " " << map.empty() << std::endl;
+		map.insert(NAMESPACE::make_pair(4, 8));
+		map.insert(NAMESPACE::make_pair(3, 8));
+		map.insert(NAMESPACE::make_pair(1, 8));
+		NAMESPACE::map<int, int>::iterator it = map.begin();
+		while (it != map.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
 	}
 }
 
@@ -689,9 +703,9 @@ void	map_test() {
 	//pair_relational_operators();
 	map_constructor();
 	map_insert_1();
-	map_insert_2();
-	map_insert_3();
-	map_operator_brackets();
+	//map_insert_2();
+	//map_insert_3();
+	//map_operator_brackets();
 	map_clear();
 	//map_key_comp();
 	//map_get_allocator();
