@@ -126,7 +126,7 @@ namespace ft {
 			**		CAPACITY
 			*/
 			size_type	size() const { return _size; }
-			size_type max_size() const { return _data_allocator.max_size(); }
+			size_type max_size() const { return _node_allocator.max_size(); }
 
 
 

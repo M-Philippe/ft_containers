@@ -32,9 +32,20 @@ namespace ft {
 
 	public:
 
-		map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {
+		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {
 			(void)comp;
 			(void)alloc;
+		}
+
+		template <class InputIterator>
+  	map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {
+			(void)comp;
+			(void)alloc;
+			bst.insert(first, last);
+		}
+
+		map (const map& x) {
+			bst.insert(x.begin(), x.end());
 		}
 
 		~map() {}

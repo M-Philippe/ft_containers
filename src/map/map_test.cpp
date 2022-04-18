@@ -10,6 +10,8 @@
 #include <time.h>       /* time */
 #include <set>
 
+#define MAP_BIG_N	10000
+
 void	pair_relational_operators_output(const NAMESPACE::pair<int, float>& p1, const NAMESPACE::pair<int, float>& p2) {
 	std::cout << std::boolalpha;
 	std::cout << (p1 == p2) << std::endl;
@@ -75,6 +77,57 @@ void	pair_relational_operators() {
 void	map_constructor() {
 	std::cout << "Test Constructor" << std::endl;
 	NAMESPACE::map<int, float> map;
+	map.insert(NAMESPACE::make_pair(3, 2.02));
+	map.insert(NAMESPACE::make_pair(2, 1.29));
+	map.insert(NAMESPACE::make_pair(9, 1.89));
+	map.insert(NAMESPACE::make_pair(0, 1.90));
+	{
+		std::cout << "\t=== Construct by range ===" << std::endl;
+		NAMESPACE::map<int, float> map2(map.begin(), map.end());
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map.empty() << std::endl;
+		std::cout << map.size() << std::endl;
+		std::cout << map.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Construct by range (not full) ===" << std::endl;
+		NAMESPACE::map<int, float>::iterator begin = map.begin(); begin++;
+		NAMESPACE::map<int, float>::iterator end = map.end(); end--;
+		NAMESPACE::map<int, float> map2(begin, end);
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map.empty() << std::endl;
+		std::cout << map.size() << std::endl;
+		std::cout << map.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Construct Copy ===" << std::endl;
+		NAMESPACE::map<int, float> map2(map);
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map.empty() << std::endl;
+		std::cout << map.size() << std::endl;
+		std::cout << map.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Construct Copy (empty map)===" << std::endl;
+		NAMESPACE::map<int, float> emptyMap;
+		NAMESPACE::map<int, float> map2(emptyMap);
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map.empty() << std::endl;
+		std::cout << map.size() << std::endl;
+		std::cout << map.max_size() << std::endl;
+	}
 }
 
 void	print_after_insert(NAMESPACE::map<int, float>::iterator returnedIterator, NAMESPACE::map<int, float>::iterator begin, NAMESPACE::map<int, float>::iterator end) {
@@ -222,7 +275,7 @@ void	map_insert_1() {
 		std::cout << "\t=== Big Insert ===" << std::endl;
 		NAMESPACE::map<int, float> map;
 		NAMESPACE::pair<NAMESPACE::map<int, float>::iterator, bool> ret;
-		for (int i = 0; i < 10000; i++) {
+		for (int i = 0; i < MAP_BIG_N; i++) {
 			ret = map.insert(NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
 		}
 		std::cout << ret.second << std::endl;
@@ -330,7 +383,7 @@ void	map_insert_2() {
 		std::cout << "\t=== Big Insert ===" << std::endl;
 		NAMESPACE::map<int, float> map;
 		NAMESPACE::map<int, float>::iterator ret = map.begin();
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < MAP_BIG_N; i++) {
 			ret = map.insert(ret, NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
 		}
 		print_after_insert(ret, map.begin(), map.end());
@@ -504,9 +557,9 @@ void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
 	map_constructor();
-	map_insert_1();
-	map_insert_2();
-	map_insert_3();
+	//map_insert_1();
+	//map_insert_2();
+	//map_insert_3();
 	// to delete.
 	//map_case1();
 	//map_case2();
