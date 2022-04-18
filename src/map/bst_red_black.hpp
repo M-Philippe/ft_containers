@@ -98,15 +98,20 @@ namespace ft {
 			}
 
 			~bst_red_black() {
-				if (!_head)
+				if (!_head) {
+					_node_allocator.destroy(_begin);
+					_node_allocator.deallocate(_begin, 1);
+					_node_allocator.destroy(_end);
+					_node_allocator.deallocate(_end, 1);
 					return;
+				}
 				if (_head->leftChild)
 					recursive_deletion(_head->leftChild);
 				if (_head->rightChild)
 					recursive_deletion(_head->rightChild);
 				_node_allocator.destroy(_head);
 				_node_allocator.deallocate(_head, 1);
-				_size--;
+				_size = 0;
 			}
 
 			/*

@@ -72,6 +72,11 @@ void	pair_relational_operators() {
 	pair_relational_operators_output(p1, p2);
 }
 
+void	map_constructor() {
+	std::cout << "Test Constructor" << std::endl;
+	NAMESPACE::map<int, float> map;
+}
+
 void	print_after_insert(NAMESPACE::map<int, float>::iterator returnedIterator, NAMESPACE::map<int, float>::iterator begin, NAMESPACE::map<int, float>::iterator end) {
 	std::cout << "From returned iterator" << std::endl;
 	while (returnedIterator != end)
@@ -217,7 +222,7 @@ void	map_insert_1() {
 		std::cout << "\t=== Big Insert ===" << std::endl;
 		NAMESPACE::map<int, float> map;
 		NAMESPACE::pair<NAMESPACE::map<int, float>::iterator, bool> ret;
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			ret = map.insert(NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
 		}
 		std::cout << ret.second << std::endl;
@@ -498,9 +503,11 @@ void	map_case5() {
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
+	map_constructor();
 	map_insert_1();
 	map_insert_2();
 	map_insert_3();
+	// to delete.
 	//map_case1();
 	//map_case2();
 	//map_case3();
