@@ -81,10 +81,9 @@ namespace ft {
 			typedef typename ft::map_iterator<node_pointer, T, Compare> iterator;
 			typedef typename ft::map_iterator<node_pointer, const T, Compare> const_iterator;
 
-			iterator 		begin() { return iterator(_begin->parent); }
-			iterator 		end() { return iterator(_end); }
-			const_iterator 	begin() const { return const_iterator(_begin->parent); }
-			const_iterator 	end() const { return const_iterator(_end); }
+			/*
+			**		CONSTRUCTORS / DESTRUCTOR
+			*/
 
 			bst_red_black(const data_compare& comp = data_compare(), const allocator_type& alloc = allocator_type()) {
 				_data_allocator = alloc;
@@ -110,18 +109,26 @@ namespace ft {
 				_size--;
 			}
 
-			void	print() {
-				node* node = _head;
-				std::cout << "STARTING BY HEAD: " << std::endl;
-				printNodeAndChild(node);
-				printX(node->leftChild);
-				printX(node->rightChild);
-			}
+			/*
+			**		ITERATORS
+			*/
+			iterator 		begin() { return iterator(_begin->parent); }
+			iterator 		end() { return iterator(_end); }
+			const_iterator 	begin() const { return const_iterator(_begin->parent); }
+			const_iterator 	end() const { return const_iterator(_end); }
 
-			/*		Insertion		*/
-			pair<iterator, bool>  insert(const value_type& val) {
-				return add_node(val);
-			}
+			/*
+			**		CAPACITY
+			*/
+			size_type	size() const { return _size; }
+			size_type max_size() const { return _data_allocator.max_size(); }
+
+
+
+			/*
+			**		MODIFIERS
+			*/
+			pair<iterator, bool>  insert(const value_type& val) { return add_node(val); }
 
 			iterator insert(iterator position, const value_type& val) {
 				(void) position;
@@ -134,7 +141,6 @@ namespace ft {
 					add_node(*(first++));
 			}
 
-			/* 		Deletion 	   */
 			template <typename key_type>
 			size_t erase(const key_type& key) {
 				node_pointer node = _head;
@@ -173,11 +179,9 @@ namespace ft {
 				}
 			}
 
-			/* 		Utils 	   */
-			size_type	size() const {
-				return _size;
-			}
-
+			/*
+			**		OPERATIONS
+			*/
 			template <typename key_type>
 			const_iterator find(const key_type& k) const {
 				iterator ret = iterator(_end);
@@ -229,6 +233,17 @@ namespace ft {
 				return make_pair(first, second);
 			}
 
+
+		/*
+		**		TO_DELETE
+		*/
+		void	print() {
+			node* node = _head;
+			std::cout << "STARTING BY HEAD: " << std::endl;
+			printNodeAndChild(node);
+			printX(node->leftChild);
+			printX(node->rightChild);
+			}
 
 		private:
 			allocator_type		_data_allocator;

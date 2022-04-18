@@ -39,13 +39,24 @@ namespace ft {
 
 		~map() {}
 
-		/*     Iterator     */
+		/*
+		**		ITERATORS
+		*/
 		iterator 		begin() { return bst.begin(); }
 		const_iterator 	begin() const { return bst.begin(); }
 		iterator 		end() { return bst.end(); }
 		const_iterator 	end() const { return bst.end(); }
 
-		/*     Insertion / Deletion     */
+		/*
+		**		CAPACITY
+		*/
+		size_type	size() const { return bst.size(); }
+		bool		empty() const { return bst.size() == 0; }
+		size_type	max_size() const { return bst.max_size(); }
+
+		/*
+		**		MODIFIERS
+		*/
 		pair<iterator, bool>	insert(const value_type& val) { return bst.insert(val); }
 		iterator				insert(iterator position, const value_type& k) { return bst.insert(position, k); }
 		template <class InputIterator>
@@ -55,10 +66,14 @@ namespace ft {
 		void 					erase(iterator first, iterator last) { bst.erase(first, last); }
 		size_type 				erase(const key_type& k) { return bst.erase(k); }
 
-		/*     Utils     */
-		size_type	size() const { return bst.size(); }
+		/*
+		**		OPERATIONS
+		*/
+		iterator find (const key_type& k) { return bst.find(k); }
+		const_iterator find (const key_type& k) const { return bst.find(k); }
 		size_type	count(const key_type& k) const { return bst.count(k); }
-		bool		empty() const { return bst.size() == 0; }
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
+		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
 
 
 		/*     To Delete     */
