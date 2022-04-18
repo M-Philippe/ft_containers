@@ -217,7 +217,7 @@ void	map_insert_1() {
 		std::cout << "\t=== Big Insert ===" << std::endl;
 		NAMESPACE::map<int, float> map;
 		NAMESPACE::pair<NAMESPACE::map<int, float>::iterator, bool> ret;
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000; i++) {
 			ret = map.insert(NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
 		}
 		std::cout << ret.second << std::endl;
@@ -325,7 +325,7 @@ void	map_insert_2() {
 		std::cout << "\t=== Big Insert ===" << std::endl;
 		NAMESPACE::map<int, float> map;
 		NAMESPACE::map<int, float>::iterator ret = map.begin();
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 100000; i++) {
 			ret = map.insert(ret, NAMESPACE::make_pair(i % 2 == 0 ? i : -i, 1.02));
 		}
 		print_after_insert(ret, map.begin(), map.end());
