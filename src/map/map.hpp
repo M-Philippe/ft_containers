@@ -50,6 +50,13 @@ namespace ft {
 
 		~map() {}
 
+		map& operator=(const map& x) {
+			if (this == &x)
+				return *this;
+			bst = x.bst;
+			return *this;
+		}
+
 		/*
 		**		ITERATORS
 		*/
@@ -85,7 +92,7 @@ namespace ft {
 		size_type	count(const key_type& k) const { return bst.count(k); }
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
 		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
-
+		void clear() { bst.clear(); }
 
 		/*     To Delete     */
 		void print() { bst.print(); }

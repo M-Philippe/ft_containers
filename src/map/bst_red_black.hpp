@@ -98,20 +98,18 @@ namespace ft {
 			}
 
 			~bst_red_black() {
-				if (!_head) {
-					_node_allocator.destroy(_begin);
-					_node_allocator.deallocate(_begin, 1);
-					_node_allocator.destroy(_end);
-					_node_allocator.deallocate(_end, 1);
-					return;
-				}
-				if (_head->leftChild)
-					recursive_deletion(_head->leftChild);
-				if (_head->rightChild)
-					recursive_deletion(_head->rightChild);
-				_node_allocator.destroy(_head);
-				_node_allocator.deallocate(_head, 1);
-				_size = 0;
+				clear();
+			}
+
+			bst_red_black& operator=(const bst_red_black& x) {
+				clear();
+				_head = NULL;
+				_begin = new_node();
+				_end = new_node();
+				_begin->parent = _end;
+				_end->parent = _begin;
+				insert(x.begin(), x.end());
+				return *this;
 			}
 
 			/*
@@ -182,6 +180,23 @@ namespace ft {
 					++next;
 					deleteNode(*first);
 				}
+			}
+
+			void	clear() {
+				if (!_head) {
+					_node_allocator.destroy(_begin);
+					_node_allocator.deallocate(_begin, 1);
+					_node_allocator.destroy(_end);
+					_node_allocator.deallocate(_end, 1);
+					return;
+				}
+				if (_head->leftChild)
+					recursive_deletion(_head->leftChild);
+				if (_head->rightChild)
+					recursive_deletion(_head->rightChild);
+				_node_allocator.destroy(_head);
+				_node_allocator.deallocate(_head, 1);
+				_size = 0;
 			}
 
 			/*
