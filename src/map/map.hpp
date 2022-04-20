@@ -110,12 +110,10 @@ namespace ft {
 		iterator find (const key_type& k) { return bst.find(k); }
 		const_iterator find (const key_type& k) const { return bst.find(k); }
 		size_type	count(const key_type& k) const { return bst.count(k); }
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
-		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
-
-
 		iterator lower_bound (const key_type& k) { return bst.lower_bound(k); }
 		const_iterator lower_bound (const key_type& k) const { return bst.lower_bound(k); }
+		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
+		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
 
 		/*
 		**		ALLOCATOR
