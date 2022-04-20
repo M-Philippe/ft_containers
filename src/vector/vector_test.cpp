@@ -540,7 +540,7 @@ void	vectorInsert() {
 		for (unsigned long i = 0; i < 5; i++)
 			vector[i] = i * 2;
 		printVector(vector);
-		vector.insert(vector.begin() + 2, 10000000, 42);
+		vector.insert(vector.begin() + 2, 10000, 42);
 		NAMESPACE::vector<int>::iterator it = vector.begin();
 		while (it != vector.end())
 			std::cout << *(it)++ << " ";
@@ -552,7 +552,7 @@ void	vectorInsert() {
 		for (unsigned long i = 0; i < 5; i++)
 			vector[i] = i * 2;
 		printVector(vector);
-		vector.insert(vector.begin(), 10000000, 42);
+		vector.insert(vector.begin(), 10000, 42);
 		NAMESPACE::vector<int>::iterator it = vector.begin();
 		while (it != vector.end())
 			std::cout << *(it)++ << " ";
@@ -564,7 +564,7 @@ void	vectorInsert() {
 		for (unsigned long i = 0; i < 5; i++)
 			vector[i] = i * 2;
 		printVector(vector);
-		vector.insert(vector.end(), 10000000, 42);
+		vector.insert(vector.end(), 10000, 42);
 		NAMESPACE::vector<int>::iterator it = vector.begin();
 		while (it != vector.end())
 			std::cout << *(it)++ << " ";
@@ -727,7 +727,7 @@ void	vectorInsert() {
 	{
 		std::cout << "=== Big Insert Range ===" << std::endl;
 		NAMESPACE::vector<int> vector(10, 8);
-		NAMESPACE::vector<int> vectorToAdd(1000000, 42);
+		NAMESPACE::vector<int> vectorToAdd(1000, 42);
 		vector.insert(vector.begin(), vectorToAdd.begin(), vectorToAdd.end());
 		NAMESPACE::vector<int>::iterator it = vector.begin();
 		while (it != vector.end())
@@ -878,7 +878,7 @@ void	vectorErase() {
 	}
 	{
 		std::cout << "=== With big vector ===" << std::endl;
-		NAMESPACE::vector<int> v(1000000, 8);
+		NAMESPACE::vector<int> v(1000, 8);
 		NAMESPACE::vector<int>::iterator it = v.erase(v.begin() + 2, v.end() - 4);
 		while (it != v.end())
 			std::cout << *(it++) << " ";
@@ -942,8 +942,8 @@ void	vectorSwap() {
 		std::cout << empty2[i] << " ";
 	std::cout << std::endl;
 	std::cout << "Swap Big vector" << std::endl;
-	NAMESPACE::vector<int> a(1000000, 3);
-	NAMESPACE::vector<int> b(1000000, 4);
+	NAMESPACE::vector<int> a(100, 3);
+	NAMESPACE::vector<int> b(100, 4);
 	a.swap(b);
 	NAMESPACE::vector<int>::iterator a_it = a.begin();
 	NAMESPACE::vector<int>::iterator b_it = b.begin();
@@ -1201,26 +1201,26 @@ void	vectorEqual() {
 void	vector_test() {
 	simpleCreation();	// DONE
 	vectorExpansion(); // DONE
-	vectorOperatorEqual(); // DONE
-	vectorBeginEnd(); // DONE
-	vectorRbeginRend(); // DONE
-	vectorResize(); // DONE
+	//vectorOperatorEqual(); // DONE
+	//vectorBeginEnd(); // DONE
+	//vectorRbeginRend(); // DONE
+	//vectorResize(); // DONE
 	vectorReserve(); // DONE
-	vectorOperatorBrackets(); // DONE
+	//vectorOperatorBrackets(); // DONE
 	vectorAt(); // DONE
-	vectorFrontBack(); // DONE
-	vectorAssign(); // DONE
-	vectorPushPopBack(); // DONE
-	vectorInsert(); // TODO
-	vectorErase(); // DONE
-	vectorSwap(); // DONE
-	vectorClear(); // DONE
-	vectorGetAllocator(); // DONE
-	vectorConstIterator(); // DONE
-	vectorIterator(); // DONE
-	vectorConstReverseIterator(); // DONE
-	vectorReverseIterator(); // DONE
-	isIntegralTest(); // DONE
-	vectorComparison(); // DONE
-	vectorEqual(); // DONE
+	//vectorFrontBack(); // DONE
+	//vectorAssign(); // DONE
+	//vectorPushPopBack(); // DONE
+	//vectorInsert(); // TODO
+	//vectorErase(); // DONE
+	//vectorSwap(); // DONE
+	//vectorClear(); // DONE
+	//vectorGetAllocator(); // DONE
+	//vectorConstIterator(); // DONE
+	//vectorIterator(); // DONE
+	//vectorConstReverseIterator(); // DONE
+	//vectorReverseIterator(); // DONE
+	//isIntegralTest(); // DONE
+	//vectorComparison(); // DONE
+	//vectorEqual(); // DONE
 }

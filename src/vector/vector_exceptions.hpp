@@ -2,7 +2,7 @@
 # define VECTOR_EXCEPTIONS_HPP
 
 #include <string>
-#include <cstdio> // sprintf (check stringstream to replace it)
+#include <sstream>
 
 namespace ft {
 
@@ -29,14 +29,13 @@ namespace ft {
       ~out_of_range() throw() {}
 
       void assemble_error_message() {
-        _ret = "vector::_M_range_check: __n (which is ";
-        char s[sizeof(int) * 8 + 1];
-        sprintf(s, "%zu", _n);
-        _ret += s;
-        _ret += ") >= this->size() (which is ";
-        sprintf(s, "%zu", _size);
-        _ret = _ret + s;
-        _ret += ")";
+        std::stringstream stream;
+        stream << "vector::_M_range_check: __n (which is ";
+        stream << _n;
+        stream << ") >= this->size() (which is ";
+        stream << _size;
+        stream << ")";
+        _ret = stream.str();
       }
 
       const char* what() const throw() { return(_ret.c_str()); }
