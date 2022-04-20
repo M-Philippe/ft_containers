@@ -261,6 +261,18 @@ namespace ft {
 				return make_pair(first, second);
 			}
 
+			template <typename key_type>
+			iterator lower_bound(const key_type& k) {
+				iterator it = this->begin();
+				while (it != this->end() && this->comp_binded(*it, k))
+					it++;
+				return it;
+			}
+
+			template <typename key_type>
+			const_iterator lower_bounds(const key_type& k) {
+				return const_iterator(lower_bound(k));
+			}
 
 		/*
 		**		TO_DELETE

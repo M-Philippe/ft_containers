@@ -93,6 +93,12 @@ namespace ft {
 		void 					erase(iterator first, iterator last) { bst.erase(first, last); }
 		size_type 				erase(const key_type& k) { return bst.erase(k); }
 
+		void swap (map& x) { bst.swap(x.bst); }
+		void clear() {
+			if (bst.size() != 0)
+				bst.clear();
+		}
+
 		/*
 		**		OBSERVERS
 		*/
@@ -106,11 +112,10 @@ namespace ft {
 		size_type	count(const key_type& k) const { return bst.count(k); }
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
 		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
-		void swap (map& x) { bst.swap(x.bst); }
-		void clear() {
-			if (bst.size() != 0)
-				bst.clear();
-		}
+
+
+		iterator lower_bound (const key_type& k) { return bst.lower_bound(k); }
+		const_iterator lower_bound (const key_type& k) const { return bst.lower_bound(k); }
 
 		/*
 		**		ALLOCATOR
