@@ -1,7 +1,7 @@
 #ifndef BST_RED_BLACK_HPP
 # define BST_RED_BLACK_HPP
 
-#include "map_iterator.hpp"
+#include "../iterator/bst_rb_iterator.hpp"
 #include "../utils/utils.hpp"
 
 #include <iostream> // tmp (std::cout, std::endl)
@@ -78,8 +78,11 @@ namespace ft {
 
 		public:
 
-			typedef typename ft::map_iterator<node_pointer, T, Compare> iterator;
-			typedef typename ft::map_iterator<node_pointer, const T, Compare> const_iterator;
+			typedef typename ft::bst_rb_iterator<node_pointer, T, Compare> 					iterator;
+			typedef typename ft::bst_rb_iterator<node_pointer, const T, Compare> 			const_iterator;
+			typedef typename ft::reverse_bst_rb_iterator<node_pointer, T, Compare> 			reverse_iterator;
+			typedef typename ft::reverse_bst_rb_iterator<node_pointer, const T, Compare> 	reverse_const_iterator;
+
 
 			/*
 			**		CONSTRUCTORS / DESTRUCTOR
@@ -115,10 +118,14 @@ namespace ft {
 			/*
 			**		ITERATORS
 			*/
-			iterator 		begin() { return iterator(_begin->parent); }
-			iterator 		end() { return iterator(_end); }
-			const_iterator 	begin() const { return const_iterator(_begin->parent); }
-			const_iterator 	end() const { return const_iterator(_end); }
+			iterator 				begin() { return iterator(_begin->parent); }
+			iterator 				end() { return iterator(_end); }
+			const_iterator 			begin() const { return const_iterator(_begin->parent); }
+			const_iterator 			end() const { return const_iterator(_end); }
+			reverse_iterator 		rbegin() { return reverse_iterator(_end->parent); }
+			reverse_iterator 		rend() { return reverse_iterator(_begin); }
+			reverse_const_iterator	rbegin() const { return reverse_iterator(_end->parent); }
+			reverse_const_iterator	rend() const { return reverse_iterator(_begin); }
 
 			/*
 			**		CAPACITY
@@ -191,11 +198,9 @@ namespace ft {
 			}
 
 			void	clear() {
-				unset_bounds();
-				if (!_head) {
-					set_bounds();
+				if (_size == 0)
 					return;
-				}
+				unset_bounds();
 				if (_head->leftChild)
 					recursive_deletion(_head->leftChild);
 				if (_head->rightChild)
