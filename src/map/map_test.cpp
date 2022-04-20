@@ -1155,7 +1155,7 @@ void	map_test() {
 	//map_swap_non_member();
 	//map_clear();
 	//map_key_comp();
-	map_value_comp();
+	//map_value_comp();
 	//map_lower_bound();
 	//map_lower_bound_const();
 	//map_upper_bound();
@@ -1168,5 +1168,7 @@ void	map_test() {
 	//map_case3();
 	//map_case4();
 	//map_case5();
+	map_iterator();
+	map_const_iterator();
 	return;
 }

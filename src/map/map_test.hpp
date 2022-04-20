@@ -12,5 +12,7 @@
 // NAMESPACE::vector<int> foo;
 
 void	map_test();
+void	map_iterator();
+void	map_const_iterator();
 
 #endif
