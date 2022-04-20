@@ -20,6 +20,7 @@ SRCS	=	src/main.cpp\
 				src/vector/vector_test_iterator.cpp\
 				src/stack/stack_test.cpp\
 				src/map/map_test.cpp\
+				src/set/set_test.cpp\
 
 FT_OBJS	=	$(SRCS:%.cpp=ft_objs/%.o)
 STD_OBJS = $(SRCS:%.cpp=std_objs/%.o)

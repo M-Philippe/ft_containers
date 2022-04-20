@@ -337,7 +337,6 @@ void	map_insert_1() {
 		std::cout << ret.second << std::endl;
 		print_after_insert(ret.first, begin, end);
 	}
-	// Add test to check no leaks with empty map.
 }
 
 void	map_insert_2() {
