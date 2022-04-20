@@ -112,6 +112,8 @@ namespace ft {
 		size_type	count(const key_type& k) const { return bst.count(k); }
 		iterator lower_bound (const key_type& k) { return bst.lower_bound(k); }
 		const_iterator lower_bound (const key_type& k) const { return bst.lower_bound(k); }
+		iterator upper_bound (const key_type& k) { return bst.upper_bound(k); }
+		const_iterator upper_bound (const key_type& k) const { return bst.upper_bound(k); }
 		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
 		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
 

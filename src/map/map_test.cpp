@@ -911,6 +911,136 @@ void	map_lower_bound_const() {
 	}
 }
 
+void	map_upper_bound() {
+	std::cout << "Map upper_bound" << std::endl;
+	{
+		NAMESPACE::map<int, int> map;
+		for (int i = 0; i < 10; i++)
+			map.insert(NAMESPACE::make_pair(i + 1, i - 5));
+		std::cout << "\tClassic" << std::endl;
+		NAMESPACE::map<int, int>::iterator it = map.lower_bound(4);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk < begin()" << std::endl;
+		it = map.upper_bound(-1);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk == begin" << std::endl;
+		it = map.upper_bound(map.begin()->first);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk == end - 1" << std::endl;
+		it = map.upper_bound((--map.end())->first);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk > end" << std::endl;
+		it = map.upper_bound(100);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		// This test is non-sense because:
+		// This element acts as a placeholder; attempting to access it results in undefined behavior.
+		//std::cout << "\tk == end()" << std::endl;
+		//it = map.lower_bound(map.end()->first);
+		//std::cout << map.end()->first << std::endl;
+		//while (it != map.end())
+		//	std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		//std::cout << std::endl;
+	}
+	{
+		NAMESPACE::map<int, int> map;
+		std::cout << "\tClassic" << std::endl;
+		NAMESPACE::map<int, int>::iterator it = map.lower_bound(4);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk < begin()" << std::endl;
+		it = map.upper_bound(-1);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk == begin" << std::endl;
+		it = map.upper_bound(map.begin()->first);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk > end" << std::endl;
+		it = map.upper_bound(100);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+	}
+}
+
+void	map_upper_bound_const() {
+	std::cout << "Map upper_bound Const" << std::endl;
+	{
+		NAMESPACE::map<int, int> map;
+		for (int i = 0; i < 10; i++)
+			map.insert(NAMESPACE::make_pair(i + 1, i - 5));
+		std::cout << "\tClassic" << std::endl;
+		NAMESPACE::map<int, int>::const_iterator it = map.lower_bound(4);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk < begin()" << std::endl;
+		it = map.upper_bound(-1);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk == begin" << std::endl;
+		it = map.upper_bound(map.begin()->first);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk == end - 1" << std::endl;
+		it = map.upper_bound((--map.end())->first);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk > end" << std::endl;
+		it = map.upper_bound(100);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		// This test is non-sense because:
+		// This element acts as a placeholder; attempting to access it results in undefined behavior.
+		//std::cout << "\tk == end()" << std::endl;
+		//it = map.lower_bound(map.end()->first);
+		//std::cout << map.end()->first << std::endl;
+		//while (it != map.end())
+		//	std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		//std::cout << std::endl;
+	}
+	{
+		NAMESPACE::map<int, int> map;
+		std::cout << "\tClassic" << std::endl;
+		NAMESPACE::map<int, int>::const_iterator it = map.lower_bound(4);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk < begin()" << std::endl;
+		it = map.upper_bound(-1);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk == begin" << std::endl;
+		it = map.upper_bound(map.begin()->first);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+		std::cout << "\tk > end" << std::endl;
+		it = map.upper_bound(100);
+		while (it != map.end())
+			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		std::cout << std::endl;
+	}
+}
+
 void	map_get_allocator() {
 	ft::map<int, float> map1;
 	std::map<int, float> map2;
@@ -970,8 +1100,10 @@ void	map_test() {
 	//map_swap_non_member();
 	//map_clear();
 	//map_key_comp();
-	map_lower_bound();
-	map_lower_bound_const();
+	//map_lower_bound();
+	//map_lower_bound_const();
+	map_upper_bound();
+	map_upper_bound_const();
 	//map_get_allocator();
 	//map_relational_operators();
 	// to delete.

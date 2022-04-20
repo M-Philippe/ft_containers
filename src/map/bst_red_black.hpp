@@ -246,6 +246,15 @@ namespace ft {
 			}
 
 			template <typename key_type>
+			iterator upper_bound(const key_type& k) {
+				iterator it = find(k);
+				if (it != end())
+					return ++it;
+				it = lower_bound(k);
+				return it;
+			}
+
+			template <typename key_type>
 			pair<iterator, iterator> equal_range(const key_type& k) {
 				pair<iterator, iterator> ret;
 				iterator first = find(k);
