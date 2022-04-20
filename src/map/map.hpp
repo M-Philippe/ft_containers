@@ -104,6 +104,19 @@ namespace ft {
 		*/
 		key_compare key_comp() const { return key_compare(); }
 
+		template <class K, class Te, class C, class A>
+		class v_c
+		{
+		  friend class map;
+			protected:
+			  C comp;
+			  v_c (C c) : comp(c) {}
+			public:
+			  bool operator() (const value_type& x, const value_type& y) const { return comp(x.first, y.first); }
+		}; // map::value_compare
+		typedef map<Key, T, Compare, Alloc>::v_c<Key, T, Compare, Alloc> value_compare;
+		value_compare	value_comp() const { return value_compare(key_compare()); }
+
 		/*
 		**		OPERATIONS
 		*/
@@ -172,7 +185,6 @@ namespace ft {
   void swap (map<K, Te, C, A>& x, map<K, Te, C, A>& y) {
 		x.swap(y);
 	}
-
 
 }; // namespace ft
 

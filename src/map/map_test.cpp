@@ -781,6 +781,21 @@ void	map_key_comp() {
 	std::cout << comp(map1.begin()->first, map1.begin()->first) << std::endl;
 }
 
+void	map_value_comp() {
+	NAMESPACE::map<int, int> map;
+	for (int i = 0; i < 10; i++)
+		map.insert(NAMESPACE::make_pair(i * 2, i));
+	NAMESPACE::map<int, int>::iterator it = map.begin();
+	NAMESPACE::pair<int, int> last_elem = *(--map.end());
+	while (map.value_comp()(*it++, last_elem))
+		std::cout << "[" << it->first << ";" << it->second << "] ";
+	std::cout << std::endl;
+	NAMESPACE::pair<int, int> pair = NAMESPACE::make_pair(42, 24);
+	std::cout << std::boolalpha;
+	std::cout << map.value_comp()(pair, last_elem) << std::endl;
+	std::cout << map.value_comp()(last_elem, pair) << std::endl;
+}
+
 void	map_lower_bound() {
 	std::cout << "Map lower_bound" << std::endl;
 	{
@@ -1140,10 +1155,11 @@ void	map_test() {
 	//map_swap_non_member();
 	//map_clear();
 	//map_key_comp();
-	map_lower_bound();
-	map_lower_bound_const();
-	map_upper_bound();
-	map_upper_bound_const();
+	map_value_comp();
+	//map_lower_bound();
+	//map_lower_bound_const();
+	//map_upper_bound();
+	//map_upper_bound_const();
 	//map_get_allocator();
 	//map_relational_operators();
 	// to delete.
