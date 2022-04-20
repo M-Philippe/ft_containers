@@ -1201,26 +1201,26 @@ void	vectorEqual() {
 void	vector_test() {
 	simpleCreation();	// DONE
 	vectorExpansion(); // DONE
-	//vectorOperatorEqual(); // DONE
-	//vectorBeginEnd(); // DONE
-	//vectorRbeginRend(); // DONE
-	//vectorResize(); // DONE
+	vectorOperatorEqual(); // DONE
+	vectorBeginEnd(); // DONE
+	vectorRbeginRend(); // DONE
+	vectorResize(); // DONE
 	vectorReserve(); // DONE
-	//vectorOperatorBrackets(); // DONE
+	vectorOperatorBrackets(); // DONE
 	vectorAt(); // DONE
-	//vectorFrontBack(); // DONE
-	//vectorAssign(); // DONE
-	//vectorPushPopBack(); // DONE
-	//vectorInsert(); // TODO
-	//vectorErase(); // DONE
-	//vectorSwap(); // DONE
-	//vectorClear(); // DONE
-	//vectorGetAllocator(); // DONE
-	//vectorConstIterator(); // DONE
-	//vectorIterator(); // DONE
-	//vectorConstReverseIterator(); // DONE
-	//vectorReverseIterator(); // DONE
-	//isIntegralTest(); // DONE
-	//vectorComparison(); // DONE
-	//vectorEqual(); // DONE
+	vectorFrontBack(); // DONE
+	vectorAssign(); // DONE
+	vectorPushPopBack(); // DONE
+	vectorInsert(); // TODO
+	vectorErase(); // DONE
+	vectorSwap(); // DONE
+	vectorClear(); // DONE
+	vectorGetAllocator(); // DONE
+	vectorConstIterator(); // DONE
+	vectorIterator(); // DONE
+	vectorConstReverseIterator(); // DONE
+	vectorReverseIterator(); // DONE
+	isIntegralTest(); // DONE
+	vectorComparison(); // DONE
+	vectorEqual(); // DONE
 }
