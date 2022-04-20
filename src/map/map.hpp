@@ -117,6 +117,19 @@ namespace ft {
 		*/
 		allocator_type get_allocator() const { return allocator_type(); }
 
+		/*
+		**		RELATIONAL OPERATORS
+		*/
+		template <class K, class Te, class C, class A> friend bool operator==( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs);
+		template <class K, class Te, class C, class A> friend bool operator!=( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs);
+		template <class K, class Te, class C, class A> friend bool operator<( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs);
+		template <class K, class Te, class C, class A> friend bool operator<= ( const map<K, Te, C, A>& lhs, const map<K, Te, C, A>& rhs );
+		template <class K, class Te, class C, class A> friend bool operator>  ( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs );
+		template <class K, class Te, class C, class A> friend bool operator>= ( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs );
+
+		template <class K, class Te, class C, class A>
+  	void swap (map<K, Te, C, A>& x, map<K, Te, C, A>& y);
+
 		/*     To Delete     */
 		void print() { bst.print(); }
 
@@ -124,6 +137,37 @@ namespace ft {
 		bst_red_black<value_type, Compare, Alloc> bst;
 
 	}; // class map
+
+	template <class Key, class T, class Compare, class Alloc>
+	bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs) {
+		return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+	}
+	template <class K, class Te, class C, class A>
+	bool operator!=( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs) {
+		return !(lhs == rhs);
+	}
+	template <class K, class Te, class C, class A>
+	bool operator<( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs) {
+		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+	}
+	template <class K, class Te, class C, class A>
+	bool operator<= ( const map<K, Te, C, A>& lhs, const map<K, Te, C, A>& rhs ) {
+		return !(rhs < lhs);
+	}
+	template <class K, class Te, class C, class A>
+	bool operator>  ( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs ) {
+		return rhs < lhs;
+	}
+	template <class K, class Te, class C, class A>
+	bool operator>= ( const map<K,Te,C,A>& lhs, const map<K,Te,C,A>& rhs ) {
+		return !(lhs < rhs);
+	}
+
+	template <class K, class Te, class C, class A>
+  void swap (map<K, Te, C, A>& x, map<K, Te, C, A>& y) {
+		x.swap(y);
+	}
+
 
 }; // namespace ft
 

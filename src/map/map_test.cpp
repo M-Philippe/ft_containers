@@ -684,6 +684,52 @@ void	map_swap() {
 	std::cout << std::endl;
 }
 
+void	map_swap_non_member() {
+	NAMESPACE::map<int, float> map;
+	NAMESPACE::map<int, float> map2;
+	for (int i = 0; i < 4; i++)
+		map.insert(NAMESPACE::make_pair(i + 1, 1.03 + i));
+	//NAMESPACE::map<int, float>::iterator it1 = map.begin();
+	//NAMESPACE::map<int, float>::iterator it2 = map2.begin();
+	NAMESPACE::map<int, float>::iterator t_it1 = map.begin();
+	NAMESPACE::map<int, float>::iterator t_it2 = map2.begin();
+	std::cout << "BEFORE SWAP" << std::endl;
+	while (t_it1 != map.end())
+		std::cout << (t_it1++)->first << " ";
+	std::cout << std::endl;
+	while (t_it2 != map2.end())
+		std::cout << (t_it2++)->first << " ";
+	std::cout << std::endl;
+	NAMESPACE::swap(map, map2);
+	std::cout << "AFTER SWAP" << std::endl;
+	//while (it1 != map2.end())
+	//	std::cout << (it1++)->first << " ";
+	//std::cout << std::endl;
+	//while (it2 != map.end())
+	//	std::cout << (it2++)->first << " ";
+	//std::cout << std::endl;
+	t_it1 = map.begin();
+	t_it2 = map2.begin();
+	while (t_it1 != map.end())
+		std::cout << (t_it1++)->first << " ";
+	std::cout << std::endl;
+	while (t_it2 != map2.end())
+		std::cout << (t_it2++)->first << " ";
+	std::cout << std::endl;
+	map.insert(NAMESPACE::make_pair(55, 34));
+	map2.insert(NAMESPACE::make_pair(55, 34));
+	NAMESPACE::swap(map, map2);
+	std::cout << "RE-SWAP" << std::endl;
+	t_it1 = map.begin();
+	t_it2 = map2.begin();
+	while (t_it1 != map.end())
+		std::cout << (t_it1++)->first << " ";
+	std::cout << std::endl;
+	while (t_it2 != map2.end())
+		std::cout << (t_it2++)->first << " ";
+	std::cout << std::endl;
+}
+
 void	map_clear() {
 	std::cout << "map clear" << std::endl;
 	{
@@ -744,6 +790,44 @@ void	map_get_allocator() {
 		std::cout << "WRONG" << std::endl;
 }
 
+void	print_map_relational_operators(NAMESPACE::map<int, int>& map, NAMESPACE::map<int, int>& map2) {
+	std::cout << std::boolalpha;
+	std::cout << (map == map2) << std::endl;
+	std::cout << (map != map2) << std::endl;
+	std::cout << (map < map2) << std::endl;
+	std::cout << (map <= map2) << std::endl;
+	std::cout << (map > map2) << std::endl;
+	std::cout << (map >= map2) << std::endl;
+}
+
+void	map_relational_operators() {
+	std::cout << "Map relational operators" << std::endl;
+	NAMESPACE::map<int, int> map;
+	for (int i = 1; i < 11; i++)
+		map.insert(NAMESPACE::make_pair(i * 3, i * 2));
+	{
+		std::cout << "\t=== Same size ===" << std::endl;
+		NAMESPACE::map<int, int> map2;
+		for (int i = 1; i < 11; i++)
+			map2.insert(NAMESPACE::make_pair(i * 4, i * 5));
+		print_map_relational_operators(map, map2);
+	}
+	{
+		std::cout << "\t=== map.size() > map2.size() ===" << std::endl;
+		NAMESPACE::map<int, int> map2;
+		for (int i = 1; i < 8; i++)
+			map2.insert(NAMESPACE::make_pair(i * 4, i * 5));
+		print_map_relational_operators(map, map2);
+	}
+	{
+		std::cout << "\t=== map.size() < map2.size() ===" << std::endl;
+		NAMESPACE::map<int, int> map2;
+		for (int i = 1; i < 24; i++)
+			map2.insert(NAMESPACE::make_pair(i * 4, i * 5));
+		print_map_relational_operators(map, map2);
+	}
+}
+
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
@@ -752,10 +836,12 @@ void	map_test() {
 	//map_insert_2();
 	//map_insert_3();
 	//map_operator_brackets();
-	map_swap();
+	//map_swap();
+	map_swap_non_member();
 	//map_clear();
 	//map_key_comp();
 	//map_get_allocator();
+	map_relational_operators();
 	// to delete.
 	//map_case1();
 	//map_case2();
