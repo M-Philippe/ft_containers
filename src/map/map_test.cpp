@@ -1170,5 +1170,6 @@ void	map_test() {
 	//map_case5();
 	map_iterator();
 	map_const_iterator();
+	map_reverse_iterator();
 	return;
 }

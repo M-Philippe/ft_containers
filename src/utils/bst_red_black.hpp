@@ -3,7 +3,7 @@
 
 #include "../iterator/bst_rb_iterator.hpp"
 #include "../utils/utils.hpp"
-
+#include "../iterator/reverse_iterator.hpp"
 #include <iostream> // tmp (std::cout, std::endl)
 
 namespace ft {
@@ -80,8 +80,11 @@ namespace ft {
 
 			typedef typename ft::bst_rb_iterator<node_pointer, T, Compare> 					iterator;
 			typedef typename ft::bst_rb_iterator<node_pointer, const T, Compare> 			const_iterator;
-			typedef typename ft::reverse_bst_rb_iterator<node_pointer, T, Compare> 			reverse_iterator;
-			typedef typename ft::reverse_bst_rb_iterator<node_pointer, const T, Compare> 	reverse_const_iterator;
+			//typedef typename ft::reverse_bst_rb_iterator<node_pointer, T, Compare> 			reverse_iterator;
+			//typedef typename ft::reverse_bst_rb_iterator<node_pointer, const T, Compare> 	reverse_const_iterator;
+			typedef typename ft::reverse_iterator<iterator> reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator> const_reverse_iterator;
+
 
 
 			/*
@@ -118,14 +121,14 @@ namespace ft {
 			/*
 			**		ITERATORS
 			*/
-			iterator 				begin() { return iterator(_begin->parent); }
-			iterator 				end() { return iterator(_end); }
-			const_iterator 			begin() const { return const_iterator(_begin->parent); }
-			const_iterator 			end() const { return const_iterator(_end); }
-			reverse_iterator 		rbegin() { return reverse_iterator(_end->parent); }
-			reverse_iterator 		rend() { return reverse_iterator(_begin); }
-			reverse_const_iterator	rbegin() const { return reverse_iterator(_end->parent); }
-			reverse_const_iterator	rend() const { return reverse_iterator(_begin); }
+			iterator 								begin() { return iterator(_begin->parent); }
+			iterator 								end() { return iterator(_end); }
+			const_iterator 					begin() const { return const_iterator(_begin->parent); }
+			const_iterator 					end() const { return const_iterator(_end); }
+			reverse_iterator 				rbegin() { return reverse_iterator(end()); }
+			reverse_iterator 				rend() { return reverse_iterator(begin()); }
+			const_reverse_iterator	rbegin() const { return reverse_iterator(end()); }
+			const_reverse_iterator	rend() const { return reverse_iterator(begin()); }
 
 			/*
 			**		CAPACITY

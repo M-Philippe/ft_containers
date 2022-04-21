@@ -31,13 +31,13 @@ namespace ft {
 				**	CONSTRUCTOR
 				*/
 				reverse_iterator() {_base = NULL; }
-				explicit reverse_iterator(iterator_type it) { _base = it - 1; }
-				template <class Iter> reverse_iterator(const reverse_iterator<Iter>& rev_it) { _base = rev_it.base() - 1; }
+				explicit reverse_iterator(iterator_type it) { _base = --it; }
+				template <class Iter> reverse_iterator(const reverse_iterator<Iter>& rev_it) { _base = rev_it.base(); _base--; }
 				~reverse_iterator() {};
 
 				iterator_type base() const { return ++(iterator_type(_base)); }
 
-				reference operator*() const { return (*_base); }
+				reference operator*() const { return *_base; }
 
 				reverse_iterator operator+ (difference_type n) const {
 					iterator_type newIterator(_base);

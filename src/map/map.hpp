@@ -29,7 +29,7 @@ namespace ft {
 		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::iterator 				iterator;
 		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::const_iterator 			const_iterator;
 		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::reverse_iterator 		reverse_iterator;
-		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::reverse_const_iterator 	reverse_const_iterator;
+		typedef typename ft::bst_red_black<value_type, Compare, Alloc>::const_reverse_iterator 	const_reverse_iterator;
 
 
 	public:
@@ -69,8 +69,8 @@ namespace ft {
 
 		const_iterator 			begin()	 const	{ return bst.begin(); }
 		const_iterator 			end()    const	{ return bst.end(); }
-		reverse_const_iterator	rbegin() const	{ return bst.rbegin(); }
-		reverse_const_iterator	rend()	 const	{ return bst.rend(); }
+		const_reverse_iterator	rbegin() const	{ return bst.rbegin(); }
+		const_reverse_iterator	rend()	 const	{ return bst.rend(); }
 
 		/*
 		**		CAPACITY

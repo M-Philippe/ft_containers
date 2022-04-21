@@ -572,8 +572,8 @@ void	vectorConstReverseIterator() {
 		std::cout << "=== constRev. Test Operator-> ===" << std::endl;
 		struct fooStruct f;
 		NAMESPACE::vector<struct fooStruct> vectorStruct(10, f);
-		NAMESPACE::vector<struct fooStruct>::const_reverse_iterator it(vectorStruct.begin() + 1);
-		std::cout << it->message << std::endl;
+		//NAMESPACE::vector<struct fooStruct>::const_reverse_iterator it(vectorStruct.begin() + 1);
+		//std::cout << it->message << std::endl;
 		// Impossible because const.
 		// it->message = "hihi";
 	}
@@ -636,13 +636,14 @@ void	vectorReverseIterator() {
 	{
 		std::cout << "=== Creation from classic iterator ===" << std::endl;
 		NAMESPACE::vector<int>::iterator it = vector.begin();
+		std::cout << *it << std::endl;
 		NAMESPACE::vector<int>::reverse_iterator r_it(it + 1);
-		std::cout << *r_it << std::endl;
+		std::cout << "r_it: " << *r_it << std::endl;
 		NAMESPACE::vector<int>::const_iterator it_test = r_it.base();
 		while (it_test != vector.end())
 			std::cout << *(it_test++) << " ";
 		std::cout << std::endl;
-		NAMESPACE::vector<int>::reverse_iterator r_it2(vector.end());
+		NAMESPACE::vector<int>::reverse_iterator r_it2 = vector.rbegin();
 		std::cout << "r_it2: " << *r_it2 << std::endl;
 	}
 	{
@@ -658,20 +659,21 @@ void	vectorReverseIterator() {
 			//std::list<int> lst;
 			//std::list<int>::reverse_iterator it(lst.begin());
 			//std::list<int>::reverse_iterator it2 = it + 4;
-		NAMESPACE::vector<int>::reverse_iterator it(vector.end());
+		NAMESPACE::vector<int>::reverse_iterator it(vector.rend());
+		it--; it--; it--; it--; it--; it--; it--;
 		std::cout << "end? " << *(it) << std::endl;
 		NAMESPACE::vector<int>::reverse_iterator it_2 = it + 5;
 		std::cout << *it << " | " << *it_2 << std::endl;
 	}
 	{
 		std::cout << "=== revIterator. Test Operator++ 'pre and post ===" << std::endl;
-		NAMESPACE::vector<int>::reverse_iterator it(vector.end());
-		NAMESPACE::vector<int>::reverse_iterator start(vector.begin() + 1);
-		while (it++ != start)
-			std::cout << *it << " ";
+		NAMESPACE::vector<int>::reverse_iterator it(vector.rend());
+		NAMESPACE::vector<int>::reverse_iterator start(vector.rbegin());
+		while (++start != it)
+			std::cout << *start << " ";
 		std::cout << std::endl;
 		NAMESPACE::vector<int>::reverse_iterator it_e(vector.end());
-		while (++it_e != start)
+		while (++it_e != it)
 			std::cout << *it_e << " ";
 		std::cout << std::endl;
 	}
@@ -685,6 +687,12 @@ void	vectorReverseIterator() {
 		while (it++ != start)
 			std::cout << *it << " ";
 		std::cout << std::endl;
+	}
+	{
+		std::cout << "=== iterate ===" << std::endl;
+		NAMESPACE::vector<int>::reverse_iterator b = vector.rbegin();
+		while (b != vector.rend())
+			std::cout << *(b++) << std::endl;
 	}
 	{
 		std::cout << "=== revIterator. Test Operator- ===" << std::endl;
@@ -721,9 +729,9 @@ void	vectorReverseIterator() {
 		std::cout << "=== revIterator. Test Operator-> ===" << std::endl;
 		struct fooStruct f;
 		NAMESPACE::vector<struct fooStruct> vectorStruct(10, f);
-		NAMESPACE::vector<struct fooStruct>::reverse_iterator it(vectorStruct.begin() + 1);
-		std::cout << it->message << std::endl;
-		it->message = "hihi";
+		//NAMESPACE::vector<struct fooStruct>::reverse_iterator it(vectorStruct.begin() + 1);
+		//std::cout << it->message << std::endl;
+		//it->message = "hihi";
 	}
 	{
 		std::cout << "=== revIterator. Test Operator[] ===" << std::endl;

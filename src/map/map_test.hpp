@@ -14,5 +14,6 @@
 void	map_test();
 void	map_iterator();
 void	map_const_iterator();
+void	map_reverse_iterator();
 
 #endif

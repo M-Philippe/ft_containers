@@ -47,8 +47,8 @@ namespace ft {
 				return (bst_rb_iterator<N, const T, Compare>(_node));
 			}
 
-			reference operator*() { return _node->data; }
-			pointer operator->() { return &_node->data; }
+			reference operator*() const { return _node->data; }
+			pointer operator->() const { return &_node->data; }
 
 			void	moveToLeftmostNode() {
 				while (_node->leftChild != NULL)
@@ -97,69 +97,6 @@ namespace ft {
 		friend bool operator!= (const self_type& lhs, const self_type& rhs) { return !(lhs == rhs); }
 
 	}; // bst_rb_iterator
-
-	template <typename N /* node_pointer */, typename T /* node_pointer->data */, class Compare>
-	class reverse_bst_rb_iterator : public bst_rb_iterator<N, T, Compare>
-	{
-		public:
-			typedef reverse_bst_rb_iterator<N, T, Compare> self_type;
-
-		public:
-			reverse_bst_rb_iterator() {
-				this->_node = NULL;
-				this->_comp = Compare();
-			}
-			reverse_bst_rb_iterator(N node) {
-				this->_comp = Compare();
-				this->_node = node;
-			}
-			reverse_bst_rb_iterator(const reverse_bst_rb_iterator& org) {
-				this->_comp = org._comp;
-				this->_node = org._node;
-			}
-			~reverse_bst_rb_iterator() {}
-
-			operator reverse_bst_rb_iterator<N, const T, Compare>() {
-				return (reverse_bst_rb_iterator<N, const T, Compare>(this->_node));
-			}
-
-			self_type operator++() {
-				if (this->_node->leftChild) {
-					for (this->_node = this->_node->leftChild; this->_node->rightChild; this->_node = this->_node->rightChild);
-				} else if (this->_node == this->_node->parent->rightChild) {
-					this->_node = this->_node->parent;
-				} else {
-					for (this->_node = this->_node->parent; this->_node == this->_node->parent->leftChild; this->_node = this->_node->parent);
-					this->_node = this->_node->parent;
-				}
-				return *this;
-			}
-
-			self_type operator++(int) {
-				reverse_bst_rb_iterator it(*this);
-				++(*this);
-				return it;
-			}
-
-			self_type operator--() {
-				if (this->_node->rightChild) {
-					for (this->_node = this->_node->rightChild; this->_node->leftChild; this->_node = this->_node->leftChild);
-				}
-				else if (this->_node == this->_node->parent->leftChild)
-					this->_node = this->_node->parent;
-				else {
-					for (this->_node = this->_node->parent; this->_node == this->_node->parent->rightChild; this->_node = this->_node->parent);
-					this->_node = this->_node->parent;
-				}
-				return *this;
-			}
-
-			self_type operator--(int) {
-				reverse_bst_rb_iterator it(*this);
-				--(*this);
-				return it;
-			}
-	};
 }; // namespace ft
 
 #endif
