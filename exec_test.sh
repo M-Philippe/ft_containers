@@ -17,6 +17,12 @@ then
 	valgrind --leak-check=full --show-leak-kinds=all ./ft_test > /dev/null
 	valgrind --leak-check=full --show-leak-kinds=all ./std_test > /dev/null
 	exit
+elif [ "$1" = "-tst_github" ]
+then
+	cd containers_test
+	./do.sh map
+	cd ..
+	exit
 fi
 
 if [ "$OSTYPE" = "linux-gnu" ]
