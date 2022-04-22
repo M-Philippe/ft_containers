@@ -47,8 +47,8 @@ namespace ft {
 				return (bst_rb_iterator<N, const T, Compare>(_node));
 			}
 
-			reference operator*() const { return _node->data; }
-			pointer operator->() const { return &_node->data; }
+			reference	operator*() const { return _node->data; }
+			pointer 	operator->() const { return &_node->data; }
 
 			void	moveToLeftmostNode() {
 				while (_node->leftChild != NULL)

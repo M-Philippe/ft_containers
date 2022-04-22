@@ -17,14 +17,11 @@ namespace ft {
 			typedef Compare data_compare;
 			bst_red_black_map() { _comp = data_compare(); }
 			~bst_red_black_map() {}
-			bool comp_binded(T lhs, T rhs) { return _comp(lhs.first, rhs.first); }
-			// template <typename key_type>
-			// bool comp_binded(T lhs, key_type rhs) { return _comp(lhs.first, rhs); }
+
 			template <typename key_type>
 			bool comp_binded(T lhs, key_type rhs) const { return _comp(lhs.first, rhs); }
+			bool comp_binded(T lhs, T rhs) { return _comp(lhs.first, rhs.first); }
 
-			// template <typename key_type>
-			// bool equal_binded(T lhs, key_type rhs) { return lhs.first == rhs; }
 			template <typename key_type>
 			bool equal_binded(T lhs, key_type rhs) const { return lhs.first == rhs; }
 			bool equal_binded(T lhs, T rhs) { return lhs.first == rhs.first; }
@@ -39,9 +36,10 @@ namespace ft {
 			typedef Compare data_compare;
 			bst_red_black_map() { _comp = data_compare(); }
 			~bst_red_black_map() {}
-			bool comp_binded(T lhs, T rhs) { return _comp(lhs, rhs); }
+
 			template <typename key_type>
 			bool comp_binded(T lhs, key_type rhs) const { return _comp(lhs, rhs); }
+			bool comp_binded(T lhs, T rhs) { return _comp(lhs, rhs); }
 
 			template <typename key_type>
 			bool equal_binded(T lhs, key_type rhs) const { return lhs == rhs; }
@@ -78,12 +76,10 @@ namespace ft {
 
 		public:
 
-			typedef typename ft::bst_rb_iterator<node_pointer, T, Compare> 					iterator;
-			typedef typename ft::bst_rb_iterator<node_pointer, const T, Compare> 			const_iterator;
-			//typedef typename ft::reverse_bst_rb_iterator<node_pointer, T, Compare> 			reverse_iterator;
-			//typedef typename ft::reverse_bst_rb_iterator<node_pointer, const T, Compare> 	reverse_const_iterator;
-			typedef typename ft::reverse_iterator<iterator> reverse_iterator;
-			typedef typename ft::reverse_iterator<const_iterator> const_reverse_iterator;
+			typedef typename ft::bst_rb_iterator<node_pointer, T, Compare> 			iterator;
+			typedef typename ft::bst_rb_iterator<node_pointer, const T, Compare> 	const_iterator;
+			typedef typename ft::reverse_iterator<iterator> 						reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator> 					const_reverse_iterator;
 
 
 
@@ -97,10 +93,8 @@ namespace ft {
 				_comp = comp;
 				_head = NULL;
 				_size = 0;
-				_begin = new_node();
-				_end = new_node();
-				_begin->parent = _end;
-				_end->parent = _begin;
+				_null = new_node();
+				_null->color = 0;
 			}
 
 			~bst_red_black() {
@@ -121,20 +115,20 @@ namespace ft {
 			/*
 			**		ITERATORS
 			*/
-			iterator 								begin() { return iterator(_begin->parent); }
-			iterator 								end() { return iterator(_end); }
-			const_iterator 					begin() const { return const_iterator(_begin->parent); }
-			const_iterator 					end() const { return const_iterator(_end); }
+			iterator 						begin() { return iterator(get_min()->parent); }
+			iterator 						end() { return iterator(get_max()); }
+			const_iterator 					begin() const { return const_iterator(get_min()->parent); }
+			const_iterator 					end() const { return const_iterator(get_max()); }
 			reverse_iterator 				rbegin() { return reverse_iterator(end()); }
 			reverse_iterator 				rend() { return reverse_iterator(begin()); }
-			const_reverse_iterator	rbegin() const { return reverse_iterator(end()); }
-			const_reverse_iterator	rend() const { return reverse_iterator(begin()); }
+			const_reverse_iterator			rbegin() const { return reverse_iterator(end()); }
+			const_reverse_iterator			rend() const { return reverse_iterator(begin()); }
 
 			/*
 			**		CAPACITY
 			*/
 			size_type	size() const { return _size; }
-			size_type max_size() const { return _node_allocator.max_size(); }
+			size_type	max_size() const { return _node_allocator.max_size(); }
 
 			/*
 			**		MODIFIERS
@@ -153,12 +147,11 @@ namespace ft {
 			}
 
 			template <typename key_type>
-			size_t erase(const key_type& key) {
+			size_t	erase(const key_type& key) {
 				node_pointer node = _head;
 				node_pointer toDelete = NULL;
 
-				unset_bounds();
-				while (node != NULL) {
+				while (node != _null) {
 					if (this->equal_binded(node->data, key)) {
 						toDelete = node;
 						break;
@@ -168,7 +161,6 @@ namespace ft {
 					else
 						node = node->leftChild;
 				}
-				set_bounds();
 				if (!toDelete) {
 					return 0;
 				} else {
@@ -176,17 +168,16 @@ namespace ft {
 				}
 			}
 
-			void erase(iterator position) {
-				if (*position)
-					deleteNode(*position);
+			void	erase(iterator position) {
+				node_pointer node = findNode(*position);
+				if (node)
+					deleteNode(node);
 			}
 
-			void erase (iterator first, iterator  last) {
-				if (first == last)
-					return;
+			void	erase (iterator first, iterator  last) {
 				for (iterator next = first; first != last; first = next) {
 					++next;
-					deleteNode(*first);
+					deleteNode(findNode(*first));
 				}
 			}
 
@@ -203,7 +194,6 @@ namespace ft {
 			void	clear() {
 				if (_size == 0)
 					return;
-				unset_bounds();
 				if (_head->leftChild)
 					recursive_deletion(_head->leftChild);
 				if (_head->rightChild)
@@ -212,7 +202,6 @@ namespace ft {
 				_node_allocator.deallocate(_head, 1);
 				_head = NULL;
 				_size = 0;
-				set_bounds();
 			}
 
 			/*
@@ -221,22 +210,18 @@ namespace ft {
 			template <typename key_type>
 			const_iterator find(const key_type& k) const {
 				iterator ret = iterator(_end);
-				unset_bounds();
 				for (node_pointer node = _head; node != NULL; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
 					if (this->equal_binded(node->data, k))
 						ret = iterator(node);
-				set_bounds();
 				return ret;
 			}
 
 			template <typename key_type>
 			iterator find(const key_type& k) {
 				iterator ret = iterator(_end);
-				unset_bounds();
 				for (node_pointer node = _head; node != NULL; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
 					if (this->equal_binded(node->data, k))
 						ret = iterator(node);
-				set_bounds();
 				return ret;
 			}
 
@@ -271,15 +256,13 @@ namespace ft {
 					++second;
 					return ret = make_pair(first, second);
 				}
-				unset_bounds();
 				node_pointer y;
-				for (node_pointer x = _head; x != NULL; y = x) {
+				for (node_pointer x = _head; x != _null; y = x) {
 					if (this->comp_binded(x->data, k) > 0)
 						x = x->rightChild;
 					else
 						x = x->leftChild;
 				}
-				set_bounds();
 				first = iterator(y);
 				++first;
 				second = first;
@@ -303,6 +286,7 @@ namespace ft {
 			data_compare		_comp;
 			node_pointer		_head;
 			node_pointer		_begin;
+			node_pointer		_null;
 			node_pointer		_end;
 			size_type			_size;
 
@@ -315,9 +299,10 @@ namespace ft {
 
 			pair<iterator, bool> add_node(T data) {
 				node_pointer newNode = new_node(data);
+				newNode->leftChild = _null;
+				newNode->rightChild = _null;
 				pair<iterator, bool> ret;
 				ret = ft::make_pair(iterator(newNode), true);
-				unset_bounds();
 				if (!_head) {
 					_head = newNode;
 					_head->color = 0;
@@ -325,7 +310,7 @@ namespace ft {
 				} else {
 					node_pointer x = _head;
 					node_pointer y =  x;
-					while (x != NULL) {
+					while (x != _null) {
 						y = x;
 						if (this->equal_binded(newNode->data, x->data)) {
 							ret.first = iterator(x);
@@ -348,10 +333,9 @@ namespace ft {
 					}
 				}
 				if (!ret.second) {
-          _node_allocator.destroy(newNode);
-          _node_allocator.deallocate(newNode, 1);
+          			_node_allocator.destroy(newNode);
+          			_node_allocator.deallocate(newNode, 1);
 				}
-				set_bounds();
 				return ret;
 			}
 
@@ -401,7 +385,7 @@ namespace ft {
 			void leftRotation(node_pointer node) {
 				node_pointer tmp = node->rightChild;
 				node->rightChild = tmp->leftChild;
-				if (tmp->leftChild != NULL)
+				if (tmp->leftChild != _null)
 					tmp->leftChild->parent = node;
 				tmp->parent = node->parent;
 				if (node->parent == NULL)
@@ -417,7 +401,7 @@ namespace ft {
 			void rightRotation(node_pointer node) {
 				node_pointer tmp = node->leftChild;
 				node->leftChild = tmp->rightChild;
-				if (tmp->rightChild != NULL)
+				if (tmp->rightChild != _null)
 					tmp->rightChild->parent = node;
 				tmp->parent = node->parent;
 				if (node->parent == NULL)
@@ -433,14 +417,12 @@ namespace ft {
 			/* 		Deletion 	   */
 			size_t deleteNode(node_pointer toDelete) {
 				node_pointer x, y;
-				// checkTreeProperties(_head);
-				unset_bounds();
 				y = toDelete;
 				int y_original_color = y->color;
-				if (toDelete->leftChild == NULL) {
+				if (toDelete->leftChild == _null) {
 					x = toDelete->rightChild;
 					rbTransplant(toDelete, toDelete->rightChild);
-				} else if (toDelete->rightChild == NULL) {
+				} else if (toDelete->rightChild == _null) {
 					x = toDelete->leftChild;
 					rbTransplant(toDelete, toDelete->leftChild);
 				} else {
@@ -462,7 +444,6 @@ namespace ft {
 				delete(toDelete);
 				if (y_original_color == 0 && x)
 					fixDelete(x);
-				set_bounds();
 				return 1;
 			}
 
@@ -535,34 +516,15 @@ namespace ft {
 
 			/* 		Utils		*/
 			node_pointer get_min(node_pointer node) const {
-				while (node->leftChild)
+				while (node->leftChild != _null)
 					node = node->leftChild;
 				return node;
 			}
 
 			node_pointer get_max(node_pointer node) const {
-				while (node->rightChild)
+				while (node->rightChild != _null)
 					node = node->rightChild;
 				return node;
-			}
-
-			void set_bounds() const {
-				if (_size) {
-					_begin->parent = get_min(_head);
-					_end->parent = get_max(_head);
-					_begin->parent->leftChild = _begin;
-					_end->parent->rightChild = _end;
-				} else {
-					_begin->parent = _end;
-					_end->parent = _begin;
-				}
-			}
-
-			void unset_bounds() const {
-				if (_begin->parent && _begin->parent != _end)
-					_begin->parent->leftChild = NULL;
-				if (_end->parent && _end->parent != _begin)
-					_end->parent->rightChild = NULL;
 			}
 
 			void	recursive_deletion(node_pointer node) {
@@ -575,38 +537,13 @@ namespace ft {
 				_size--;
 			}
 
-			void	checkTreeProperties(node_pointer head) {
-				unset_bounds();
-				if (_head->color != 0)
-					std::cout << " Bad head color." << std::endl;
-				if (!checkTwoConsecutivesRed(head))
-					std::cout << " Two consecutives red nodes." << std::endl;
-				blackNodes(head);
-				print();
-				set_bounds();
-			}
-
-			int blackNodes(node_pointer node) {
-				if (node == NULL)
-					return 1;
-				int rightBlackNodes = blackNodes(node->rightChild);
-				int leftBlackNodes = blackNodes(node->leftChild);
-				if (rightBlackNodes != leftBlackNodes)
-					std::cout << "bad Number Black Nodes" << std::endl;
-				if (node->color == 0)
-					++leftBlackNodes;
-				return leftBlackNodes;
-			}
-
-			bool	checkTwoConsecutivesRed(node_pointer node) {
-				bool ret = true;
-				if (!node)
-					return true;
-				if (node->color == 1 && node->parent->color == 1)
-					return false;
-				ret *= checkTwoConsecutivesRed(node->leftChild);
-				ret *= checkTwoConsecutivesRed(node->rightChild);
-				return ret;
+			template <typename key_type>
+			node_pointer findNode(const key_type& k) {
+				node_pointer node;
+				for (node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
+					if (this->equal_binded(node->data, k))
+						break;
+				return node;
 			}
 
 			/*		TO DELETE		*/
