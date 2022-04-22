@@ -1146,10 +1146,9 @@ void	map_relational_operators() {
 void	map_erase() {
 	std::cout << "Map.erase()" << std::endl;
 	NAMESPACE::map<int, int> map;
-	// std::cout << "\t=== Empty map ===" << std::endl;
-	// map.erase(map.begin(), map.end());
-	// std::cout << map.erase(map.erase(10)) << std::endl;
-	// map.erase(map.begin());
+	std::cout << "\t=== Empty map ===" << std::endl;
+	map.erase(map.begin(), map.end());
+	std::cout << map.erase(map.erase(10)) << std::endl;
 	std::cout << "\t=== erase(const key_type& k) ===" << std::endl;
 	for (int i = 0; i < 1000; ++i)
 		map.insert(NAMESPACE::make_pair<int, int>(i % 3 == 0 ? i : -i, 1));
@@ -1158,14 +1157,15 @@ void	map_erase() {
 	for (NAMESPACE::map<int, int>::iterator it = map.begin(); it != map.end(); ++it)
 		std::cout << it->first << std::endl;
 	std::cout << "\t=== erase(iterator first) ===" << std::endl;
-	// for (int i = -1000; i < -600; ++i)
-	// 	map.erase(map.find(i));
-	// for (NAMESPACE::map<int, int>::iterator it = map.begin(); it != map.end(); ++it)
-	// 	std::cout << it->first << std::endl;
+	for (int i = -1000; i < -600; ++i)
+		if (map.find(i) != map.end())
+			map.erase(map.find(i));
+	for (NAMESPACE::map<int, int>::iterator it = map.begin(); it != map.end(); ++it)
+		std::cout << it->first << std::endl;
 	std::cout << "\t=== erase(iterator first, iterator last) ===" << std::endl;
-	// map.erase(map.begin(), map.end());
-	// for (NAMESPACE::map<int, int>::iterator it = map.begin(); it != map.end(); ++it)
-	// 	std::cout << it->first << std::endl;
+	map.erase(map.begin(), map.end());
+	for (NAMESPACE::map<int, int>::iterator it = map.begin(); it != map.end(); ++it)
+		std::cout << it->first << std::endl;
 }
 
 void	map_test() {
@@ -1194,7 +1194,7 @@ void	map_test() {
 	map_case5();
 	map_iterator();
 	map_const_iterator();
-	map_reverse_iterator();
+	// map_reverse_iterator();
 	map_erase();
 	return;
 }

@@ -160,6 +160,8 @@ namespace ft {
 
 			template <typename key_type>
 			size_t	erase(const key_type& key) {
+				if (!_size)
+					return 0;
 				node_pointer node = _head;
 				node_pointer toDelete = NULL;
 				unset_bounds();
@@ -182,15 +184,18 @@ namespace ft {
 			}
 
 			void	erase(iterator position) {
-				node_pointer node = findNode(*position);
-				if (node)
+				if (_size) {
+					node_pointer node = findNode(*position);
 					deleteNode(node);
+				}
 			}
 
 			void	erase (iterator first, iterator  last) {
-				for (iterator next = first; first != last; first = next) {
-					++next;
-					deleteNode(findNode(*first));
+				if (_size) {
+					for (iterator next = first; first != last; first = next) {
+						++next;
+						deleteNode(findNode(*first));
+					}
 				}
 			}
 
@@ -206,7 +211,7 @@ namespace ft {
 			}
 
 			void	clear() {
-				if (_size == 0)
+				if (!_size)
 					return;
 				unset_bounds();
 				recursive_deletion(_head);
@@ -221,7 +226,7 @@ namespace ft {
 			template <typename key_type>
 			const_iterator find(const key_type& k) const {
 				iterator ret = iterator(_end);
-				if (size()) {
+				if (_size) {
 					unset_bounds();
 					for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
 						if (this->equal_binded(node->data, k))
@@ -234,10 +239,10 @@ namespace ft {
 			template <typename key_type>
 			iterator find(const key_type& k) {
 				iterator ret = iterator(_end);
-				if (size()) {
+				if (_size) {
 					unset_bounds();
 					for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
-						if (node != _null && node != _begin && node != _end && this->equal_binded(node->data, k))
+						if (node != _null && this->equal_binded(node->data, k))
 							ret = iterator(node);
 					set_bounds();
 				}
@@ -296,6 +301,7 @@ namespace ft {
 		*/
 		void	print() {
 			node* node = _head;
+			std::cout << "SIZE: " << _size << std::endl;
 			std::cout << "STARTING BY HEAD: " << std::endl;
 			printNodeAndChild(node);
 			printX(node->leftChild);
@@ -440,6 +446,8 @@ namespace ft {
 
 			/* 		Deletion 	   */
 			size_t deleteNode(node_pointer toDelete) {
+				if (!toDelete)
+					return 0;
 				node_pointer x, y;
 				unset_bounds();
 				y = toDelete;
@@ -469,6 +477,9 @@ namespace ft {
 				delete(toDelete);
 				if (y_original_color == 0 && x)
 					fixDelete(x);
+				--_size;
+				if (!_size)
+					_head = NULL;
 				set_bounds();
 				return 1;
 			}
@@ -585,10 +596,12 @@ namespace ft {
 			template <typename key_type>
 			node_pointer findNode(const key_type& k) {
 				node_pointer node;
+				unset_bounds();
 				for (node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
 					if (this->equal_binded(node->data, k))
 						break;
-				return node;
+				set_bounds();
+				return node == _null ? NULL : node;
 			}
 
 			/*		TO DELETE		*/
@@ -624,8 +637,10 @@ namespace ft {
 			}
 
 			void	printX(node_pointer node) {
-				if (node == NULL)
+				if (node == _null)
 					return;
+				if (node == NULL)
+					std::cout << "ERREUR" << std::endl;
 				printNodeAndChild(node);
 				printX(node->leftChild);
 				printX(node->rightChild);
