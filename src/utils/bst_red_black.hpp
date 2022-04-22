@@ -101,6 +101,10 @@ namespace ft {
 				_null->is_null = true;
 				_begin->parent = _end;
 				_end->parent = _begin;
+				_begin->leftChild = _null;
+				_begin->rightChild = _null;
+				_end->leftChild = _null;
+				_end->rightChild = _null;
 			}
 
 			~bst_red_black() {
@@ -198,18 +202,14 @@ namespace ft {
 				ft::swap(_begin, swap_bst._begin);
 				ft::swap(_end, swap_bst._end);
 				ft::swap(_size, swap_bst._size);
+				ft::swap(_null, swap_bst._null);
 			}
 
 			void	clear() {
 				if (_size == 0)
 					return;
 				unset_bounds();
-				if (_head->leftChild)
-					recursive_deletion(_head->leftChild);
-				if (_head->rightChild)
-					recursive_deletion(_head->rightChild);
-				_node_allocator.destroy(_head);
-				_node_allocator.deallocate(_head, 1);
+				recursive_deletion(_head);
 				_head = NULL;
 				_size = 0;
 				set_bounds();
@@ -220,12 +220,13 @@ namespace ft {
 			*/
 			template <typename key_type>
 			const_iterator find(const key_type& k) const {
-				unset_bounds();
+				// unset_bounds();
 				iterator ret = iterator(_end);
-				for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
-					if (this->equal_binded(node->data, k))
-						ret = iterator(node);
-				set_bounds();
+				(void)k;
+				// for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
+				// 	if (this->equal_binded(node->data, k))
+				// 		ret = iterator(node);
+				// set_bounds();
 				return ret;
 			}
 
@@ -255,7 +256,8 @@ namespace ft {
 
 			template <typename key_type>
 			iterator upper_bound(const key_type& k) {
-				iterator it = find(k);
+				// iterator it = find(k);
+				iterator it = end();
 				if (it != end())
 					return ++it;
 				it = lower_bound(k);
@@ -550,9 +552,9 @@ namespace ft {
 
 			void	unset_bounds() const {
 				if (_begin->parent && _begin->parent != _end)
-					_begin->parent->leftChild = NULL;
+					_begin->parent->leftChild = _null;
 				if (_end->parent && _end->parent != _begin)
-					_end->parent->rightChild = NULL;
+					_end->parent->rightChild = _null;
 			}
 
 			node_pointer get_min(node_pointer node) const {

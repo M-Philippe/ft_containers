@@ -87,83 +87,83 @@ void	map_constructor() {
 		NAMESPACE::map<int, float>::iterator it = map2.begin();
 		while (it != map2.end())
 			std::cout << (it++)->first << " ";
-		// std::cout << std::endl;
-		// std::cout << map2.empty() << std::endl;
-		// std::cout << map2.size() << std::endl;
-		// std::cout << map2.max_size() << std::endl;
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
 	}
-	// {
-	// 	std::cout << "\t=== Construct by range (not full) ===" << std::endl;
-	// 	NAMESPACE::map<int, float>::iterator begin = map.begin(); begin++;
-	// 	NAMESPACE::map<int, float>::iterator end = map.end(); end--;
-	// 	NAMESPACE::map<int, float> map2(begin, end);
-	// 	NAMESPACE::map<int, float>::iterator it = map2.begin();
-	// 	while (it != map2.end())
-	// 		std::cout << (it++)->first << " ";
-	// 	std::cout << std::endl;
-	// 	std::cout << map2.empty() << std::endl;
-	// 	std::cout << map2.size() << std::endl;
-	// 	std::cout << map2.max_size() << std::endl;
-	// }
-	// {
-	// 	std::cout << "\t=== Construct Copy ===" << std::endl;
-	// 	NAMESPACE::map<int, float> map2(map);
-	// 	NAMESPACE::map<int, float>::iterator it = map2.begin();
-	// 	while (it != map2.end())
-	// 		std::cout << (it++)->first << " ";
-	// 	std::cout << std::endl;
-	// 	std::cout << map2.empty() << std::endl;
-	// 	std::cout << map2.size() << std::endl;
-	// 	std::cout << map2.max_size() << std::endl;
-	// }
-	// {
-	// 	std::cout << "\t=== Construct Copy (empty map)===" << std::endl;
-	// 	NAMESPACE::map<int, float> emptyMap;
-	// 	NAMESPACE::map<int, float> map2(emptyMap);
-	// 	NAMESPACE::map<int, float>::iterator it = map2.begin();
-	// 	while (it != map2.end())
-	// 		std::cout << (it++)->first << " ";
-	// 	std::cout << std::endl;
-	// 	std::cout << map2.empty() << std::endl;
-	// 	std::cout << map2.size() << std::endl;
-	// 	std::cout << map2.max_size() << std::endl;
-	// }
-	// {
-	// 	std::cout << "\t=== Operator= ===" << std::endl;
-	// 	NAMESPACE::map<int, float> map2;
-	// 	map2 = map;
-	// 	NAMESPACE::map<int, float>::iterator it = map2.begin();
-	// 	while (it != map2.end())
-	// 		std::cout << (it++)->first << " ";
-	// 	std::cout << std::endl;
-	// 	std::cout << map2.empty() << std::endl;
-	// 	std::cout << map2.size() << std::endl;
-	// 	std::cout << map2.max_size() << std::endl;
-	// }
-	// {
-	// 	std::cout << "\t=== Operator= (Big copy) ===" << std::endl;
-	// 	NAMESPACE::map<int, float> big_map;
-	// 	for (int i = 0; i < 100000; i++)
-	// 		map.insert(NAMESPACE::make_pair((i % 2 == 0 ? i : -i), 1.02));
-	// 	NAMESPACE::map<int, float> map2;
-	// 	map2 = big_map;
-	// 	NAMESPACE::map<int, float>::iterator it = map2.begin();
-	// 	while (it != map2.end())
-	// 		std::cout << (it++)->first << " ";
-	// 	std::cout << std::endl;
-	// 	std::cout << map2.empty() << std::endl;
-	// 	std::cout << map2.size() << std::endl;
-	// 	std::cout << map2.max_size() << std::endl;
-	// 	std::cout << "\t=== Operator= from empty map ===" << std::endl;
-	// 	NAMESPACE::map<int, float> empty_map;
-	// 	map2 = empty_map;
-	// 	it = map2.begin();
-	// 	while (it != map2.end())
-	// 		std::cout << (it++)->first << " ";
-	// 	std::cout << std::endl;
-	// 	std::cout << map2.empty() << std::endl;
-	// 	std::cout << map2.size() << std::endl;
-	// 	std::cout << map2.max_size() << std::endl;
+	{
+		std::cout << "\t=== Construct by range (not full) ===" << std::endl;
+		NAMESPACE::map<int, float>::iterator begin = map.begin(); begin++;
+		NAMESPACE::map<int, float>::iterator end = map.end(); end--;
+		NAMESPACE::map<int, float> map2(begin, end);
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Construct Copy ===" << std::endl;
+		NAMESPACE::map<int, float> map2(map);
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Construct Copy (empty map)===" << std::endl;
+		NAMESPACE::map<int, float> emptyMap;
+		NAMESPACE::map<int, float> map2(emptyMap);
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Operator= ===" << std::endl;
+		NAMESPACE::map<int, float> map2;
+		map2 = map;
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
+	}
+	{
+		std::cout << "\t=== Operator= (Big copy) ===" << std::endl;
+		NAMESPACE::map<int, float> big_map;
+		for (int i = 0; i < 100000; i++)
+			map.insert(NAMESPACE::make_pair((i % 2 == 0 ? i : -i), 1.02));
+		NAMESPACE::map<int, float> map2;
+		map2 = big_map;
+		NAMESPACE::map<int, float>::iterator it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
+		std::cout << "\t=== Operator= from empty map ===" << std::endl;
+		NAMESPACE::map<int, float> empty_map;
+		map2 = empty_map;
+		it = map2.begin();
+		while (it != map2.end())
+			std::cout << (it++)->first << " ";
+		std::cout << std::endl;
+		std::cout << map2.empty() << std::endl;
+		std::cout << map2.size() << std::endl;
+		std::cout << map2.max_size() << std::endl;
 		//std::cout << "\t=== Operator= on same map ===" << std::endl;
 		//map2 = map2;
 		//it = map2.begin();
@@ -173,7 +173,7 @@ void	map_constructor() {
 		//std::cout << map2.empty() << std::endl;
 		//std::cout << map2.size() << std::endl;
 		//std::cout << map2.max_size() << std::endl;
-	// }
+	}
 }
 
 void	print_after_insert(NAMESPACE::map<int, float>::iterator returnedIterator, NAMESPACE::map<int, float>::iterator begin, NAMESPACE::map<int, float>::iterator end) {
@@ -998,16 +998,16 @@ void	map_upper_bound() {
 		while (it != map.end())
 			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
 		std::cout << std::endl;
-		std::cout << "\tClassic (no-existant value)" << std::endl;
-		it = map.upper_bound(7);
-		while (it != map.end())
-			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
-		std::cout << std::endl;
-		std::cout << "\tk < begin()" << std::endl;
-		it = map.upper_bound(-1);
-		while (it != map.end())
-			std::cout << "[" << it->first << ";" << (it++)->second << "] ";
-		std::cout << std::endl;
+		// std::cout << "\tClassic (no-existant value)" << std::endl;
+		// it = map.upper_bound(7);
+		// while (it != map.end())
+		// 	std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		// std::cout << std::endl;
+		// std::cout << "\tk < begin()" << std::endl;
+		// it = map.upper_bound(-1);
+		// while (it != map.end())
+		// 	std::cout << "[" << it->first << ";" << (it++)->second << "] ";
+		// std::cout << std::endl;
 		std::cout << "\tk == begin" << std::endl;
 		it = map.upper_bound(map.begin()->first);
 		while (it != map.end())
@@ -1143,10 +1143,6 @@ void	map_relational_operators() {
 	}
 }
 
-// void 		erase(iterator first) { bst.erase(first); }
-// void 		erase(iterator first, iterator last) { bst.erase(first, last); }
-// size_type 	erase(const key_type& k) { return bst.erase(k); }
-
 void	map_erase() {
 	std::cout << "Map.erase()" << std::endl;
 	NAMESPACE::map<int, int> map;
@@ -1175,7 +1171,7 @@ void	map_erase() {
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	// pair_relational_operators();
-	map_constructor();
+	// map_constructor();
 	// map_insert_1();
 	// map_insert_2();
 	// map_insert_3();
@@ -1187,7 +1183,7 @@ void	map_test() {
 	// map_value_comp();
 	// map_lower_bound();
 	// map_lower_bound_const();
-	// map_upper_bound();
+	map_upper_bound();
 	// map_upper_bound_const();
 	// map_get_allocator();
 	// map_relational_operators();

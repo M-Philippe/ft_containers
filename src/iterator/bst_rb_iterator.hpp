@@ -50,23 +50,46 @@ namespace ft {
 			reference	operator*() const { return _node->data; }
 			pointer 	operator->() const { return &_node->data; }
 
-			/* pre-increment */
+			// self_type operator++() {
+			// 	if (_node->rightChild) {
+			// 		for (_node = _node->rightChild; _node->leftChild; _node = _node->leftChild);
+			// 	}
+			// 	else if (_node == _node->parent->leftChild)
+			// 		_node = _node->parent;
+			// 	else {
+			// 		for (_node = _node->parent; _node == _node->parent->rightChild; _node = _node->parent);
+			// 		_node = _node->parent;
+			// 	}
+			// 	return *this;
+			// }
+
+
 			self_type operator++() {
-				if (_node->rightChild) {
-					for (_node = _node->rightChild; _node->leftChild; _node = _node->leftChild);
-				}
-				else if (_node == _node->parent->leftChild)
+				if (!_node->rightChild->is_null) {
+					for (_node = _node->rightChild; !_node->leftChild->is_null; _node = _node->leftChild);
+				} else if (_node == _node->parent->leftChild) {
 					_node = _node->parent;
-				else {
+				} else {
 					for (_node = _node->parent; _node == _node->parent->rightChild; _node = _node->parent);
 					_node = _node->parent;
 				}
 				return *this;
 			}
-
+			// self_type operator--() {
+			// 	if (_node->leftChild) {
+			// 		for (_node = _node->leftChild; _node->rightChild; _node = _node->rightChild);
+			// 	} else if (_node == _node->parent->rightChild) {
+			// 		_node = _node->parent;
+			// 	} else {
+			// 		for (_node = _node->parent; _node == _node->parent->leftChild; _node = _node->parent);
+			// 		_node = _node->parent;
+			// 	}
+			// 	return *this;
+			// }
+			/* pre-increment */
 			self_type operator--() {
-				if (_node->leftChild) {
-					for (_node = _node->leftChild; _node->rightChild; _node = _node->rightChild);
+				if (!_node->leftChild->is_null) {
+					for (_node = _node->leftChild; !_node->rightChild->is_null; _node = _node->rightChild);
 				} else if (_node == _node->parent->rightChild) {
 					_node = _node->parent;
 				} else {
