@@ -220,24 +220,27 @@ namespace ft {
 			*/
 			template <typename key_type>
 			const_iterator find(const key_type& k) const {
-				// unset_bounds();
 				iterator ret = iterator(_end);
-				(void)k;
-				// for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
-				// 	if (this->equal_binded(node->data, k))
-				// 		ret = iterator(node);
-				// set_bounds();
+				if (size()) {
+					unset_bounds();
+					for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
+						if (this->equal_binded(node->data, k))
+							ret = iterator(node);
+					set_bounds();
+				}
 				return ret;
 			}
 
 			template <typename key_type>
 			iterator find(const key_type& k) {
-				unset_bounds();
 				iterator ret = iterator(_end);
-				for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
-					if (this->equal_binded(node->data, k))
-						ret = iterator(node);
-				set_bounds();
+				if (size()) {
+					unset_bounds();
+					for (node_pointer node = _head; node != _null; node = this->comp_binded(node->data, k) > 0 ? node->rightChild : node->leftChild)
+						if (node != _null && node != _begin && node != _end && this->equal_binded(node->data, k))
+							ret = iterator(node);
+					set_bounds();
+				}
 				return ret;
 			}
 
@@ -256,8 +259,7 @@ namespace ft {
 
 			template <typename key_type>
 			iterator upper_bound(const key_type& k) {
-				// iterator it = find(k);
-				iterator it = end();
+				iterator it = find(k);
 				if (it != end())
 					return ++it;
 				it = lower_bound(k);
@@ -273,6 +275,7 @@ namespace ft {
 					++second;
 					return ret = make_pair(first, second);
 				}
+
 				unset_bounds();
 				node_pointer y;
 				for (node_pointer x = _head; x != _null; y = x) {

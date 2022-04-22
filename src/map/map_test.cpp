@@ -1183,7 +1183,7 @@ void	map_test() {
 	// map_value_comp();
 	// map_lower_bound();
 	// map_lower_bound_const();
-	map_upper_bound();
+	// map_upper_bound();
 	// map_upper_bound_const();
 	// map_get_allocator();
 	// map_relational_operators();
@@ -1194,7 +1194,7 @@ void	map_test() {
 	// map_case5();
 	// map_iterator();
 	// map_const_iterator();
-	// map_reverse_iterator();
+	map_reverse_iterator();
 	// map_erase();
 	return;
 }
