@@ -50,11 +50,6 @@ namespace ft {
 			reference	operator*() const { return _node->data; }
 			pointer 	operator->() const { return &_node->data; }
 
-			void	moveToLeftmostNode() {
-				while (_node->leftChild != NULL)
-					_node = _node->leftChild;
-			}
-
 			/* pre-increment */
 			self_type operator++() {
 				if (_node->rightChild) {

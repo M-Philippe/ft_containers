@@ -40,7 +40,7 @@ namespace ft {
 		}
 
 		template <class InputIterator>
-  	map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {
+  		map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) {
 			(void)comp;
 			(void)alloc;
 			bst.insert(first, last);
