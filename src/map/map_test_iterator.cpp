@@ -270,60 +270,60 @@ void    map_reverse_iterator() {
 	std::cout << "map ReverseConstIterator" << std::endl;
 	NAMESPACE::map<int, int> map;
 	for (unsigned long i = 1; i < 21; i++)
-					map.insert(NAMESPACE::make_pair(i * 2, i));
+		map.insert(NAMESPACE::make_pair(i * 2, i));
 	{
-					std::cout << "=== Empty creation ===" << std::endl;
-					ft::map<int, int>::reverse_iterator ft_it;
-					std::map<int, int>::reverse_iterator std_it;
+		std::cout << "=== Empty creation ===" << std::endl;
+		ft::map<int, int>::reverse_iterator ft_it;
+		std::map<int, int>::reverse_iterator std_it;
 	}
 	{
-					std::cout << "=== Creation from classic iterator ===" << std::endl;
-					NAMESPACE::map<int, int>::iterator it = map.begin(); it++;
-					NAMESPACE::map<int, int>::reverse_iterator r_it(it);
-					std::cout << r_it->first << std::endl;
-					NAMESPACE::map<int, int>::const_iterator it_test = r_it.base();
-					while (it_test != map.end())
-									std::cout << (it_test++)->first << " ";
-					std::cout << std::endl;
-					NAMESPACE::map<int, int>::reverse_iterator r_it2(map.end());
-					std::cout << "r_it2: " << r_it2->first << std::endl;
+		std::cout << "=== Creation from classic iterator ===" << std::endl;
+		NAMESPACE::map<int, int>::iterator it = map.begin(); it++;
+		NAMESPACE::map<int, int>::reverse_iterator r_it(it);
+		std::cout << r_it->first << std::endl;
+		NAMESPACE::map<int, int>::const_iterator it_test = r_it.base();
+		while (it_test != map.end())
+						std::cout << (it_test++)->first << " ";
+		std::cout << std::endl;
+		NAMESPACE::map<int, int>::reverse_iterator r_it2(map.end());
+		std::cout << "r_it2: " << r_it2->first << std::endl;
 	}
 	{
-					std::cout << "=== Creation from other reverse_iterator ===" << std::endl;
-					NAMESPACE::map<int, int>::iterator it = map.begin();
-					it++;
-					NAMESPACE::map<int, int>::reverse_iterator first(it);
-					NAMESPACE::map<int, int>::reverse_iterator second(first);
-					std::cout << "base: " << first.base()->first << " " << (second.base())->first << std::endl;
-					std::cout << first->first << " " << second->first << std::endl;
+		std::cout << "=== Creation from other reverse_iterator ===" << std::endl;
+		NAMESPACE::map<int, int>::iterator it = map.begin();
+		it++;
+		NAMESPACE::map<int, int>::reverse_iterator first(it);
+		NAMESPACE::map<int, int>::reverse_iterator second(first);
+		std::cout << "base: " << first.base()->first << " " << (second.base())->first << std::endl;
+		std::cout << first->first << " " << second->first << std::endl;
 	}
 	{
-					std::cout << "=== revIterator. Test Operator++ 'pre and post ===" << std::endl;
-					NAMESPACE::map<int, int>::reverse_iterator it(map.end());
-					std::cout << "r_it: " << it->first << std::endl;
-					it++;
-					std::cout << "r_it: " << it->first << std::endl;
-					NAMESPACE::map<int, int>::reverse_iterator start(map.begin());
-					while (++it != start)
-									std::cout << it->first << " " << std::endl;
-					std::cout << std::endl;
-					NAMESPACE::map<int, int>::reverse_iterator it_e(map.end());
-					while (++it_e != start)
-									std::cout << it_e->first << " ";
-					std::cout << std::endl;
+		std::cout << "=== revIterator. Test Operator++ 'pre and post ===" << std::endl;
+		NAMESPACE::map<int, int>::reverse_iterator it(map.end());
+		std::cout << "r_it: " << it->first << std::endl;
+		it++;
+		std::cout << "r_it: " << it->first << std::endl;
+		NAMESPACE::map<int, int>::reverse_iterator start(map.begin());
+		while (++it != start)
+						std::cout << it->first << " " << std::endl;
+		std::cout << std::endl;
+		NAMESPACE::map<int, int>::reverse_iterator it_e(map.end());
+		while (++it_e != start)
+						std::cout << it_e->first << " ";
+		std::cout << std::endl;
 	}
 	NAMESPACE::map<int, int>::reverse_iterator end(map.end());
 	{
-					std::cout << "=== revIterator. Test Operator-- ===" << std::endl;
-					NAMESPACE::map<int, int>::reverse_iterator it(map.begin()++);
-					std::cout << it->first << std::endl;
-					while (it-- != end)
-									std::cout << it->first << " ";
-					std::cout << std::endl;
-					NAMESPACE::map<int, int>::reverse_iterator it_e(map.begin());
-					while (--it_e != end)
-									std::cout << it_e->first << " ";
-					std::cout << std::endl;
+		// std::cout << "=== revIterator. Test Operator-- ===" << std::endl;
+		// NAMESPACE::map<int, int>::reverse_iterator it(++map.begin());
+		// std::cout << "it --> " << it->first << std::endl;
+		// while (it-- != end)
+		// 				std::cout << it->first << " ";
+		// std::cout << std::endl;
+		// NAMESPACE::map<int, int>::reverse_iterator it_e(map.begin());
+		// while (--it_e != end)
+		// 				std::cout << it_e->first << " ";
+		// std::cout << std::endl;
 	}
 	/*{
 					std::cout << "=== revIterator. Test Operator-> ===" << std::endl;
@@ -354,7 +354,7 @@ void    map_reverse_iterator() {
 					NAMESPACE::map<int, int>::reverse_iterator rev_it = it;
 					NAMESPACE::map<int, int>::reverse_iterator rev_it2 = it;
 					std::cout << it->first << std::endl;
-					it--;
+					it++;
 					std::cout << it->first << std::endl;
 					std::cout << rev_it->first << std::endl;
 					std::cout << rev_it2->first << std::endl;
@@ -362,6 +362,7 @@ void    map_reverse_iterator() {
 	{
 					std::cout << "=== Trying cast from non-const to const ===" << std::endl;
 					NAMESPACE::map<int, int>::reverse_iterator it(map.begin());
+					--it;
 					std::cout << it->first << " " << it.base()->first << std::endl;
 					NAMESPACE::map<int, int>::const_reverse_iterator it2(it);
 					std::cout << it->first << " " << it2->first << std::endl;
