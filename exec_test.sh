@@ -12,10 +12,25 @@ then
 	./ft_test
 	./std_test
 	exit
+elif [ "$1" = "-help" ]
+then
+	echo "-show to show tests results."
+	echo "-leaks to show memory usage."
+	echo "-unit_test to show mli42_tests"
+	exit
 elif [ "$1" = "-leaks" ]
 then
 	valgrind --leak-check=full --show-leak-kinds=all ./ft_test > /dev/null
 	valgrind --leak-check=full --show-leak-kinds=all ./std_test > /dev/null
+	exit
+elif [ "$1" = "-compile" ]
+then
+	clang++ -g3 -Wall -Wextra -fsanitize=address -std=c++98 ./containers_test/srcs/$2/$3
+	exit
+elif [ "$1" = "-unit_test" ]
+then
+	cd containers_test
+	./do.sh $2
 	exit
 fi
 

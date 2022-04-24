@@ -62,7 +62,7 @@ namespace ft
     vector(InputIterator first,
            InputIterator last,
            const allocator_type &alloc = allocator_type(),
-           typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) : _alloc(alloc)
+           typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL) : _alloc(alloc)
     {
       InputIterator tmp = first;
       unsigned long count = 0;
@@ -224,7 +224,7 @@ namespace ft
     */
 
     template <class InputIterator>
-    void assign (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) {
+    void assign (InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
       this->clear();
       *this = vector(first, last);
     }
@@ -309,13 +309,13 @@ namespace ft
 
     template <class InputIterator>
     void insert (iterator position, InputIterator first, InputIterator last,
-    typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0) {
+    typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL) {
       size_type indexPosition = position - begin();
       size_type n = last - first;
       if (n + _size >= _capacity) {
         ft::vector<value_type> tmp(begin() + indexPosition, end());
         if (_capacity == 0)
-          this->reserve(1);
+          this->reserve(n * 2);
         else if (n + _size > _capacity * 2)
           this->reserve((n + _size) * 2);
         else

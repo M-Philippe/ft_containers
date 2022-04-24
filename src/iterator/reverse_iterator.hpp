@@ -138,6 +138,43 @@ namespace ft {
 		return (rhs.base() - lhs.base());
 	}
 
+	template<class IterL, class IterR>
+	bool operator==(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+	{ return lhs.base() == rhs.base(); }
+
+	template<class IterL, class IterR>
+	bool operator<(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+	{ return lhs.base() > rhs.base(); }
+
+	template<class IterL, class IterR>
+	bool operator<=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+	{ return lhs.base() >= rhs.base(); }
+
+	template<class IterL, class IterR>
+	bool operator!=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+	{ return lhs.base() != rhs.base(); }
+
+	template<class IterL, class IterR>
+	bool operator>(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+	{ return lhs.base() < rhs.base(); }
+
+	template<class IterL, class IterR>
+	bool operator>=(reverse_iterator<IterL> const &lhs, reverse_iterator<IterR> const &rhs)
+	{ return lhs.base() <= rhs.base(); }
+
+
+	// Substract of const or non const reverse_iterator
+	template<class IteratorL, class IteratorR>
+	typename reverse_iterator<IteratorL>::difference_type
+	operator-(reverse_iterator<IteratorL> const &lhs, reverse_iterator<IteratorR> const &rhs)
+	{ return rhs.base() - lhs.base(); }
+
+	// [ operators+ for pre addition ex : 5 + rit]
+	//template<class Iterator>
+	//reverse_iterator<Iterator>
+	//operator+(typename reverse_iterator<Iterator>::difference_type n, reverse_iterator<Iterator> const &i)
+	//{ return reverse_iterator<Iterator>(i.base() - n); }
+
 }; // namespace ft
 
 #endif
