@@ -168,50 +168,8 @@ void	set_insert_1() {
 	// Add test to check no leaks with empty set.
 }
 
-template <class SET>
-void cst(const SET &lhs, const SET &rhs) {
-	static int i = 0;
-
-	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
-	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
-	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
-	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
-}
-
-void	t() {
-	NAMESPACE::set<char> st1;
-	NAMESPACE::set<char> st2;
-
-	st1.insert('a');
-	st1.insert('b');
-	st1.insert('c');
-	st1.insert('d');
-	st2.insert('a');
-	st2.insert('b');
-	st2.insert('c');
-	st2.insert('d');
-
-	cst(st1, st1); // 0
-	cst(st1, st2); // 1
-
-	st2.insert('e');
-	st2.insert('f');
-	st2.insert('h');
-	st2.insert('h');
-
-	cst(st1, st2); // 2
-	cst(st2, st1); // 3
-
-	NAMESPACE::swap(st1, st2);
-
-	cst(st1, st2); // 4
-	cst(st2, st1); // 5
-
-}
-
 void	set_test() {
 	std::cout << "Set Test" << std::endl;
-	//set_insert_1();
-	t();
+	set_insert_1();
 	return;
 }
