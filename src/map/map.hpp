@@ -6,6 +6,7 @@
 #include "../iterator/bst_rb_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../utils/bst_red_black.hpp"
+#include <stdlib.h>
 
 namespace ft {
 
@@ -131,8 +132,8 @@ namespace ft {
 		const_iterator 	lower_bound (const key_type& k) const { return bst.lower_bound(k); }
 		iterator 		upper_bound (const key_type& k) { return bst.upper_bound(k); }
 		const_iterator 	upper_bound (const key_type& k) const { return bst.upper_bound(k); }
-		pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return equal_range(k); }
-		pair<iterator,iterator>             equal_range (const key_type& k) { return equal_range(k); }
+		ft::pair<iterator,iterator>             equal_range (const key_type& k) { return bst.equal_range(k); }
+		ft::pair<const_iterator,const_iterator> equal_range (const key_type& k) const { return bst.equal_range(k); }
 
 		/*
 		**		ALLOCATOR

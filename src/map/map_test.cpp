@@ -9,6 +9,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <set>
+#include <list>
 
 #define MAP_BIG_N	10000
 
@@ -1187,14 +1188,14 @@ void	map_test() {
 	map_upper_bound_const();
 	map_get_allocator();
 	map_relational_operators();
-	map_case1();
-	map_case2();
-	map_case3();
-	map_case4();
-	map_case5();
+	//map_case1();
+	//map_case2();
+	//map_case3();
+	//map_case4();
+	//map_case5();
 	map_iterator();
 	map_const_iterator();
-	// map_reverse_iterator();
+	//// map_reverse_iterator();
 	map_erase();
 	return;
 }

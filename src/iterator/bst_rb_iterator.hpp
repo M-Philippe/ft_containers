@@ -43,6 +43,14 @@ namespace ft {
 			}
 			~bst_rb_iterator() {}
 
+			bst_rb_iterator& operator=(const bst_rb_iterator& org) {
+				if (this != &org) {
+					this->_node = org._node;
+					this->_comp = org._comp;
+				}
+				return *this;
+			}
+
 			operator bst_rb_iterator<N, const T, Compare>() {
 				return (bst_rb_iterator<N, const T, Compare>(_node));
 			}
@@ -50,7 +58,7 @@ namespace ft {
 			reference	operator*() const { return _node->data; }
 			pointer 	operator->() const { return &_node->data; }
 
-			self_type operator++() {
+			self_type& operator++() {
 				if (!_node->rightChild->is_null) {
 					for (_node = _node->rightChild; !_node->leftChild->is_null; _node = _node->leftChild);
 				} else if (_node == _node->parent->leftChild) {
@@ -63,7 +71,7 @@ namespace ft {
 			}
 
 			/* pre-increment */
-			self_type operator--() {
+			self_type& operator--() {
 				if (!_node->leftChild->is_null) {
 					for (_node = _node->leftChild; !_node->rightChild->is_null; _node = _node->rightChild);
 				} else if (_node == _node->parent->rightChild) {
