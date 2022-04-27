@@ -30,7 +30,14 @@ then
 elif [ "$1" = "-unit_test" ]
 then
 	cd containers_test
-	./do.sh $2
+	if [ "$2" = "all" ]
+	then
+		./do.sh vector
+		./do.sh stack
+		./do.sh map
+	else
+		./do.sh $2
+	fi
 	exit
 fi
 
