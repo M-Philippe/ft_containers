@@ -153,9 +153,6 @@ namespace ft {
 		template <class K, class Te, class C, class A>
   		void swap (map<K, Te, C, A>& x, map<K, Te, C, A>& y);
 
-		/*     To Delete     */
-		void print() { bst.print(); }
-
 		private:
 			bst_red_black<value_type, Compare, Alloc> bst;
 

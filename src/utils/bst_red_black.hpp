@@ -336,18 +336,6 @@ namespace ft {
 				return ft::make_pair(first, second);
 			}
 
-		/*
-		**		TO_DELETE
-		*/
-		void	print() {
-			node* node = _head;
-			std::cout << "SIZE: " << _size << std::endl;
-			std::cout << "STARTING BY HEAD: " << std::endl;
-			printNodeAndChild(node);
-			printX(node->leftChild);
-			printX(node->rightChild);
-			}
-
 		private:
 			allocator_type		_data_allocator;
 			allocator_node		_node_allocator;
@@ -514,7 +502,8 @@ namespace ft {
 					y->leftChild->parent = y;
 					y->color = toDelete->color;
 				}
-				delete(toDelete);
+				_node_allocator.destroy(toDelete);
+				_node_allocator.deallocate(toDelete, 1);
 				if (y_original_color == 0 && x)
 					fixDelete(x);
 				--_size;
@@ -643,49 +632,6 @@ namespace ft {
 				set_bounds();
 				return node == _null ? NULL : node;
 			}
-
-			/*		TO DELETE		*/
-			void	printNodeAndChild(node_pointer node) {
-				std::cout << "NODE: " << node->data.first << (node->color == 0 ? " | black" : " | red") << std::endl;
-				if (node->leftChild != NULL)
-						std::cout << "\t\tLEFT_CHILD: " << node->leftChild->data.first << (node->leftChild->color == 0 ? " | black" : " | red") << std::endl;
-				else
-						std::cout << "\t\tLEFT_CHILD: NULL" << std::endl;
-				if (node->rightChild != NULL)
-						std::cout << "\t\tRIGHT_CHILD: " << node->rightChild->data.first << (node->rightChild->color == 0 ? " | black" : " | red") << std::endl;
-				else
-						std::cout << "\t\tRIGHT_CHILD: NULL" << std::endl;
-			}
-
-			void	printNode(node_pointer node) {
-				if (node == NULL)
-					return;
-				printNodeAndChild(node);
-				node_pointer tmp = node;
-				node = node->leftChild;
-				std::cout << "GOING LEFT" << std::endl;
-				while (node != NULL) {
-					printNodeAndChild(node);
-					node = node->leftChild;
-				}
-				std::cout << "GOING RIGHT" << std::endl;
-				tmp = tmp->rightChild;
-				while (tmp != NULL) {
-					printNodeAndChild(tmp);
-					tmp = tmp->rightChild;
-				}
-			}
-
-			void	printX(node_pointer node) {
-				if (node == _null)
-					return;
-				if (node == NULL)
-					std::cout << "ERREUR" << std::endl;
-				printNodeAndChild(node);
-				printX(node->leftChild);
-				printX(node->rightChild);
-			}
-
 	}; // class bst_red_black
 
 }; // namespace ft
