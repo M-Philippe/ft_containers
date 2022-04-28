@@ -1169,6 +1169,37 @@ void	map_erase() {
 		std::cout << it->first << std::endl;
 }
 
+void	map_equal_range() {
+	std::cout << "equal_range" << std::endl;
+	{
+		NAMESPACE::map<int, int> map;
+		for (int i = 0; i < 20; i++)
+			map.insert(NAMESPACE::make_pair(i, i));
+		NAMESPACE::pair<NAMESPACE::map<int, int>::iterator, NAMESPACE::map<int, int>::iterator> p;
+		p = map.equal_range(3);
+		while (p.first != p.second) {
+			std::cout << p.first->first << " | " << p.first->second << std::endl;
+			p.first++;
+		}
+		p = map.equal_range(-1);
+		while (p.first != p.second) {
+			std::cout << p.first->first << " | " << p.first->second << std::endl;
+			p.first++;
+		}
+		NAMESPACE::pair<NAMESPACE::map<int, int>::const_iterator, NAMESPACE::map<int, int>::const_iterator> p_c;
+		p_c = map.equal_range(3);
+		while (p_c.first != p_c.second) {
+			std::cout << p_c.first->first << " | " << p_c.first->second << std::endl;
+			p_c.first++;
+		}
+		p_c = map.equal_range(-1);
+		while (p_c.first != p_c.second) {
+			std::cout << p_c.first->first << " | " << p_c.first->second << std::endl;
+			p_c.first++;
+		}
+	}
+}
+
 void	map_test() {
 	std::cout << "map Test" << std::endl;
 	//pair_relational_operators();
@@ -1196,6 +1227,7 @@ void	map_test() {
 	//map_iterator();
 	//map_const_iterator();
 	////// map_reverse_iterator();
-	map_erase();
+	//map_erase();
+	map_equal_range();
 	return;
 }
