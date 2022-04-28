@@ -289,51 +289,11 @@ namespace ft {
 			template <typename key_type>
 			ft::pair<iterator, iterator> equal_range(const key_type& k) {
 				return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
-				pair<iterator, iterator> ret;
-				iterator first = find(k);
-				iterator second = first;
-				if (first != _end) {
-					++second;
-					return ft::make_pair(first, second);
-				}
-				unset_bounds();
-				node_pointer y;
-				for (node_pointer x = _head; x != _null; y = x) {
-					if (this->comp_binded(x->data, k) > 0)
-						x = x->rightChild;
-					else
-						x = x->leftChild;
-				}
-				set_bounds();
-				first = iterator(y);
-				++first;
-				second = first;
-				return ft::make_pair(first, second);
 			}
 
 			template <typename key_type>
 			ft::pair<const_iterator, const_iterator> equal_range(const key_type& k) const {
 				return (ft::make_pair(this->lower_bound(k), this->upper_bound(k)));
-				pair<const_iterator, const_iterator> ret;
-				const_iterator first = find(k);
-				const_iterator second = first;
-				if (first != _end) {
-					++second;
-					return ft::make_pair(first, second);
-				}
-				unset_bounds();
-				node_pointer y;
-				for (node_pointer x = _head; x != _null; y = x) {
-					if (this->comp_binded(x->data, k) > 0)
-						x = x->rightChild;
-					else
-						x = x->leftChild;
-				}
-				set_bounds();
-				first = iterator(y);
-				++first;
-				second = first;
-				return ft::make_pair(first, second);
 			}
 
 		private:
