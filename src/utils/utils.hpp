@@ -144,33 +144,30 @@ namespace ft {
 	template<bool Cond, class T = void> struct enable_if {};
   template<class T> struct enable_if<true, T> { typedef T type; };
 
-	template <bool is_integral, typename T>
-  struct is_integral_res {
-		typedef T type;
-		static const bool value = is_integral;
-		};
-
 	/*
 	**	IS_INTEGRAL
 	*/
-	template <typename> struct is_integral_type : public is_integral_res<false, bool> {};
+	template <typename T, bool is_integral> struct integral_res {
+		typedef T	value_type;
+		static const bool value = is_integral;
+	};
 
-	template <> struct is_integral_type<bool> : public is_integral_res<true, bool> {};
-	template <> struct is_integral_type<char> : public is_integral_res<true, char> {};
-	template <> struct is_integral_type<wchar_t> : public is_integral_res<true, wchar_t> {};
-	template <> struct is_integral_type<signed char> : public is_integral_res<true, signed char> {};
-	template <> struct is_integral_type<short int> : public is_integral_res<true, short int> {};
-	template <> struct is_integral_type<int> : public is_integral_res<true, int> {};
-	template <> struct is_integral_type<long int> : public is_integral_res<true, long int> {};
-	template <> struct is_integral_type<long long int> : public is_integral_res<true, long long int> {};
-	template <> struct is_integral_type<unsigned char> : public is_integral_res<true, unsigned char> {};
-	template <> struct is_integral_type<unsigned short int> : public is_integral_res<true, unsigned short int> {};
-	template <> struct is_integral_type<unsigned int> : public is_integral_res<true, unsigned int> {};
-	template <> struct is_integral_type<unsigned long int> : public is_integral_res<true, unsigned long int> {};
-	template <> struct is_integral_type<unsigned long long int> : public is_integral_res<true, unsigned long long int> {};
+	template <typename T> struct integral_constant : public integral_res<T, false> {};
+	template <> struct integral_constant<bool> : public integral_res<bool, true> {};
+	template <> struct integral_constant<char> : public integral_res<char, true> {};
+	template <> struct integral_constant<wchar_t> : public integral_res<wchar_t, true> {};
+	template <> struct integral_constant<signed char> : public integral_res<signed char, true> {};
+	template <> struct integral_constant<short int> : public integral_res<short int, true> {};
+	template <> struct integral_constant<int> : public integral_res<int, true> {};
+	template <> struct integral_constant<long int> : public integral_res<long int, true> {};
+	template <> struct integral_constant<long long int> : public integral_res<long long int, true> {};
+	template <> struct integral_constant<unsigned char> : public integral_res<unsigned char, true> {};
+	template <> struct integral_constant<unsigned short int> : public integral_res<unsigned short int, true> {};
+	template <> struct integral_constant<unsigned int> : public integral_res<unsigned int, true> {};
+	template <> struct integral_constant<unsigned long int> : public integral_res<unsigned long int, true> {};
+	template <> struct integral_constant<unsigned long long int> : public integral_res<unsigned long long int, true> {};
 
-	template <typename T>
-  struct is_integral : public is_integral_type<T> { };
+	template <class T> struct is_integral : public integral_constant<T> {};
 
 } // namespace ft
 
