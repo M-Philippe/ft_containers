@@ -22,9 +22,9 @@ int		main(void)
 	try {
 		vct.at(10) = 42;
 	}
-	//catch (std::out_of_range &e) {
-	//	std::cout << "Catch out_of_range exception!" << std::endl;
-	//}
+	catch (std::out_of_range &e) {
+		std::cout << "Catch out_of_range exception!" << std::endl;
+	}
 	catch (std::exception &e) {
 		std::cout << "Catch exception: " << e.what() << std::endl;
 	}

@@ -175,7 +175,7 @@ namespace ft
     void reserve(size_type n)
     {
       if (n > max_size())
-        throw(length_error("reserve"));
+        throw (std::length_error(length_error("reserve").what()));
       else if (n > _capacity)
       {
         _capacity = n;
@@ -200,14 +200,14 @@ namespace ft
     reference at(size_type n)
     {
       if (n >= _size)
-        throw(out_of_range(_size, n));
+        throw(std::out_of_range(out_of_range(_size, n).what()));
       return (_array[n]);
     }
 
     const_reference at(size_type n) const
     {
       if (n >= _size)
-        throw(out_of_range(_size, n));
+        throw(std::out_of_range(out_of_range(_size, n).what()));
       return (_array[n]);
     }
 
