@@ -390,8 +390,8 @@ namespace ft {
 					}
 				}
 				if (!ret.second) {
-          			_node_allocator.destroy(newNode);
-          			_node_allocator.deallocate(newNode, 1);
+          _node_allocator.destroy(newNode);
+          _node_allocator.deallocate(newNode, 1);
 				}
 				set_bounds();
 				return ret;
