@@ -17,8 +17,10 @@ namespace ft {
 		pair (const first_type& a, const second_type& b) : first(a), second(b) {}
 		~pair() {}
 		pair& operator= (const pair& pr) {
-			first = pr.first;
-			second = pr.second;
+			if (this != &pr) {
+				first = pr.first;
+				second = pr.second;
+			}
 			return *this;
 		}
 		first_type	first;

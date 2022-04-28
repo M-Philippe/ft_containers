@@ -51,7 +51,7 @@ namespace ft {
 				return *this;
 			}
 
-			operator bst_rb_iterator<N, const T, Compare>() {
+			operator bst_rb_iterator<N, const T, Compare>() const {
 				return (bst_rb_iterator<N, const T, Compare>(_node));
 			}
 

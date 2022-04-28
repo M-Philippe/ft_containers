@@ -35,6 +35,7 @@ then
 		./do.sh vector
 		./do.sh stack
 		./do.sh map
+		./do.sh set
 	else
 		./do.sh $2
 	fi
