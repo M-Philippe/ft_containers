@@ -66,12 +66,12 @@ namespace ft {
 
 	template<class InputIterator>
 	typename ft::iterator_traits<InputIterator>::difference_type
-		__distance (InputIterator first, InputIterator last, ft::random_access_iterator_tag)
+		ft_distance (InputIterator first, InputIterator last, ft::random_access_iterator_tag)
 	{return (last - first);}
 
 	template<class InputIterator>
 	typename ft::iterator_traits<InputIterator>::difference_type
-		__distance (InputIterator first, InputIterator last, ft::input_iterator_tag) {
+		ft_distance (InputIterator first, InputIterator last, ft::input_iterator_tag) {
 			typename ft::iterator_traits<InputIterator>::difference_type distance = 0;
 			while (first != last) {
 				first++;
@@ -79,6 +79,18 @@ namespace ft {
 			}
 			return (distance);
 		}
+
+	/* If it is a random-access iterator,
+	the function uses operator- to calculate distance.
+	Otherwise, the function uses the increase operator (operator++) repeatedly.
+	*/
+	template<class InputIterator>
+	typename ft::iterator_traits<InputIterator>::difference_type
+		distance (InputIterator first, InputIterator last)
+	{
+		typedef ft::iterator_traits<InputIterator> traits;
+		return ft_distance(first, last, typename traits::iterator_category());
+	}
 
 	template <class InputIterator1, class InputIterator2>
   bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
@@ -126,18 +138,6 @@ namespace ft {
 			first2++;
 		}
 		return (first2 != last2);
-	}
-
-	/* If it is a random-access iterator,
-	the function uses operator- to calculate distance.
-	Otherwise, the function uses the increase operator (operator++) repeatedly.
-	*/
-	template<class InputIterator>
-	typename ft::iterator_traits<InputIterator>::difference_type
-		distance (InputIterator first, InputIterator last)
-	{
-		typedef ft::iterator_traits<InputIterator> traits;
-		return __distance(first, last, typename traits::iterator_category());
 	}
 
 	/*

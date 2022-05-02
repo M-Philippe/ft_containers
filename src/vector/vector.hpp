@@ -53,6 +53,8 @@ namespace ft
         : _alloc(alloc)
     {
       _capacity = n;
+      //if (n == 0)
+      //  return;
       _array = _alloc.allocate(_capacity);
       for (_size = 0; _size < n; ++_size)
         _alloc.construct(_array + _size, val);
@@ -235,11 +237,17 @@ namespace ft
         for (size_type i = 0; i < _size; ++i)
           _alloc.destroy(_array + i);
         _alloc.deallocate(_array, _size);
+        //
+        //_size = 0;
         _capacity > n ? _capacity = n * 2 : _capacity = n;
         _array = _alloc.allocate(_capacity);
       }
       for (size_type i = 0; i < n; ++i) {
-        _alloc.destroy(_array + i);
+        //
+        //if (_size > 0) {
+          _alloc.destroy(_array + i);
+          //_size--;
+        //}
         _alloc.construct(_array + i, val);
       }
       _size = n;
@@ -249,6 +257,7 @@ namespace ft
     {
       if (_size < _capacity)
       {
+        std::cout << _size << " | " << _capacity << std::endl;
         _array[_size] = val;
         _size++;
       }
