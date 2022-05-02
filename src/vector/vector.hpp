@@ -232,14 +232,16 @@ namespace ft
     void assign(size_type n, const value_type &val)
     {
       if (n > _capacity) {
-        for (size_type i = 0; i < _size; ++i)
-          _alloc.destroy(_array + i);
-        _alloc.deallocate(_array, _size);
+        this->clear();
+        _alloc.deallocate(_array, _capacity);
         _capacity > n ? _capacity = n * 2 : _capacity = n;
         _array = _alloc.allocate(_capacity);
       }
       for (size_type i = 0; i < n; ++i) {
-        _alloc.destroy(_array + i);
+        if (_size > 0) {
+          _alloc.destroy(_array + i);
+          _size--;
+        }
         _alloc.construct(_array + i, val);
       }
       _size = n;
@@ -249,7 +251,7 @@ namespace ft
     {
       if (_size < _capacity)
       {
-        _array[_size] = val;
+        _alloc.construct(_array + _size, val);
         _size++;
       }
       else
@@ -282,9 +284,9 @@ namespace ft
       if (n + _size >= _capacity) {
         ft::vector<value_type> tmp(begin() + indexPosition, end());
         if (_capacity == 0)
-          this->reserve(1);
+          this->reserve(n);
         else if (n + _size > _capacity * 2)
-          this->reserve((n + _size) * 2);
+          this->reserve(n + _size);
         else
           this->reserve(_capacity * 2);
         size_type count = 0;
@@ -296,11 +298,13 @@ namespace ft
       } else {
         ft::vector<value_type> tmp(begin() + indexPosition, end());
         for (size_type i = 0; i < n; i++) {
-          _alloc.destroy(this->_array + indexPosition);
+          if (indexPosition < _size)
+            _alloc.destroy(this->_array + indexPosition);
           _alloc.construct(this->_array + indexPosition++, val);
         }
         for (size_type i = 0; i < tmp.size(); i++) {
-          _alloc.destroy(this->_array + indexPosition);
+          if (indexPosition < _size)
+            _alloc.destroy(this->_array + indexPosition);
           _alloc.construct(this->_array + indexPosition++, tmp[i]);
         }
         _size += n;
@@ -315,9 +319,9 @@ namespace ft
       if (n + _size >= _capacity) {
         ft::vector<value_type> tmp(begin() + indexPosition, end());
         if (_capacity == 0)
-          this->reserve(n * 2);
+          this->reserve(n);
         else if (n + _size > _capacity * 2)
-          this->reserve((n + _size) * 2);
+          this->reserve(n + _size);
         else
           this->reserve(_capacity * 2);
         size_type count = 0;
@@ -329,11 +333,13 @@ namespace ft
       } else {
         ft::vector<value_type> tmp(begin() + indexPosition, end());
         while (first != last) {
-          _alloc.destroy(this->_array + indexPosition);
+          if (indexPosition < _size)
+            _alloc.destroy(this->_array + indexPosition);
           _alloc.construct(this->_array + indexPosition++, *(first++));
         }
         for (size_type i = 0; i < tmp.size(); i++) {
-          _alloc.destroy(this->_array + indexPosition);
+          if (indexPosition < _size)
+            _alloc.destroy(this->_array + indexPosition);
           _alloc.construct(this->_array + indexPosition++, tmp[i]);
         }
         _size += n;

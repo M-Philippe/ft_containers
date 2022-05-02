@@ -4,7 +4,7 @@
 #include <string.h>
 #include "vector_test.hpp"
 
-#define MAX_TEST 10000
+#define MAX_TEST 1000
 
 void	printOk() {
 	std::cout << "\033[0;32m" << "V" << "\033[0;37m";
@@ -124,7 +124,7 @@ void	vectorBeginEnd() {
 		NAMESPACE::vector<int>::iterator start = vector.begin();
 		NAMESPACE::vector<int>::iterator end = vector.end();
 		while (start != end) {
-			std::cout << *start << " " << *end << std::endl;
+			std::cout << *start << std::endl;
 			start++;
 		}
 		start = vector.begin();
@@ -437,7 +437,7 @@ void	vectorPushPopBack() {
 	{
 		std::cout << "=== Push_back 1 million times ===" << std::endl;
 		NAMESPACE::vector<int> vector;
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < MAX_TEST; i++) {
 			vector.push_back(i * 2);
 			std::cout << vector.size() << " " << vector.capacity() << " ";
 		}
@@ -1198,28 +1198,28 @@ void	vectorEqual() {
 }
 
 void	vector_test() {
-	//simpleCreation();	// DONE
-	//vectorExpansion(); // DONE
-	//vectorOperatorEqual(); // DONE
-	//vectorBeginEnd(); // DONE
-	//vectorRbeginRend(); // DONE
-	//vectorResize(); // DONE
-	//vectorReserve(); // DONE
-	//vectorOperatorBrackets(); // DONE
-	//vectorAt(); // DONE
-	//vectorFrontBack(); // DONE
-	//vectorAssign(); // DONE
-	//vectorPushPopBack(); // DONE
-	//vectorInsert(); // TODO
-	//vectorErase(); // DONE
-	//vectorSwap(); // DONE
-	//vectorClear(); // DONE
-	//vectorGetAllocator(); // DONE
-	//vectorConstIterator(); // DONE
-	//vectorIterator(); // DONE
-	//vectorConstReverseIterator(); // DONE
-	//vectorReverseIterator(); // DONE
+	simpleCreation();	// DONE
+	vectorExpansion(); // DONE
+	vectorOperatorEqual(); // DONE
+	vectorBeginEnd(); // DONE
+	vectorRbeginRend(); // DONE
+	vectorResize(); // DONE
+	vectorReserve(); // DONE
+	vectorOperatorBrackets(); // DONE
+	vectorAt(); // DONE
+	vectorFrontBack(); // DONE
+	vectorAssign(); // DONE
+	vectorPushPopBack(); // DONE
+	vectorInsert(); // TODO
+	vectorErase(); // DONE
+	vectorSwap(); // DONE
+	vectorClear(); // DONE
+	vectorGetAllocator(); // DONE
+	vectorConstIterator(); // DONE
+	vectorIterator(); // DONE
+	vectorConstReverseIterator(); // DONE
+	vectorReverseIterator(); // DONE
 	isIntegralTest(); // DONE
-	//vectorComparison(); // DONE
-	//vectorEqual(); // DONE
+	vectorComparison(); // DONE
+	vectorEqual(); // DONE
 }

@@ -11,7 +11,7 @@
 #include <set>
 #include <list>
 
-#define MAP_BIG_N	10000
+#define MAP_BIG_N	1000000
 
 void	pair_relational_operators_output(const NAMESPACE::pair<int, float>& p1, const NAMESPACE::pair<int, float>& p2) {
 	std::cout << std::boolalpha;
@@ -1202,32 +1202,44 @@ void	map_equal_range() {
 
 void	map_test() {
 	std::cout << "map Test" << std::endl;
-	//pair_relational_operators();
-	//map_constructor();
-	//map_insert_1();
-	//map_insert_2();
-	//map_insert_3();
-	//map_operator_brackets();
-	//map_swap();
-	//map_swap_non_member();
-	//map_clear();
-	//map_key_comp();
-	//map_value_comp();
-	//map_lower_bound();
-	//map_lower_bound_const();
-	//map_upper_bound();
-	//map_upper_bound_const();
-	//map_get_allocator();
-	//map_relational_operators();
-	//map_case1();
-	//map_case2();
-	//map_case3();
-	//map_case4();
-	//map_case5();
-	//map_iterator();
-	//map_const_iterator();
-	////// map_reverse_iterator();
-	//map_erase();
+	pair_relational_operators();
+	map_constructor();
+	map_insert_1();
+	map_insert_2();
+	map_insert_3();
+	map_operator_brackets();
+	map_swap();
+	map_swap_non_member();
+	map_clear();
+	map_key_comp();
+	map_value_comp();
+	map_lower_bound();
+	map_lower_bound_const();
+	map_upper_bound();
+	map_upper_bound_const();
+	map_get_allocator();
+	map_relational_operators();
+	map_case1();
+	map_case2();
+	map_case3();
+	map_case4();
+	map_case5();
+	map_iterator();
+	map_const_iterator();
+	//// map_reverse_iterator();
+	map_erase();
 	map_equal_range();
+	NAMESPACE::map<int, int> map;
+	NAMESPACE::map<int, int> map2;
+	for (int i = 0; i < 100000; i++)
+		map.insert(NAMESPACE::make_pair(i, i));
+	for (int i = 0; i < 10000; i++)
+		map2.insert(NAMESPACE::make_pair(i, i));
+	map = map2;
+	NAMESPACE::map<int, int>::iterator it = map.begin();
+	while (it != map.end()) {
+		std::cout << it->first << std::endl;;
+		it++;
+	}
 	return;
 }
