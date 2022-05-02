@@ -1197,6 +1197,8 @@ void	vectorEqual() {
 	}
 }
 
+#include <string>
+
 void	vector_test() {
 	simpleCreation();	// DONE
 	vectorExpansion(); // DONE
