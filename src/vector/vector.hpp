@@ -238,7 +238,6 @@ namespace ft
         _alloc.deallocate(_array, _capacity);
         for (size_type i = 0; i < _size; ++i)
           _alloc.destroy(_array + i);
-        _alloc.deallocate(_array, _size);
         _capacity > n ? _capacity = n * 2 : _capacity = n;
         _array = _alloc.allocate(_capacity);
       }
