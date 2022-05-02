@@ -1197,6 +1197,8 @@ void	vectorEqual() {
 	}
 }
 
+#include <string>
+
 void	vector_test() {
 	//simpleCreation();	// DONE
 	//vectorExpansion(); // DONE
@@ -1219,7 +1221,20 @@ void	vector_test() {
 	//vectorIterator(); // DONE
 	//vectorConstReverseIterator(); // DONE
 	//vectorReverseIterator(); // DONE
-	isIntegralTest(); // DONE
+	//isIntegralTest(); // DONE
 	//vectorComparison(); // DONE
 	//vectorEqual(); // DONE
+	//std::string c[3] = {"hi", "ho", "hu"};
+	//std::string s1 = c[0];
+	//std::string s2 = c[2];
+	//NAMESPACE::vector<std::string> v(s1, s2);
+	//NAMESPACE::vector<std::string>::iterator it = v.begin();
+	//while (it != v.end()) {
+	//	std::cout << *it << std::endl;
+	//	it++;
+	//}
+	std::vector<std::string> v;
+  ft::vector<std::string> v1(300, "string");
+  //ft::vector<std::string> f;
+  v.insert(v.end(), v1.begin(), v1.end());
 }
