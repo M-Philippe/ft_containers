@@ -53,8 +53,8 @@ namespace ft
         : _alloc(alloc)
     {
       _capacity = n;
-      //if (n == 0)
-      //  return;
+      if (n == 0)
+        return;
       _array = _alloc.allocate(_capacity);
       for (_size = 0; _size < n; ++_size)
         _alloc.construct(_array + _size, val);
@@ -100,6 +100,8 @@ namespace ft
 
     vector &operator=(const vector &rhs)
     {
+      if (this == &rhs)
+        return *this;
       clear();
       if (_capacity >= rhs._size)
       {

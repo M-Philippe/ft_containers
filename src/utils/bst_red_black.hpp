@@ -4,7 +4,6 @@
 #include "../iterator/bst_rb_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../iterator/reverse_iterator.hpp"
-#include <iostream> // tmp (std::cout, std::endl)
 
 namespace ft {
 
@@ -116,6 +115,8 @@ namespace ft {
 			}
 
 			bst_red_black& operator=(const bst_red_black& x) {
+				if (this == &x)
+					return *this;
 				clear();
 				_head = NULL;
 				insert(x.begin(), x.end());
