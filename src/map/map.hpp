@@ -6,7 +6,6 @@
 #include "../iterator/bst_rb_iterator.hpp"
 #include "../utils/utils.hpp"
 #include "../utils/bst_red_black.hpp"
-#include <stdlib.h>
 
 namespace ft {
 

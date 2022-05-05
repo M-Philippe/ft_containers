@@ -962,6 +962,21 @@ void	vectorSwap() {
 	while (b_it != b.end())
 		std::cout << *(b_it++) << " ";
 	std::cout << "\n\t===" << std::endl;
+	{
+		NAMESPACE::vector<int> vc1(10, 1);
+		NAMESPACE::vector<int> vc2(2, 9);
+		NAMESPACE::vector<int>::iterator it_1 = vc1.begin();
+		NAMESPACE::vector<int>::iterator it_2 = vc2.begin();
+		swap(vc1, vc2);
+		while (it_1 != vc2.end()) {
+			std::cout << *it_1 << std::endl;
+			it_1++;
+		}
+		while (it_2 != vc1.end()) {
+			std::cout << *it_2 << std::endl;
+			it_2++;
+		}
+	}
 }
 
 void	vectorClear() {
@@ -1198,6 +1213,7 @@ void	vectorEqual() {
 }
 
 #include <string>
+#include <list>
 
 void	vector_test() {
 	simpleCreation();	// DONE

@@ -34,4 +34,11 @@ void	stack_test() {
 	std::cout << (s > s3) << std::endl;
 	std::cout << (s >= s3) << std::endl;
 	std::cout << std::noboolalpha;
+	NAMESPACE::stack<int, std::deque<int> > s4;
+	for (int i = 0; i < 10; i++)
+		s4.push(i);
+	while (!s4.empty()) {
+		std::cout << s4.top() << std::endl;
+		s4.pop();
+	}
 }

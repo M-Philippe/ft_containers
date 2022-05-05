@@ -4,10 +4,7 @@
 #include <string.h>
 #include <iostream>
 #include "vector_test.hpp"
-
-// TMP
 #include <map>
-#include <list>
 
 void	vectorConstIterator() {
 	std::cout << "Vector ConstIterator" << std::endl;

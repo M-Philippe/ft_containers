@@ -32,8 +32,6 @@ template <typename T>
     }
 
     operator random_access_iterator<const T>() {  return (random_access_iterator<const T>(_link));  }
-    //template <typename const_iter>
-    //random_access_iterator(random_access_iterator<const_iter> const &it) : _link(it.base()) {}
     const pointer &base() const { return _link; }
 
     ~random_access_iterator() {};

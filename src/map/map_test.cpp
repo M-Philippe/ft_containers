@@ -5,12 +5,6 @@
 #include "../vector/vector.hpp"
 #include <vector>
 
-// TMP
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-#include <set>
-#include <list>
-
 #define MAP_BIG_N	1000000
 
 void	pair_relational_operators_output(const NAMESPACE::pair<int, float>& p1, const NAMESPACE::pair<int, float>& p2) {
@@ -563,12 +557,6 @@ void	map_case2() {
 		it++;
 	}
 	std::cout << "===" << std::endl;
-}
-
-void	print_exit(NAMESPACE::map<int, float>& map) {
-	//map.print();
-	(void)map;
-	exit(0);
 }
 
 void	map_case3() {
@@ -1226,20 +1214,7 @@ void	map_test() {
 	map_case5();
 	map_iterator();
 	map_const_iterator();
-	//// map_reverse_iterator();
+	map_reverse_iterator();
 	map_erase();
 	map_equal_range();
-	NAMESPACE::map<int, int> map;
-	NAMESPACE::map<int, int> map2;
-	for (int i = 0; i < 100000; i++)
-		map.insert(NAMESPACE::make_pair(i, i));
-	for (int i = 0; i < 10000; i++)
-		map2.insert(NAMESPACE::make_pair(i, i));
-	map = map2;
-	NAMESPACE::map<int, int>::iterator it = map.begin();
-	while (it != map.end()) {
-		std::cout << it->first << std::endl;;
-		it++;
-	}
-	return;
 }

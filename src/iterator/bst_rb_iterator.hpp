@@ -4,9 +4,6 @@
 #include "../iterator/iterator.hpp"
 #include "../utils/utils.hpp"
 
-#include <stdlib.h> // tmp
-#include <iostream> // tmp std::cout std::endl
-
 namespace ft {
 	template <typename N /* node_pointer */, typename T /* node_pointer->data */, class Compare>
 	class bst_rb_iterator : public ft::iterator<ft::bidirectional_iterator_tag, T>

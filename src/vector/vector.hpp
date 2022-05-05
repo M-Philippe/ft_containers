@@ -422,22 +422,6 @@ namespace ft
     /*
     **      NON-MEMBERS FUNCTIONS
     */
-
-    template <class T_, class Alloc_>
-    friend bool operator== (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
-    template <class T_, class Alloc_>
-    friend bool operator!= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
-    template <class T_, class Alloc_>
-    friend bool operator<  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
-    template <class T_, class Alloc_>
-    friend bool operator<= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
-    template <class T_, class Alloc_>
-    friend bool operator>  (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
-    template <class T_, class Alloc_>
-    friend bool operator>= (const vector<T_, Alloc_>& lhs, const vector<T_, Alloc_>& rhs);
-
-    template <class T_, class Alloc_>
-    void swap (vector<T_, Alloc_>& x, vector<T_, Alloc_>& y);
   }; // class vector
 
   template <class T, class Alloc>
