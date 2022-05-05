@@ -50,6 +50,12 @@ elif [ "$OSTYPE" = "darwin20" ]
 then
 	time ./ft_test > ft_results.txt
 	time ./std_test > std_results.txt
+elif [ "$OSTYPE" = "darwin18" ]
+then
+	echo -e "${GREEN}TIME FOR FT${NC}"
+	time ./ft_test > ft_results.txt
+	echo -e "${GREEN}TIME FOR STD${NC}"
+	time ./std_test > std_results.txt
 else
 	echo -e "${RED} Unknown platform, impossible to display execution time.${NC}"
 	./ft_test > ft_results.txt
@@ -59,9 +65,9 @@ fi
 diff ft_results.txt std_results.txt > /dev/null
 if [ $? -eq 0 ]
 then
-	echo -e "${GREEN}=== VectorTest OK :) ===${NC}"
+	echo -e "${GREEN}=== Test OK :) ===${NC}"
 else
-	echo -e "${RED}=== VectorTest BAD :'( ===${NC}"
+	echo -e "${RED}=== Test BAD :'( ===${NC}"
 	echo -e "$(diff ft_results.txt std_results.txt)"
 fi
 
